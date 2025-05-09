@@ -272,7 +272,8 @@ nav a.active::after {
 .keywords {
   font-size: 1.5rem;
   font-style: italic;
-  color: var(--text-secondary);
+  color: var(--accent-color);
+  font-weight: bold;
   margin-bottom: var(--spacing-lg);
 }
 
