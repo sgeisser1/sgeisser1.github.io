@@ -537,13 +537,17 @@ section:nth-child(even) {
 
 .soft-skills-list li {
   margin-bottom: var(--spacing-sm);
-  display: flex;
+  /* Removed flex display to allow default list markers */
+  /* display: flex; */
   align-items: center;
   gap: var(--spacing-sm);
+  list-style: disc; /* Use small points as list markers */
+  margin-left: 1.25rem; /* Add some indentation for the markers */
 }
 
 .soft-skills-list i {
-  color: var(--accent-color);
+  /* Removed the check circle icon */
+  display: none;
 }
 
 .language-item {
@@ -559,14 +563,8 @@ section:nth-child(even) {
 }
 
 .language-level span {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: var(--skill-bar-bg);
-}
-
-.language-level span.filled {
-  background-color: var(--accent-color);
+  /* Removed visual representation of rating points */
+  display: none;
 }
 
 .level-text {

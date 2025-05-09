@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starfinder Project | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles for project detail page */
+        main {
+            padding-top: calc(80px + var(--spacing-xl)); /* Add padding to account for fixed header */
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color var(--transition-fast);
+        }
+        
+        .back-link i {
+            margin-right: var(--spacing-xs);
+        }
+        
+        .back-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-lg);
+            color: var(--accent-color);
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .project-tags span {
+            background-color: var(--accent-color);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .project-overview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .project-description {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .project-description h2 {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .project-description h3 {
+            color: var(--accent-color);
+            margin: var(--spacing-lg) 0 var(--spacing-sm);
+        }
+        
+        .project-description p {
+            margin-bottom: var(--spacing-md);
+            line-height: 1.8;
+        }
+        
+        /* Gallery styles */
+        .gallery-container {
+            margin: var(--spacing-xl) 0;
+        }
+        
+        .gallery-main {
+            margin-bottom: var(--spacing-md);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .gallery-main img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: var(--spacing-sm);
+        }
+        
+        .gallery-thumbnail {
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity var(--transition-fast), transform var(--transition-fast);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .gallery-thumbnail:hover, .gallery-thumbnail.active {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+        
+        .gallery-thumbnail img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .skills-list {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .skills-list li {
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .skills-list .skill-bullet {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .tech-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .tech-item i {
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+        
+        .tech-item span {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .project-section {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .project-section h3 {
+            margin-bottom: var(--spacing-md);
+            color: var(--accent-color);
+        }
+        
+        .project-timeline {
+            margin: var(--spacing-lg) 0;
+        }
+        
+        @media (max-width: 768px) {
+            .project-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-thumbnails {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="header-info">
+                    <h1>STEPHAN <span>GEISSER</span></h1>
+                    <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
+                </div>
+                <div class="theme-toggle">
+                    <button id="theme-toggle-btn" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </div>
+            </div>
+             <nav>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#experience">Experience</a></li>
+                    <li><a href="index.html#education">Education</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-toggle">
+                <button id="nav-toggle-btn" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="project-detail">
+            <div class="container">
+                <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
+                <h1 class="project-title">Starfinder</h1>
+                
+                <div class="project-tags">
+                    <span>Arduino</span>
+                    <span>Mechanics</span>
+                    <span>Astronomy</span>
+                    <span>Electronics</span>
+                    <span>Stepper Motors</span>
+                </div>
+                
+                <!-- Gallery with 7 images -->
+                <div class="gallery-container">
+                    <div class="gallery-main">
+                        <img id="main-image" src="images\starfinder\Starfinder_all.jpg" alt="Starfinder Telescope Control System">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumbnail active" data-img="images\starfinder\Starfinder_all.jpg">
+                            <img src="images\starfinder\Starfinder_all.jpg" alt="Starfinder Telescope Control System">
+                        </div>
+                        <div class="gallery-thumbnail active" data-img="images\starfinder\Starfinder_finekonzept_1.jpg">
+                            <img src="images\starfinder\Starfinder_finekonzept_1.jpg" alt="Starfinder CAD">
+                        </div>
+                        <div class="gallery-thumbnail active" data-img="images\starfinder\Starfinder_finekonzept_2.jpg">
+                            <img src="images\starfinder\Starfinder_finekonzept_2.jpg" alt="Starfinder CAD">
+                        </div>
+                        <div class="gallery-thumbnail active" data-img="images\starfinder\Starfinder_finekonzept_3.jpg">
+                            <img src="images\starfinder\Starfinder_finekonzept_3.jpg" alt="Starfinder CAD">
+                        </div>
+                        <div class="gallery-thumbnail active" data-img="images\starfinder\Starfinder_finekonzept_4.jpg">
+                            <img src="images\starfinder\Starfinder_finekonzept_4.jpg" alt="Starfinder CAD">
+                        </div>
+                        <div class="gallery-thumbnail active" data-img="images\starfinder\Starfinder_building_1.jpg">
+                            <img src="images\starfinder\Starfinder_building_1.jpg" alt="Starfinder Realisation">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images\starfinder\Starfinder_building_2.jpg">
+                            <img src="images\starfinder\Starfinder_building_2.jpg" alt="Starfinder Realisation">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images\starfinder\Starfinder_building_3.jpg">
+                            <img src="images\starfinder\Starfinder_building_3.jpg" alt="Starfinder Realisation">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images\starfinder\Starfinder_building_4.jpg">
+                            <img src="images\starfinder\Starfinder_building_4.jpg" alt="Starfinder Realisation">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images\starfinder\Starfinder_building_5.jpg">
+                            <img src="images\starfinder\Starfinder_building_5.jpg" alt="Starfinder Realisation">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images\starfinder\Starfinder_building_6.jpg">
+                            <img src="images\starfinder\Starfinder_building_6.jpg" alt="Starfinder Realisation">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images\starfinder\Starfinder_building_7.jpg">
+                            <img src="images\starfinder\Starfinder_building_7.jpg" alt="Starfinder Realisation">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-description">
+                    <div class="project-section">
+                        <h2>Project Overview</h2>
+                        <p>Starfinder is a telescopic tracking system designed to counteract Earth's rotation, enabling precise astronomical observation and photography. This project combines mechanical engineering with electronics and programming to create a user-friendly tool for astronomy enthusiasts.</p>
+                        
+                        <p>In astronomy, one of the biggest challenges is the Earth's constant rotation, which causes stars and other celestial objects to move across the night sky. For long-exposure photography or detailed observation, this movement results in blurred images or lost targets. Starfinder automatically compensates for this movement, keeping the telescope perfectly aligned with the chosen celestial object.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fas fa-code"></i>
+                                <span>Arduino</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-microchip"></i>
+                                <span>Electronics</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Mechanics</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Project Goals</h3>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Create a system that precisely counteracts Earth's rotation</li>
+                            <li><span class="skill-bullet"></span> Implement remote control functionality for ease of use</li>
+                            <li><span class="skill-bullet"></span> Enable long-exposure astrophotography with minimal star trailing</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Implementation</h3>
+                        <p>The core of the Starfinder system is based on an Arduino microcontroller that precisely controls stepper motors attached to the telescope's axes. By calculating the Earth's rotation rate and applying the inverse movement to the telescope, the system maintains a fixed position relative to the celestial target.</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Arduino microcontroller for precise timing and motor control</li>
+                            <li><span class="skill-bullet"></span> Custom-designed gear systems to translate motor rotation to telescopic movement</li>
+                            <li><span class="skill-bullet"></span> High-precision stepper motors for both altitude and azimuth axes</li>
+                            <li><span class="skill-bullet"></span> Additional stepper motor for focus control</li>
+                            <li><span class="skill-bullet"></span> Rotary encoders for accurate position feedback</li>
+                            <li><span class="skill-bullet"></span> 3D printed components for specialized mounting hardware</li>
+                        </ul>
+                    </div>
+                                       
+                    <div class="project-section">
+                        <h3>Outcomes & Learnings</h3>
+                        <p>The Starfinder project successfully demonstrates how mechanical engineering, electronics, and software can be integrated to solve a complex astronomical challenge. The system allows for tracking accuracy sufficient for deep-sky photography and has been successfully tested on various celestial objects including planets, nebulae, and distant galaxies.</p>
+                        
+                        <p>This project deepened my understanding of precision mechanics, motor control systems, and the practical application of theoretical astronomical calculations. The modular design approach also taught valuable lessons about creating adaptable systems that can be modified to work with different hardware configurations.</p>
+                    </div>
+
+                    <div class="project-section acknowledgments">
+                        <h3>Acknowledgments</h3>
+                        <p>I would like to express my sincere gratitude to <strong>Roger Monn</strong> for his invaluable collaboration on this project. His expertise in <strong>coding</strong> and <strong>soldering</strong> significantly contributed to the success of Starfinder. Roger's programming skills were essential for creating the precise control algorithms, while his exceptional soldering craftsmanship ensured reliable electronic connections throughout the system.</p>
+                        
+                        <p>Special thanks to Roger for his dedication during the late-night testing sessions and his continued support throughout the development process. This project would not have been possible without his contributions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
+            <p>References available upon request.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Theme toggle functionality
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        const currentTheme = localStorage.getItem('theme') ||
+                            (prefersDarkScheme.matches ? 'dark' : 'light');
+
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+
+        // Mobile navigation toggle
+        const navToggleBtn = document.getElementById('nav-toggle-btn');
+        const navElement = document.querySelector('nav');
+
+        navToggleBtn.addEventListener('click', () => {
+            navElement.classList.toggle('active');
+            navToggleBtn.classList.toggle('active');
+        });
+        
+        // Gallery functionality
+        const mainImage = document.getElementById('main-image');
+        const thumbnails = document.querySelectorAll('.gallery-thumbnail');
+        
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function() {
+                // Update main image
+                mainImage.src = this.getAttribute('data-img');
+                mainImage.alt = this.querySelector('img').alt;
+                
+                // Update active thumbnail
+                thumbnails.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
