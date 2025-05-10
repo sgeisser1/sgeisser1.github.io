@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MECFcam Project</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to your existing CSS -->
+    <title>MECFcam Project | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project-pages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +13,6 @@
 </head>
 <body>
     <header>
-        <!-- Include your header content here if desired -->
         <div class="header-container">
             <div class="header-content">
                 <div class="header-info">
@@ -22,11 +22,11 @@
                 <div class="theme-toggle">
                     <button id="theme-toggle-btn" aria-label="Toggle dark mode">
                         <i class="fas fa-moon"></i>
-                        <i class="fa-regular fa-sun"></i>
+                        <i class="fas fa-sun"></i>
                     </button>
                 </div>
             </div>
-             <nav>
+            <nav>
                 <ul>
                     <li><a href="index.html#about">About</a></li>
                     <li><a href="index.html#experience">Experience</a></li>
@@ -51,37 +51,153 @@
         <section class="project-detail">
             <div class="container">
                 <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
                 <h1 class="project-title">MECFcam</h1>
-
-                <div class="project-images">
-                    <!-- Placeholder Images -->
-                    <img src="images/placeholder-mecfcam-1.jpg" alt="MECFcam Image 1">
-                    <img src="images/placeholder-mecfcam-2.jpg" alt="MECFcam Image 2">
+                
+                <div class="project-tags">
+                    <span>Raspberry Pi</span>
+                    <span>Video Streaming</span>
+                    <span>GStreamer</span>
+                    <span>Model Railway</span>
+                    <span>Low Latency</span>
+                </div>
+                
+                <!-- Gallery with MECF images -->
+                <div class="gallery-container">
+                    <div class="gallery-main">
+                        <img id="main-image" src="images/mecfcam/image-1.png" alt="MECFcam Project Logo">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumbnail active" data-img="images/mecfcam/image-1.png">
+                            <img src="images/mecfcam/image-1.png" alt="MECFcam Video Lok">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/mecfcam/image.png">
+                            <img src="images/mecfcam/image.png" alt="MECFcam Remote Control Drivers Cap">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/mecfcam/logo.png">
+                            <img src="images/mecfcam/logo.png" alt="MECF Logo">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="project-description">
-                    <h2>Low-latency video stream connection for a model railroad simulator.</h2>
-                    <p>The MECFcam is a project to create a low-latency video stream connection for a model railroad simulator. We have an H0 model railroad layout with a real driver's cab of the MECF. So far the camera has been operated with an analog camera and we want a digital system that will provide a higher video resolution.</p>
-                    <!-- Add more details here -->
+                    <div class="project-section">
+                        <h2>Project Overview</h2>
+                        <p>The MECFcam is a specialized low-latency video streaming system designed for a model railroad simulator. We have an H0 model railroad layout with a real driver's cab of the <a href="https://www.mecf.ch/" target="_blank">MECF</a> (Modell Eisenbahn Club Flawil). Previously, the system relied on an analog camera, but our goal was to develop a digital solution that provides higher video resolution with less noise while maintaining minimal latency.</p>
+                        
+                        <p>In model railway simulation, video latency is critical - any delay between the actual movement and what the operator sees can make controlling the train difficult and unrealistic. The challenge was to implement a high-resolution digital video solution without introducing noticeable lag, creating an immersive and responsive experience for the operator in the driver's cab.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fab fa-raspberry-pi"></i>
+                                <span>Raspberry Pi</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-camera"></i>
+                                <span>Camera Module</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-video"></i>
+                                <span>GStreamer</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-code"></i>
+                                <span>Python</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-network-wired"></i>
+                                <span>TCP/UDP</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Components</h3>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Raspberry Pi Zero 2 W</strong> - Compact, low-power computing platform</li>
+                            <li><span class="skill-bullet"></span> <strong>Raspberry Pi Camera Module 3</strong> - High-quality digital camera</li>
+                            <li><span class="skill-bullet"></span> <strong>Micro SD card (SanDisk Extreme PRO 32 GB)</strong> - Fast, reliable storage</li>
+                            <li><span class="skill-bullet"></span> <strong>Windows/Linux PC</strong> - For receiving and displaying the video stream</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Implementation</h3>
+                        <p>The system uses GStreamer, a powerful multimedia framework, to create a low-latency video pipeline from the Raspberry Pi camera to a PC. We implemented two different approaches:</p>
+                        
+                        <h4>GStreamer UDP Approach</h4>
+                        <p>This method uses User Datagram Protocol for fastest possible transmission:</p>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Raspberry Pi captures video using rpicam-vid</li>
+                            <li><span class="skill-bullet"></span> Video encoded in H264 format</li>
+                            <li><span class="skill-bullet"></span> Stream packetized with RTP (Real-time Transport Protocol)</li>
+                            <li><span class="skill-bullet"></span> Transmitted via UDP to the receiver PC</li>
+                            <li><span class="skill-bullet"></span> PC decodes and displays stream in real-time</li>
+                        </ul>
+                        
+                        <h4>TCP Approach</h4>
+                        <p>This method ensures reliable packet delivery with slightly higher latency:</p>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Raspberry Pi streams directly via TCP</li>
+                            <li><span class="skill-bullet"></span> Custom Python receiver with OpenCV for advanced processing</li>
+                            <li><span class="skill-bullet"></span> Optional frame interpolation for smoother video</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Challenges & Solutions</h3>
+                        <p>Several technical challenges were addressed during development:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Latency Management:</strong> Optimized the entire pipeline by using efficient encoding settings, minimal buffering, and direct hardware access.</li>
+                            <li><span class="skill-bullet"></span> <strong>Video Quality:</strong> Found the optimal balance between resolution, frame rate, and bitrate to maintain clarity without increasing latency.</li>
+                            <li><span class="skill-bullet"></span> <strong>Focus Control:</strong> Implemented fixed focus settings to prevent autofocus hunting and maintain a clear view of the model railway.</li>
+                            <li><span class="skill-bullet"></span> <strong>Lighting Adaptation:</strong> Added manual exposure and gain controls to handle varying lighting conditions across the model layout.</li>
+                            <li><span class="skill-bullet"></span> <strong>Network Reliability:</strong> Created both UDP (lowest latency) and TCP (highest reliability) implementations to adapt to different network conditions.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Configuration Optimizations</h3>
+                        <p>To achieve the best possible performance, we implemented several optimizations:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Resolution Control:</strong> Tuned to 1280x720 (720p) as the optimal balance between detail and performance</li>
+                            <li><span class="skill-bullet"></span> <strong>Fixed Focus:</strong> Used the --lens-position parameter to eliminate focus hunting</li>
+                            <li><span class="skill-bullet"></span> <strong>Illumination Management:</strong> Implemented fixed shutter speed and gain values for consistent lighting</li>
+                            <li><span class="skill-bullet"></span> <strong>Frame Rate Optimization:</strong> Set to 40fps for smooth motion perception</li>
+                            <li><span class="skill-bullet"></span> <strong>Network Optimization:</strong> Used wired Ethernet connections where possible to minimize latency</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Outcomes & Learnings</h3>
+                        <p>The MECFcam project successfully delivers a high-quality, low-latency video stream from the model railway to the driver's cab, significantly enhancing the simulation experience. The system achieves latency as low as 100ms while maintaining HD resolution at 40fps, providing a responsive and clear view for the operator.</p>
+                        
+                        <p>Through this project, I gained valuable experience with multimedia streaming pipelines, real-time video processing, and the challenges of optimizing for latency-sensitive applications. I also deepened my understanding of the Raspberry Pi camera system, GStreamer framework, and network streaming protocols.</p>
+                        
+                        <p>The modular approach allows for easy adaptation to different model railway layouts and can be extended with additional features such as multiple camera angles or on-screen telemetry data in future iterations.</p>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <!-- Include your footer content here if desired -->
-         <div class="container">
+        <div class="container">
             <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
             <p>References available upon request.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script> <!-- Assuming you might have a script.js for theme toggle/nav -->
     <script>
         // Set current year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // Theme toggle functionality (copy from index.html if needed)
+        // Theme toggle functionality
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -98,13 +214,29 @@
             localStorage.setItem('theme', theme);
         });
 
-        // Mobile navigation toggle (copy from index.html if needed)
+        // Mobile navigation toggle
         const navToggleBtn = document.getElementById('nav-toggle-btn');
         const navElement = document.querySelector('nav');
 
         navToggleBtn.addEventListener('click', () => {
             navElement.classList.toggle('active');
             navToggleBtn.classList.toggle('active');
+        });
+        
+        // Gallery functionality
+        const mainImage = document.getElementById('main-image');
+        const thumbnails = document.querySelectorAll('.gallery-thumbnail');
+        
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function() {
+                // Update main image
+                mainImage.src = this.getAttribute('data-img');
+                mainImage.alt = this.querySelector('img').alt;
+                
+                // Update active thumbnail
+                thumbnails.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
     </script>
 </body>
