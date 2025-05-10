@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escher 3D Reconstruction Project</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to your existing CSS -->
+    <title>Escher 3D Reconstruction | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project-pages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +13,6 @@
 </head>
 <body>
     <header>
-        <!-- Include your header content here if desired -->
         <div class="header-container">
             <div class="header-content">
                 <div class="header-info">
@@ -22,11 +22,11 @@
                 <div class="theme-toggle">
                     <button id="theme-toggle-btn" aria-label="Toggle dark mode">
                         <i class="fas fa-moon"></i>
-                        <i class="fa-regular fa-sun"></i>
+                        <i class="fas fa-sun"></i>
                     </button>
                 </div>
             </div>
-             <nav>
+            <nav>
                 <ul>
                     <li><a href="index.html#about">About</a></li>
                     <li><a href="index.html#experience">Experience</a></li>
@@ -51,47 +51,144 @@
         <section class="project-detail">
             <div class="container">
                 <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
                 <h1 class="project-title">Escher 3D Reconstruction</h1>
-
-                <div class="project-images">
-                    <!-- Placeholder Images -->
-                    <img src="images/placeholder-escher-3d-1.jpg" alt="Escher 3D Reconstruction Image 1">
-                    <img src="images/placeholder-escher-3d-2.jpg" alt="Escher 3D Reconstruction Image 2">
+                
+                <div class="project-tags">
+                    <span>3D Modeling</span>
+                    <span>Photogrammetry</span>
+                    <span>3D Printing</span>
+                    <span>Model Railway</span>
+                    <span>Blender</span>
+                </div>
+                
+                <!-- Gallery with images -->
+                <div class="gallery-container">
+                    <div class="gallery-main">
+                        <img id="main-image" src="images/escher/EscherFinal_1.JPG" alt="Escher Fountain 3D Reconstruction">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumbnail active" data-img="images/escher/EscherFinal_1.JPG">
+                            <img src="images/escher/EscherFinal_1.JPG" alt="Escher Fountain 3D Reconstruction">
+                        </div>
+                        <div class="gallery-thumbnail active" data-img="images/escher/EscherFinal_2.JPG">
+                            <img src="images/escher/EscherFinal_2.JPG" alt="Escher Fountain 3D Reconstruction">
+                        </div>
+                        <div class="gallery-thumbnail active" data-img="images/escher/EscherFinal_3.JPG">
+                            <img src="images/escher/EscherFinal_3.JPG" alt="Escher Fountain 3D Reconstruction">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/escher/original_fountain.jpg">
+                            <img src="images/escher/original_fountain.jpg" alt="Original Escher Fountain">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/escher/photo_capture.jpg">
+                            <img src="images/escher/photo_capture.jpg" alt="Photo Capture Process">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/escher/meshroom_process.jpg">
+                            <img src="images/escher/meshroom_process.jpg" alt="Meshroom Processing">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/escher/blender_edit.jpg">
+                            <img src="images/escher/blender_edit.jpg" alt="Blender Editing">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/escher/3d_printing.jpg">
+                            <img src="images/escher/3d_printing.jpg" alt="3D Printing Process">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/escher/final_model.jpg">
+                            <img src="images/escher/final_model.jpg" alt="Final Colored Model">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="project-description">
-                    <h2>Detailed 3D reconstruction of the Escherbrunnen at Zurich main station for the MECF model railway system.</h2>
-                    <h3>Aim</h3>
-                    <ul>
-                        <li>Detailed 3D reconstruction of the Escherbrunnen at Zurich main station for the MECF model railway system.</li>
-                    </ul>
-                    <h3>Realisation</h3>
-                    <ul>
-                        <li>200 photos</li>
-                        <li>Meshroom (structure from motion) -> 3D mesh</li>
-                        <li>Instant-meshes (mesh optimisation)</li>
-                        <li>Blender (correct small errors, 3D print preparation)</li>
-                        <li>3D print with FDM printer</li>
-                    </ul>
+                    <div class="project-section">
+                        <h2>Project Overview</h2>
+                        <p>This project involved creating a detailed 3D reconstruction of the iconic Escherbrunnen (Escher Fountain) located at Zurich main station for the <a href="https://www.mecf.ch/" target="_blank">MECF</a> (Modell Eisenbahn Club Flawil) model railway system. The Escher Fountain is a significant historical landmark and creating an accurate scale model required capturing its complex architectural details.</p>
+                        
+                        <p>Using photogrammetry techniques, I transformed approximately 200 photographs of the fountain into a highly detailed 3D model. The final printed model serves as a key scenery element for the MECF's H0 scale model railway layout, adding architectural authenticity to their miniature representation of Zurich.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fas fa-camera"></i>
+                                <span>Photogrammetry</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cube"></i>
+                                <span>Meshroom</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-bezier-curve"></i>
+                                <span>Blender</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-print"></i>
+                                <span>3D Printing</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Implementation Process</h3>
+                        <p>The project followed a systematic workflow to transform photographs into a physical 3D model:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Photo Capture:</strong> Took approximately 200 high-resolution photographs of the Escher Fountain from multiple angles, ensuring sufficient overlap between images for accurate 3D reconstruction.</li>
+                            <li><span class="skill-bullet"></span> <strong>Photogrammetry:</strong> Used Meshroom software to implement Structure from Motion (SfM) algorithms, which analyze the photos to generate a dense point cloud and subsequently a detailed 3D mesh.</li>
+                            <li><span class="skill-bullet"></span> <strong>Mesh Optimization:</strong> Processed the raw 3D mesh through Instant-Meshes to optimize polygon count while preserving important details, creating a more efficient model.</li>
+                            <li><span class="skill-bullet"></span> <strong>Refinement:</strong> Used Blender to correct small errors, adjust scale to match H0 proportions (1:87), and prepare the model for 3D printing by ensuring watertight geometry.</li>
+                            <li><span class="skill-bullet"></span> <strong>3D Printing:</strong> Printed the model using a Bamboolab FDM (Fused Deposition Modeling) printer, which proved surprisingly effective at capturing the fine architectural details.</li>
+                            <li><span class="skill-bullet"></span> <strong>Finishing:</strong> Applied paint and finishing techniques to match the appearance of the original fountain.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Challenges</h3>
+                        <p>Several challenges were addressed during this project:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Complex Geometry:</strong> The fountain features intricate architectural elements that required careful capture and processing to preserve details.</li>
+                            <li><span class="skill-bullet"></span> <strong>Scale Accuracy:</strong> Ensuring the final model was precisely scaled to H0 proportions (1:87) for seamless integration with the existing model railway.</li>
+                            <li><span class="skill-bullet"></span> <strong>Mesh Optimization:</strong> Balancing detail preservation with polygon reduction to create a printable model without losing important features.</li>
+                            <li><span class="skill-bullet"></span> <strong>Print Quality:</strong> Initially assumed a DLP (Digital Light Processing) printer would be necessary for such detailed work, but discovered that modern FDM printers like the Bamboolab could achieve excellent results.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Software Tools</h3>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Meshroom:</strong> Open-source photogrammetry software that implements Structure from Motion algorithms</li>
+                            <li><span class="skill-bullet"></span> <strong>Instant-Meshes:</strong> Tool for converting irregular triangle meshes into clean quad-dominant meshes</li>
+                            <li><span class="skill-bullet"></span> <strong>Blender:</strong> 3D modeling software used for error correction and print preparation</li>
+                            <li><span class="skill-bullet"></span> <strong>Bamboolab Slicer:</strong> Preparing the 3D model for printing on the FDM printer</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Outcomes & Insights</h3>
+                        <p>The project was a success, resulting in a highly detailed scale model of the Escher Fountain that now enhances the MECF railway layout. The final colored model accurately captures the architectural essence of this iconic Zurich landmark.</p>
+                        
+                        <p>One significant insight from this project was discovering that modern FDM printers like the Bamboolab can produce remarkably detailed results for architectural models. Initially, I assumed a more expensive DLP printer would be necessary, but the Bamboolab printer produced excellent results on the first attempt. This discovery has implications for cost-effective creation of detailed architectural elements for model railways and other miniature scenes.</p>
+                        
+                        <p>This project demonstrated the power of photogrammetry for preserving cultural heritage in digital form and transforming it into physical models that can be enjoyed in new contexts. The techniques learned have applications beyond model railways, extending to architecture, archaeology, and education.</p>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <!-- Include your footer content here if desired -->
-         <div class="container">
+        <div class="container">
             <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
             <p>References available upon request.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script> <!-- Assuming you might have a script.js for theme toggle/nav -->
     <script>
         // Set current year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // Theme toggle functionality (copy from index.html if needed)
+        // Theme toggle functionality
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -108,13 +205,29 @@
             localStorage.setItem('theme', theme);
         });
 
-        // Mobile navigation toggle (copy from index.html if needed)
+        // Mobile navigation toggle
         const navToggleBtn = document.getElementById('nav-toggle-btn');
         const navElement = document.querySelector('nav');
 
         navToggleBtn.addEventListener('click', () => {
             navElement.classList.toggle('active');
             navToggleBtn.classList.toggle('active');
+        });
+        
+        // Gallery functionality
+        const mainImage = document.getElementById('main-image');
+        const thumbnails = document.querySelectorAll('.gallery-thumbnail');
+        
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function() {
+                // Update main image
+                mainImage.src = this.getAttribute('data-img');
+                mainImage.alt = this.querySelector('img').alt;
+                
+                // Update active thumbnail
+                thumbnails.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
     </script>
 </body>
