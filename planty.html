@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>plänty Project</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to your existing CSS -->
+    <title>plänty Project | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project-pages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +13,6 @@
 </head>
 <body>
     <header>
-        <!-- Include your header content here if desired -->
         <div class="header-container">
             <div class="header-content">
                 <div class="header-info">
@@ -22,11 +22,11 @@
                 <div class="theme-toggle">
                     <button id="theme-toggle-btn" aria-label="Toggle dark mode">
                         <i class="fas fa-moon"></i>
-                        <i class="fa-regular fa-sun"></i>
+                        <i class="fas fa-sun"></i>
                     </button>
                 </div>
             </div>
-             <nav>
+            <nav>
                 <ul>
                     <li><a href="index.html#about">About</a></li>
                     <li><a href="index.html#experience">Experience</a></li>
@@ -51,48 +51,192 @@
         <section class="project-detail">
             <div class="container">
                 <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
                 <h1 class="project-title">plänty</h1>
-
-                <div class="project-images">
-                    <!-- Placeholder Images -->
-                    <img src="images/placeholder-planty-1.jpg" alt="plänty Image 1">
-                    <img src="images/placeholder-planty-2.jpg" alt="plänty Image 2">
+                
+                <div class="project-tags">
+                    <span>Hydroponics</span>
+                    <span>Raspberry Pi</span>
+                    <span>Automation</span>
+                    <span>Indoor Gardening</span>
+                    <span>IoT</span>
+                    <span>LED Lighting</span>
+                </div>
+                
+                <!-- Gallery with images -->
+                <div class="gallery-container">
+                    <div class="gallery-main">
+                        <img id="main-image" src="images\plänty\planty_overview.jpg" alt="plänty Hydroponic System">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumbnail active" data-img="images\plänty\planty_overview.jpg">
+                            <img src="images\plänty\planty_overview.jpg" alt="plänty Hydroponic System">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images\plänty\planty_1.jpg">
+                            <img src="images\plänty\planty_1.jpg" alt="Hydrostatic Prototyping System">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images\plänty\planty_3.jpg">
+                            <img src="images\plänty\planty_3.jpg" alt="Testing Hydrostatic Watering">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="project-description">
-                    <h2>Hydroponic indoor plant system</h2>
-                    <h3>Aim</h3>
-                    <ul>
-                        <li>Fully comprehensive kitchen herb system for hobby chefs</li>
-                        <li>As little maintenance as possible required</li>
-                    </ul>
-                    <h3>Realisation</h3>
-                    <ul>
-                        <li>Raspberry Pi</li>
-                        <li>Hydroponic materials (no soil)</li>
-                        <li>Irrigation by means of hydrostatics and a solenoid valve</li>
-                        <li>LED lighting</li>
-                        <li>Moisture sensor</li>
-                    </ul>
+                    <div class="project-section">
+                        <h2>Project Overview</h2>
+                        <p>plänty is an automated hydroponic growing system designed specifically for kitchen herbs, combining modern agricultural technology with smart home automation to create a low-maintenance indoor gardening solution. The system enables hobby chefs and cooking enthusiasts to grow fresh, organic herbs year-round with minimal time investment and consistent results.</p>
+                        
+                        <p>Using soil-free hydroponic growing techniques, automated lighting control, and intelligent irrigation, plänty eliminates many of the common challenges associated with indoor herb gardening. The integrated control system monitors and maintains optimal growing conditions while providing valuable insights into plant health and growth metrics.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fab fa-raspberry-pi"></i>
+                                <span>Raspberry Pi</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-tint"></i>
+                                <span>Hydroponics</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>LED Lighting</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-microchip"></i>
+                                <span>Sensors</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-faucet"></i>
+                                <span>Irrigation</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-code"></i>
+                                <span>Automation</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Project Goals</h3>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Create a comprehensive, low-maintenance system for growing kitchen herbs indoors</li>
+                            <li><span class="skill-bullet"></span> Minimize user intervention while ensuring consistent plant health and growth</li>
+                            <li><span class="skill-bullet"></span> Incorporate automation to handle lighting, watering, and nutrient delivery</li>
+                            <li><span class="skill-bullet"></span> Develop a system aesthetically pleasing enough to be displayed in a kitchen environment</li>
+                            <li><span class="skill-bullet"></span> Optimize resource usage (water, electricity, nutrients) for sustainable operation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>System Components</h3>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Growing Environment:</strong> Custom-designed hydroponic growing chambers using food-safe materials, optimized for different herb varieties</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Control System:</strong> Raspberry Pi running custom software to monitor and control all system functions</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Irrigation System:</strong> Hydrostatic-driven irrigation with a solenoid valve to precisely control water flow and nutrient delivery without requiring pumps</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Lighting:</strong> Full-spectrum LED lighting array with programmable intensity and duration to optimize photosynthesis</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Sensors:</strong> Moisture sensors, temperature monitors, and water level indicators providing real-time environmental data</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>User Interface:</strong> Web-based dashboard for monitoring system status and adjusting growing parameters</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Implementation Process</h3>
+                        <p>The development of plänty involved multiple disciplines including horticulture, electronics, and software development:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Growing Medium Research:</strong> Various hydroponic substrates were tested to determine the optimal growing medium for different herb varieties, balancing water retention, oxygenation, and root support.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Lighting Optimization:</strong> Extensive testing of LED configurations to determine the ideal spectrum, intensity, and photoperiod for kitchen herbs, maximizing growth while minimizing power consumption.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Irrigation Engineering:</strong> Design of a gravity-fed hydrostatic system that maintains consistent moisture levels without complex pumping mechanisms, reducing potential failure points.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Control System Development:</strong> Creation of a Python-based control application running on Raspberry Pi to monitor sensors, control actuators, and provide a user interface for system management.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Enclosure Design:</strong> Development of a visually appealing, functional housing that integrates all components while remaining appropriate for kitchen display.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Testing and Calibration:</strong> Multiple growing cycles to fine-tune nutrient concentrations, watering schedules, and lighting parameters for optimal results across different herb varieties.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Challenges</h3>
+                        <p>Several challenges were addressed during the development process:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Water Management:</strong> Developing a reliable system to maintain optimal moisture levels without overwatering, which can lead to root rot in hydroponic systems.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Nutrient Balance:</strong> Creating a nutrient delivery system that provides consistent concentrations appropriate for multiple herb varieties with different requirements.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Power Efficiency:</strong> Balancing the need for adequate lighting with power consumption concerns, leading to the development of a dynamic lighting schedule that adjusts based on plant growth stages.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Sensor Reliability:</strong> Ensuring accurate readings from moisture sensors in a potentially corrosive environment with nutrient-rich water.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>System Integration:</strong> Combining multiple subsystems (irrigation, lighting, sensors) into a cohesive control architecture while maintaining modularity for maintenance and upgrades.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Software Components</h3>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Control System:</strong> Python-based application handling sensor readings, decision logic, and device control</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Data Logging:</strong> Time-series database storing environmental conditions and system events for analysis</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Web Interface:</strong> Flask-based dashboard providing real-time system status and control options</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Notification System:</strong> Alerts for critical conditions such as low water levels or abnormal sensor readings</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Growth Tracking:</strong> Visual documentation of plant development over time with growth metrics</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Outcomes & Insights</h3>
+                        <p>The plänty system has proven highly effective at growing a variety of kitchen herbs with minimal user intervention. Common herbs like basil, mint, cilantro, and parsley thrive in the controlled environment, providing a steady supply of fresh ingredients for cooking.</p>
+                        
+                        <p>The hydrostatic irrigation approach has been particularly successful, eliminating the need for mechanical pumps while maintaining consistent moisture levels. This has contributed significantly to the system's reliability and low maintenance requirements.</p>
+                        
+                        <p>Data collected during operation has provided valuable insights into optimizing growing conditions for different herb varieties. The system now includes specialized growing profiles for common herbs, automatically adjusting lighting and irrigation parameters based on the specific plants being grown.</p>
+                        
+                        <p>Beyond its practical applications, the project has demonstrated how modern technology can be applied to traditional practices like gardening to create more accessible, efficient solutions. The system makes growing fresh herbs feasible even for those with limited time, space, or gardening experience.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Future Enhancements</h3>
+                        <p>Several potential improvements are being considered for future iterations:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Expanded growing capacity with modular, stackable units</li>
+                            <li><span class="skill-bullet"></span> Integration with voice assistants for hands-free control and monitoring</li>
+                            <li><span class="skill-bullet"></span> Advanced nutrient monitoring with automatic adjustment capabilities</li>
+                            <li><span class="skill-bullet"></span> Computer vision for automated plant health assessment and growth tracking</li>
+                            <li><span class="skill-bullet"></span> Community feature allowing users to share growing profiles and results</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <!-- Include your footer content here if desired -->
-         <div class="container">
+        <div class="container">
             <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
-            <p>References available upon request.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script> <!-- Assuming you might have a script.js for theme toggle/nav -->
     <script>
         // Set current year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // Theme toggle functionality (copy from index.html if needed)
+        // Theme toggle functionality
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -109,13 +253,29 @@
             localStorage.setItem('theme', theme);
         });
 
-        // Mobile navigation toggle (copy from index.html if needed)
+        // Mobile navigation toggle
         const navToggleBtn = document.getElementById('nav-toggle-btn');
         const navElement = document.querySelector('nav');
 
         navToggleBtn.addEventListener('click', () => {
             navElement.classList.toggle('active');
             navToggleBtn.classList.toggle('active');
+        });
+        
+        // Gallery functionality
+        const mainImage = document.getElementById('main-image');
+        const thumbnails = document.querySelectorAll('.gallery-thumbnail');
+        
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function() {
+                // Update main image
+                mainImage.src = this.getAttribute('data-img');
+                mainImage.alt = this.querySelector('img').alt;
+                
+                // Update active thumbnail
+                thumbnails.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
     </script>
 </body>

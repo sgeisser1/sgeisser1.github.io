@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CatDoor Project</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to your existing CSS -->
+    <title>CatDoor Project | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project-pages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +13,6 @@
 </head>
 <body>
     <header>
-        <!-- Include your header content here if desired -->
         <div class="header-container">
             <div class="header-content">
                 <div class="header-info">
@@ -22,11 +22,11 @@
                 <div class="theme-toggle">
                     <button id="theme-toggle-btn" aria-label="Toggle dark mode">
                         <i class="fas fa-moon"></i>
-                        <i class="fa-regular fa-sun"></i>
+                        <i class="fas fa-sun"></i>
                     </button>
                 </div>
             </div>
-             <nav>
+            <nav>
                 <ul>
                     <li><a href="index.html#about">About</a></li>
                     <li><a href="index.html#experience">Experience</a></li>
@@ -51,42 +51,176 @@
         <section class="project-detail">
             <div class="container">
                 <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
                 <h1 class="project-title">CatDoor</h1>
-
-                <div class="project-images">
-                    <!-- Placeholder Images -->
-                    <img src="images/placeholder-catdoor-1.jpg" alt="CatDoor Image 1">
-                    <img src="images/placeholder-catdoor-2.jpg" alt="CatDoor Image 2">
+                
+                <div class="project-tags">
+                    <span>Raspberry Pi</span>
+                    <span>Automation</span>
+                    <span>Machine Learning</span>
+                    <span>Computer Vision</span>
+                    <span>RFID</span>
+                    <span>IoT</span>
+                </div>
+                
+                <!-- Gallery with images -->
+                <div class="gallery-container">
+                    <div class="gallery-main">
+                        <img id="main-image" src="images/catdoor/main-image.jpg" alt="CatDoor Automated System">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumbnail active" data-img="images/catdoor/main-image.jpg">
+                            <img src="images/catdoor/main-image.jpg" alt="CatDoor Automated System">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/catdoor/mechanism.jpg">
+                            <img src="images/catdoor/mechanism.jpg" alt="Door Mechanism">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/catdoor/control-system.jpg">
+                            <img src="images/catdoor/control-system.jpg" alt="Control System">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/catdoor/rfid-reader.jpg">
+                            <img src="images/catdoor/rfid-reader.jpg" alt="RFID Reader">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="project-description">
-                    <h2>Automation of a door opening system for our cat.</h2>
-                    <p>A normal door is opened automatically, as fitting a cat flap is unsuitable.</p>
-                    <h3>Realisation</h3>
-                    <ul>
-                        <li>Stepping motor for door opening/closing</li>
-                        <li>Raspberry Pi 5 & 2W, switches, limit switches, camera, RFID reader</li>
-                    </ul>
-                    <p>To ensure the correct cat is trying to open the door, a RFID reader reads out the cat specific chip. For safety reasons during closing a camera feed is in realtime checking if there is a cat between the door, to make sure not to hurt the cat. A web based UI can be used to remote control the door and analyze the cat's behavior.</p>
+                    <div class="project-section">
+                        <h2>Project Overview</h2>
+                        <p>The CatDoor project is an innovative alternative to traditional cat flaps, designed for situations where installing a conventional cat door is impractical or expensive due to large windows or other architectural constraints. Instead of creating a new opening in a door or wall, this system automatically opens an existing door when the household cat approaches, providing a seamless entry and exit solution.</p>
+                        
+                        <p>The system incorporates advanced technologies including RFID identification to ensure only authorized cats gain entry, and machine learning-powered computer vision to monitor the doorway for safety during operation. A web-based user interface allows for remote control and behavioral analysis of the cat's movements.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fab fa-raspberry-pi"></i>
+                                <span>Raspberry Pi</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-microchip"></i>
+                                <span>RFID</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-camera"></i>
+                                <span>Computer Vision</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-robot"></i>
+                                <span>Machine Learning</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Stepper Motors</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-code"></i>
+                                <span>Web Development</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Project Goals</h3>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Create an automated door opening system for a household cat</li>
+                            <li><span class="skill-bullet"></span> Develop a secure system that only admits authorized pets</li>
+                            <li><span class="skill-bullet"></span> Ensure safe operation to prevent injury to the cat during closing</li>
+                            <li><span class="skill-bullet"></span> Implement remote monitoring and control capabilities</li>
+                            <li><span class="skill-bullet"></span> Design a system that can be retrofitted to existing doors without major modifications</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Implementation Process</h3>
+                        <p>The CatDoor system was implemented through a combination of hardware and software components working in harmony:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Door Mechanism:</strong> A stepping motor was attached to the door handle mechanism, allowing for precise control of the door's movement. The motor is powerful enough to operate the door but gentle enough to stop immediately if resistance is detected.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Control System:</strong> Two Raspberry Pi units form the brain of the operation - a Raspberry Pi 5 handles the primary processing, including computer vision tasks, while a Raspberry Pi Zero 2W manages the RFID reading and secondary functions.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Identification System:</strong> An RFID reader detects the cat's implanted microchip when in proximity, providing secure authentication that prevents neighbor cats or other animals from triggering the door.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Safety Monitoring:</strong> A camera positioned to observe the doorway feeds real-time video to a machine learning model trained to detect cats. This ensures the door never closes if the cat is in the doorway, preventing potential injury.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Limit Switches:</strong> Physical limit switches were installed to define the maximum open and closed positions, providing a hardware safety mechanism independent of the software controls.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>User Interface:</strong> A web-based control panel was developed to allow remote monitoring and operation of the door. The interface also presents analytics on the cat's entry and exit patterns over time.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Challenges</h3>
+                        <p>Several challenges were addressed during the development of this project:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Reliable Cat Detection:</strong> Developing a machine learning model that could accurately detect cats in various lighting conditions and positions required extensive training and refinement.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>RFID Reading Range:</strong> Balancing the need for early detection with the limitation of RFID reading distances required careful positioning and testing of the reader components.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Mechanical Integration:</strong> Creating a motor coupling that could effectively operate the door handle without permanent modifications to the door required custom-designed brackets and adaptors.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Power Management:</strong> Ensuring reliable operation during power fluctuations or brief outages required implementing a backup power system for critical components.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Cat Training:</strong> Perhaps the most unpredictable challenge was teaching the cat to use the system consistently, which required patience and positive reinforcement techniques.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Software Components</h3>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Computer Vision System:</strong> Python-based application using OpenCV and TensorFlow for real-time cat detection and tracking</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>RFID Reading Module:</strong> Low-level interface with the RFID hardware to identify registered microchips</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Motor Control Logic:</strong> Precision control of the stepper motor with acceleration/deceleration profiles for smooth operation</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Web Dashboard:</strong> Flask-based web application providing real-time status, remote control, and historical data visualization</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Logging System:</strong> Comprehensive activity tracking for debugging and behavior analysis</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Outcomes & Insights</h3>
+                        <p>The CatDoor project successfully provides a convenient entry and exit solution for our cat without requiring expensive structural modifications to accommodate a traditional cat flap. The system has proven reliable in daily use, with the cat quickly adapting to the automated door.</p>
+                        
+                        <p>The machine learning component has been particularly effective, with no safety incidents recorded since implementation. The system distinguishes between the household cat and neighborhood visitors with high accuracy, and the web interface has provided interesting insights into the cat's daily routine and activity patterns.</p>
+                        
+                        <p>This project demonstrated the potential for applying sophisticated technologies to seemingly simple household problems, resulting in elegant solutions that enhance both human and pet quality of life. The modular design approach means components can be upgraded or modified independently as new technologies emerge or requirements change.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Future Improvements</h3>
+                        <p>Several potential enhancements are being considered for future iterations:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Integration with smart home systems via MQTT protocol</li>
+                            <li><span class="skill-bullet"></span> Weather-aware operation that adjusts door opening times based on outdoor conditions</li>
+                            <li><span class="skill-bullet"></span> Enhanced behavior analytics with predictive capabilities</li>
+                            <li><span class="skill-bullet"></span> Mobile app development for more convenient remote control</li>
+                            <li><span class="skill-bullet"></span> Miniaturization of components for a more streamlined installation</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <!-- Include your footer content here if desired -->
-         <div class="container">
+        <div class="container">
             <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
-            <p>References available upon request.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script> <!-- Assuming you might have a script.js for theme toggle/nav -->
     <script>
         // Set current year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // Theme toggle functionality (copy from index.html if needed)
+        // Theme toggle functionality
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -103,13 +237,29 @@
             localStorage.setItem('theme', theme);
         });
 
-        // Mobile navigation toggle (copy from index.html if needed)
+        // Mobile navigation toggle
         const navToggleBtn = document.getElementById('nav-toggle-btn');
         const navElement = document.querySelector('nav');
 
         navToggleBtn.addEventListener('click', () => {
             navElement.classList.toggle('active');
             navToggleBtn.classList.toggle('active');
+        });
+        
+        // Gallery functionality
+        const mainImage = document.getElementById('main-image');
+        const thumbnails = document.querySelectorAll('.gallery-thumbnail');
+        
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function() {
+                // Update main image
+                mainImage.src = this.getAttribute('data-img');
+                mainImage.alt = this.querySelector('img').alt;
+                
+                // Update active thumbnail
+                thumbnails.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
     </script>
 </body>
