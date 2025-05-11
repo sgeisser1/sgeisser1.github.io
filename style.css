@@ -414,6 +414,14 @@ section:nth-child(even) {
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
+.project-card h3 {
+  color: var(--text-primary);
+}
+
+.project-card p {
+  color: var(--text-primary);
+}
+
 .project-header {
   padding: var(--spacing-md) var(--spacing-md) 0;
 }
@@ -537,17 +545,30 @@ section:nth-child(even) {
 
 .soft-skills-list li {
   margin-bottom: var(--spacing-sm);
-  /* Removed flex display to allow default list markers */
-  /* display: flex; */
+  display: flex; /* Re-add flex to align pseudo-element and text */
   align-items: center;
   gap: var(--spacing-sm);
-  list-style: disc; /* Use small points as list markers */
-  margin-left: 1.25rem; /* Add some indentation for the markers */
+  list-style: none; /* Hide default marker */
+  margin-left: 0; /* Remove default indentation */
+  position: relative; /* Needed for absolute positioning of pseudo-element */
+}
+
+.soft-skills-list li::before {
+  content: '\2022'; /* Unicode for a bullet point */
+  color: var(--accent-color); /* Set color to orange */
+  font-weight: bold; /* Make it slightly more prominent */
+  display: inline-block; /* Ensure it behaves like an element */
+  width: 1em; /* Give it a fixed width */
+  margin-left: -1.25em; /* Pull it back to the left */
 }
 
 .soft-skills-list i {
   /* Removed the check circle icon */
   display: none;
+}
+
+.text-muted-skill {
+  color: var(--text-muted);
 }
 
 .language-item {
