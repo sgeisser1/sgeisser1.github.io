@@ -3,13 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escher 3D Reconstruction | Stephan Geisser</title>
+    <title>CatDoor Project | Stephan Geisser</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="project-pages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Check URL parameters for theme (backup method)
+        function getThemeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlTheme = urlParams.get('theme');
+            if (urlTheme === 'dark' || urlTheme === 'light') {
+                return urlTheme;
+            }
+            return null;
+        }
+        
+        // NEW: Try to get theme from main page if it's still open
+        function getThemeFromMainPage() {
+            try {
+                // Try to read localStorage (might work in some cases)
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+                
+                // Try accessing window.opener if opened in new tab
+                if (window.opener && window.opener.getTheme && typeof window.opener.getTheme === 'function') {
+                    const parentTheme = window.opener.getTheme();
+                    return parentTheme;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ Error accessing main page theme:', e);
+            }
+            return null;
+        }
+        
+        // Improved theme reader for project pages
+        function getTheme() {
+            
+            // First, try URL parameter (most reliable for file:// protocol)
+            const urlTheme = getThemeFromURL();
+            if (urlTheme) {
+                return urlTheme;
+            }
+            
+            // Then try to get current theme from main page
+            const mainPageTheme = getThemeFromMainPage();
+            if (mainPageTheme) {
+                return mainPageTheme;
+            }
+            
+            // Try localStorage directly (works for web servers)
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ localStorage not accessible:', e);
+            }
+            
+            // Default to light theme
+            return 'light';
+        }
+        
+        function setTheme(theme) {
+            if (theme !== 'dark' && theme !== 'light') {
+                console.error('Project page - ❌ INVALID THEME:', theme);
+                return;
+            }
+            
+            // Always apply to documentElement (this always exists)
+            document.documentElement.classList.remove('dark-theme', 'light-theme');
+            document.documentElement.classList.add(theme + '-theme');
+            
+            // Only apply to body if it exists
+            if (document.body) {
+                document.body.classList.remove('dark-theme', 'light-theme');
+                document.body.classList.add(theme + '-theme');
+            }
+            
+            // Update URL parameter to match current theme (for future refreshes)
+            const currentURL = new URL(window.location);
+            const currentURLTheme = currentURL.searchParams.get('theme');
+            
+            if (currentURLTheme !== theme) {
+                currentURL.searchParams.set('theme', theme);
+                window.history.replaceState({}, '', currentURL);
+            }
+        }
+        
+        // Apply theme immediately to documentElement only
+        const initialTheme = getTheme();
+        setTheme(initialTheme);
+        
+        // Listen for theme changes from main page via localStorage
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cv-website-theme' && (e.newValue === 'dark' || e.newValue === 'light')) {
+                setTheme(e.newValue);
+            }
+        });
+        
+        // Listen for messages from parent window (postMessage API)
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'theme-change' && (e.data.theme === 'dark' || e.data.theme === 'light')) {
+                setTheme(e.data.theme);
+            }
+        });
+        
+        // Enhanced polling that checks main page theme first
+        let lastTheme = initialTheme;
+        let pollCount = 0;
+        const checkInterval = setInterval(function() {
+            pollCount++;
+            
+            const currentTheme = getTheme();
+            if (currentTheme !== lastTheme) {
+                setTheme(currentTheme);
+                lastTheme = currentTheme;
+            }
+        }, 2000); // Check every 2 seconds
+        
+        // Stop polling after 30 seconds to prevent infinite loops
+        setTimeout(function() {
+            clearInterval(checkInterval);
+        }, 30000);
+    </script>
 </head>
 <body>
     <header>
@@ -18,12 +140,6 @@
                 <div class="header-info">
                     <h1>STEPHAN <span>GEISSER</span></h1>
                     <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
-                </div>
-                <div class="theme-toggle">
-                    <button id="theme-toggle-btn" aria-label="Toggle dark mode">
-                        <i class="fas fa-moon"></i>
-                        <i class="fas fa-sun"></i>
-                    </button>
                 </div>
             </div>
             <nav>
@@ -80,10 +196,10 @@
                         <div class="gallery-thumbnail active" data-img="images/escher/EscherFinal_1.JPG">
                             <img src="images/escher/EscherFinal_1.JPG" alt="Escher Fountain 3D Reconstruction">
                         </div>
-                        <div class="gallery-thumbnail active" data-img="images/escher/EscherFinal_2.JPG">
+                        <div class="gallery-thumbnail" data-img="images/escher/EscherFinal_2.JPG">
                             <img src="images/escher/EscherFinal_2.JPG" alt="Escher Fountain 3D Reconstruction">
                         </div>
-                        <div class="gallery-thumbnail active" data-img="images/escher/EscherFinal_3.JPG">
+                        <div class="gallery-thumbnail" data-img="images/escher/EscherFinal_3.JPG">
                             <img src="images/escher/EscherFinal_3.JPG" alt="Escher Fountain 3D Reconstruction">
                         </div>
                     </div>
@@ -123,7 +239,8 @@
                         <h3>Implementation Process</h3>
                         <p>The project followed a systematic workflow to transform photographs into a physical 3D model:</p>
                         
-                        <ul class="skills-list">
+                        <!-- LABELED LIST: Use for items with strong labels like "Photo Capture:", "Photogrammetry:", etc. -->
+                        <ul class="labeled-list">
                             <li><span class="skill-bullet"></span> <strong>Photo Capture:</strong> Took approximately 200 high-resolution photographs of the Escher Fountain from multiple angles, ensuring sufficient overlap between images for accurate 3D reconstruction.</li>
                             <li><span class="skill-bullet"></span> <strong>Photogrammetry:</strong> Used Meshroom software to implement Structure from Motion (SfM) algorithms, which analyze the photos to generate a dense point cloud and subsequently a detailed 3D mesh.</li>
                             <li><span class="skill-bullet"></span> <strong>Mesh Optimization:</strong> Processed the raw 3D mesh through Instant-Meshes to optimize polygon count while preserving important details, creating a more efficient model.</li>
@@ -137,7 +254,8 @@
                         <h3>Technical Challenges</h3>
                         <p>Several challenges were addressed during this project:</p>
                         
-                        <ul class="skills-list">
+                        <!-- LABELED LIST: Use for items with strong labels -->
+                        <ul class="labeled-list">
                             <li><span class="skill-bullet"></span> <strong>Complex Geometry:</strong> The fountain features intricate architectural elements that required careful capture and processing to preserve details.</li>
                             <li><span class="skill-bullet"></span> <strong>Print Quality:</strong> Initially assumed a DLP (Digital Light Processing) printer would be necessary for such detailed work, but discovered that modern FDM printers like the Bamboolab could achieve excellent results.</li>
                         </ul>
@@ -145,6 +263,7 @@
                     
                     <div class="project-section">
                         <h3>Software Tools</h3>
+                        <!-- REGULAR SKILLS LIST: Use for simple bullet points without "Label:" format -->
                         <ul class="skills-list">
                             <li><span class="skill-bullet"></span> <strong>Meshroom:</strong> Open-source photogrammetry software that implements Structure from Motion algorithms</li>
                             <li><span class="skill-bullet"></span> <strong>Instant-Meshes:</strong> Tool for converting irregular triangle meshes into clean quad-dominant meshes</li>
@@ -159,7 +278,7 @@
                         
                         <p>One significant insight from this project was discovering that modern FDM printers like the Bamboolab can produce remarkably detailed results for architectural models. Initially, I assumed a more expensive DLP printer would be necessary, but the Bamboolab printer produced excellent results on the first attempt. This discovery led to pleasant cost-savings.</p>
                         
-                        <p>This project demonstrated the power of photogrammetry for for creating digital models of feature rich static objects.</p>
+                        <p>This project demonstrated the power of photogrammetry for creating digital models of feature rich static objects.</p>
                     </div>
                 </div>
             </div>
@@ -175,23 +294,6 @@
     <script>
         // Set current year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // Theme toggle functionality
-        const themeToggleBtn = document.getElementById('theme-toggle-btn');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-        const currentTheme = localStorage.getItem('theme') ||
-                            (prefersDarkScheme.matches ? 'dark' : 'light');
-
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-theme');
-        }
-
-        themeToggleBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
-            const theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-            localStorage.setItem('theme', theme);
-        });
 
         // Mobile navigation toggle
         const navToggleBtn = document.getElementById('nav-toggle-btn');
@@ -216,6 +318,12 @@
                 thumbnails.forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
             });
+        });
+        
+        // Final theme check after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const theme = getTheme();
+            setTheme(theme);
         });
     </script>
 </body>

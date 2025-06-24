@@ -141,6 +141,7 @@
                     <h1>STEPHAN <span>GEISSER</span></h1>
                     <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
                 </div>
+                <!-- NO THEME TOGGLE ON PROJECT PAGES -->
             </div>
             <nav>
                 <ul>
@@ -168,134 +169,92 @@
             <div class="container">
                 <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
                 
-                <h1 class="project-title">MECFcam</h1>
+                <h1 class="project-title">Project Title</h1>
                 
                 <div class="project-tags">
-                    <span>Raspberry Pi</span>
-                    <span>Video Streaming</span>
-                    <span>GStreamer</span>
-                    <span>Model Railway</span>
-                    <span>Low Latency</span>
+                    <span>Tag 1</span>
+                    <span>Tag 2</span>
+                    <span>Tag 3</span>
                 </div>
                 
-                <!-- Gallery with MECF images -->
+                <!-- Gallery with images -->
                 <div class="gallery-container">
                     <div class="gallery-main">
-                        <img id="main-image" src="images/mecfcam/image-1.png" alt="MECFcam Project Logo">
+                        <img id="main-image" src="images/project/main-image.jpg" alt="Project Main Image">
                     </div>
                     <div class="gallery-thumbnails">
-                        <div class="gallery-thumbnail active" data-img="images/mecfcam/image-1.png">
-                            <img src="images/mecfcam/image-1.png" alt="MECFcam Video Lok">
+                        <div class="gallery-thumbnail active" data-img="images/project/image1.jpg">
+                            <img src="images/project/image1.jpg" alt="Project Image 1">
                         </div>
-                        <div class="gallery-thumbnail" data-img="images/mecfcam/image.png">
-                            <img src="images/mecfcam/image.png" alt="MECFcam Remote Control Drivers Cap">
+                        <div class="gallery-thumbnail" data-img="images/project/image2.jpg">
+                            <img src="images/project/image2.jpg" alt="Project Image 2">
                         </div>
-                        <div class="gallery-thumbnail" data-img="images/mecfcam/logo.png">
-                            <img src="images/mecfcam/logo.png" alt="MECF Logo">
-                        </div>
+                        <!-- Add more thumbnails as needed -->
                     </div>
                 </div>
 
                 <div class="project-description">
                     <div class="project-section">
                         <h2>Project Overview</h2>
-                        <p>The MECFcam is a specialized low-latency video streaming system designed for a model railroad simulator. We have an H0 model railroad layout with a real driver's cab of the <a href="https://www.mecf.ch/" target="_blank">MECF</a> (Modell Eisenbahn Club Flawil). Previously, the system relied on an analog camera, but our goal was to develop a digital solution that provides higher video resolution with less noise while maintaining minimal latency.</p>
-                        
-                        <p>In model railway simulation, video latency is critical - any delay between the actual movement and what the operator sees can make controlling the train difficult and unrealistic. The challenge was to implement a high-resolution digital video solution without introducing noticeable lag, creating an immersive and responsive experience for the operator in the driver's cab.</p>
+                        <p>Project description goes here...</p>
                     </div>
                     
                     <div class="project-section">
                         <h3>Technology Stack</h3>
                         <div class="tech-stack">
                             <div class="tech-item">
-                                <i class="fab fa-raspberry-pi"></i>
-                                <span>Raspberry Pi</span>
-                            </div>
-                            <div class="tech-item">
-                                <i class="fas fa-camera"></i>
-                                <span>Camera Module</span>
-                            </div>
-                            <div class="tech-item">
-                                <i class="fas fa-video"></i>
-                                <span>GStreamer</span>
-                            </div>
-                            <div class="tech-item">
                                 <i class="fas fa-code"></i>
-                                <span>Python</span>
+                                <span>Technology 1</span>
                             </div>
-                            <div class="tech-item">
-                                <i class="fas fa-network-wired"></i>
-                                <span>TCP/UDP</span>
-                            </div>
+                            <!-- Add more tech items -->
                         </div>
                     </div>
                     
                     <div class="project-section">
-                        <h3>Components</h3>
+                        <h3>Project Goals</h3>
+                        <!-- REGULAR SKILLS LIST: Use for simple goals/features -->
                         <ul class="skills-list">
-                            <li><span class="skill-bullet"></span> <strong>Raspberry Pi Zero 2 W</strong> - Compact, low-power computing platform</li>
-                            <li><span class="skill-bullet"></span> <strong>Raspberry Pi Camera Module 3</strong> - High-quality digital camera</li>
-                            <li><span class="skill-bullet"></span> <strong>Micro SD card (SanDisk Extreme PRO 32 GB)</strong> - Fast, reliable storage</li>
-                            <li><span class="skill-bullet"></span> <strong>Windows/Linux PC</strong> - For receiving and displaying the video stream</li>
+                            <li><span class="skill-bullet"></span> Goal 1</li>
+                            <li><span class="skill-bullet"></span> Goal 2</li>
+                            <li><span class="skill-bullet"></span> Goal 3</li>
                         </ul>
                     </div>
                     
                     <div class="project-section">
-                        <h3>Technical Implementation</h3>
-                        <p>The system uses GStreamer, a powerful multimedia framework, to create a low-latency video pipeline from the Raspberry Pi camera to a PC. We implemented two different approaches:</p>
+                        <h3>Implementation Process</h3>
+                        <p>Description of implementation...</p>
                         
-                        <h4>GStreamer UDP Approach</h4>
-                        <p>This method uses User Datagram Protocol for fastest possible transmission:</p>
-                        <ul class="skills-list">
-                            <li><span class="skill-bullet"></span> Raspberry Pi captures video using rpicam-vid</li>
-                            <li><span class="skill-bullet"></span> Video encoded in H264 format</li>
-                            <li><span class="skill-bullet"></span> Stream packetized with RTP (Real-time Transport Protocol)</li>
-                            <li><span class="skill-bullet"></span> Transmitted via UDP to the receiver PC</li>
-                            <li><span class="skill-bullet"></span> PC decodes and displays stream in real-time</li>
-                        </ul>
-                        
-                        <h4>TCP Approach</h4>
-                        <p>This method ensures reliable packet delivery with slightly higher latency:</p>
-                        <ul class="skills-list">
-                            <li><span class="skill-bullet"></span> Raspberry Pi streams directly via TCP</li>
-                            <li><span class="skill-bullet"></span> Custom Python receiver with OpenCV for advanced processing</li>
-                            <li><span class="skill-bullet"></span> Optional frame interpolation for smoother video</li>
+                        <!-- LABELED LIST: Use for detailed steps with specific labels -->
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Step 1:</strong> Detailed description of first step...</li>
+                            <li><span class="skill-bullet"></span> <strong>Step 2:</strong> Detailed description of second step...</li>
+                            <li><span class="skill-bullet"></span> <strong>Step 3:</strong> Detailed description of third step...</li>
                         </ul>
                     </div>
                     
                     <div class="project-section">
-                        <h3>Challenges & Solutions</h3>
-                        <p>Several technical challenges were addressed during development:</p>
+                        <h3>Technical Challenges</h3>
+                        <p>Challenges faced during development...</p>
                         
-                        <ul class="skills-list">
-                            <li><span class="skill-bullet"></span> <strong>Latency Management:</strong> Optimized the entire pipeline by using efficient encoding settings, minimal buffering, and direct hardware access.</li>
-                            <li><span class="skill-bullet"></span> <strong>Video Quality:</strong> Found the optimal balance between resolution, frame rate, and bitrate to maintain clarity without increasing latency.</li>
-                            <li><span class="skill-bullet"></span> <strong>Focus Control:</strong> Implemented fixed focus settings to prevent autofocus hunting and maintain a clear view of the model railway.</li>
-                            <li><span class="skill-bullet"></span> <strong>Lighting Adaptation:</strong> Added manual exposure and gain controls to handle varying lighting conditions across the model layout.</li>
-                            <li><span class="skill-bullet"></span> <strong>Network Reliability:</strong> Created both UDP (lowest latency) and TCP (highest reliability) implementations to adapt to different network conditions.</li>
+                        <!-- LABELED LIST: Use for specific challenges -->
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Challenge 1:</strong> Description and solution...</li>
+                            <li><span class="skill-bullet"></span> <strong>Challenge 2:</strong> Description and solution...</li>
                         </ul>
                     </div>
                     
                     <div class="project-section">
-                        <h3>Configuration Optimizations</h3>
-                        <p>To achieve the best possible performance, we implemented several optimizations:</p>
-                        
+                        <h3>Software Tools</h3>
+                        <!-- REGULAR SKILLS LIST: Use for tool descriptions -->
                         <ul class="skills-list">
-                            <li><span class="skill-bullet"></span> <strong>Resolution Control:</strong> Tuned to 1280x720 (720p) as the optimal balance between detail and performance</li>
-                            <li><span class="skill-bullet"></span> <strong>Fixed Focus:</strong> Used the --lens-position parameter to eliminate focus hunting</li>
-                            <li><span class="skill-bullet"></span> <strong>Illumination Management:</strong> Implemented fixed shutter speed and gain values for consistent lighting</li>
-                            <li><span class="skill-bullet"></span> <strong>Frame Rate Optimization:</strong> Set to 40fps for smooth motion perception</li>
-                            <li><span class="skill-bullet"></span> <strong>Network Optimization:</strong> Used wired Ethernet connections where possible to minimize latency</li>
+                            <li><span class="skill-bullet"></span> <strong>Tool 1:</strong> Description of tool and usage</li>
+                            <li><span class="skill-bullet"></span> <strong>Tool 2:</strong> Description of tool and usage</li>
                         </ul>
                     </div>
                     
                     <div class="project-section">
-                        <h3>Outcomes & Learnings</h3>
-                        <p>The MECFcam project successfully delivers a high-quality, low-latency video stream from the model railway to the driver's cab, significantly enhancing the simulation experience. The system achieves latency as low as 100ms while maintaining HD resolution at 40fps, providing a responsive and clear view for the operator.</p>
-                        
-                        <p>Through this project, I gained valuable experience with multimedia streaming pipelines, real-time video processing, and the challenges of optimizing for latency-sensitive applications. I also deepened my understanding of the Raspberry Pi camera system, GStreamer framework, and network streaming protocols.</p>
-                        
-                        <p>The modular approach allows for easy adaptation to different model railway layouts and can be extended with additional features such as multiple camera angles or on-screen telemetry data in future iterations.</p>
+                        <h3>Outcomes & Insights</h3>
+                        <p>Results and learnings from the project...</p>
                     </div>
                 </div>
             </div>

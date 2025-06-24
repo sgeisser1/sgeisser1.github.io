@@ -11,6 +11,67 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- FIXED THEME SYSTEM - MAIN PAGE -->
+    <script>
+        // Get current theme
+        function getTheme() {
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+            } catch (e) {
+                console.error('Main page - localStorage access failed:', e);
+            }
+            // Default to light theme
+            return 'light';
+        }
+        
+        // Set theme
+        function setTheme(theme) {
+            if (theme !== 'dark' && theme !== 'light') {
+                console.error('Invalid theme:', theme);
+                return;
+            }
+            
+            // Apply to DOM
+            document.documentElement.classList.remove('dark-theme', 'light-theme');
+            document.body.classList.remove('dark-theme', 'light-theme');
+            document.documentElement.classList.add(theme + '-theme');
+            document.body.classList.add(theme + '-theme');
+            
+            // Save to localStorage
+            try {
+                localStorage.setItem('cv-website-theme', theme);
+                
+                // Verify it was saved
+                const verification = localStorage.getItem('cv-website-theme');
+                
+                if (verification !== theme) {
+                    console.error('Main page - localStorage save failed! Expected:', theme, 'Got:', verification);
+                }
+            } catch (e) {
+                console.error('Main page - failed to save theme to localStorage:', e);
+            }
+        }
+        
+        // Toggle theme (only available on main page)
+        function toggleTheme() {
+            const current = getTheme();
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+        
+        // Apply theme immediately
+        const initialTheme = getTheme();
+        setTheme(initialTheme);
+        
+        // Make functions global
+        window.getTheme = getTheme;
+        window.setTheme = setTheme;
+        window.toggleTheme = toggleTheme;
+    </script>
+
     <header>
         <div class="header-container">
             <div class="header-content">
@@ -18,10 +79,11 @@
                     <h1>STEPHAN <span>GEISSER</span></h1>
                     <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
                 </div>
+                <!-- THEME TOGGLE - ONLY ON MAIN PAGE -->
                 <div class="theme-toggle">
                     <button id="theme-toggle-btn" aria-label="Toggle dark mode">
                         <i class="fas fa-moon"></i>
-                        <i class="fa-regular fa-sun"></i>
+                        <i class="fas fa-sun"></i>
                     </button>
                 </div>
             </div>
@@ -218,15 +280,43 @@
             <div class="container">
                 <h2 class="section-title">Projects</h2>
                 <div class="projects-grid">
+                    <!-- CatDoor Project Card -->
+                    <a href="catdoor.html" class="project-card-link">
+                        <div class="project-card" data-images='["images/catdoor/main-image.jpg", "images/catdoor/mechanism.jpg", "images/catdoor/control-system.jpg", "images/catdoor/rfid-reader.jpg"]' data-default-image="0">
+                            <div class="project-header">
+                                <h3>CatDoor</h3>
+                            </div>
+                            <div class="project-image">
+                                <img src="images/catdoor/main-image.jpg" alt="CatDoor">
+                                <div class="image-indicator">
+                                    <span class="current-image">1</span> / <span class="total-images">4</span>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <p>Automated cat door with RFID, computer vision and motor control.</p>
+                            </div>
+                            <div class="project-footer">
+                                <div class="project-tags">
+                                    <span>Automation</span>
+                                    <span>Raspberry Pi</span>
+                                    <span>RFID</span>
+                                    <span>Computer Vision</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
                     <!-- Starfinder Project Card -->
                     <a href="starfinder.html" class="project-card-link">
-                        <div class="project-card">
+                        <div class="project-card" data-images='["images/starfinder/Starfinder_all.jpg", "images/starfinder/Starfinder_finekonzept_1.jpg", "images/starfinder/Starfinder_finekonzept_2.jpg", "images/starfinder/Starfinder_finekonzept_3.jpg", "images/starfinder/Starfinder_finekonzept_4.jpg", "images/starfinder/Starfinder_building_1.jpg", "images/starfinder/Starfinder_building_2.jpg", "images/starfinder/Starfinder_building_3.jpg", "images/starfinder/Starfinder_building_4.jpg", "images/starfinder/Starfinder_building_5.jpg", "images/starfinder/Starfinder_building_6.jpg", "images/starfinder/Starfinder_building_7.jpg"]' data-default-image="0">
                             <div class="project-header">
                                 <h3>Starfinder</h3>
                             </div>
                             <div class="project-image">
-                                <img src="images/starfinder/starfinder_1.jpg" alt="Starfinder">
-                                <!-- Add more images for this project when available -->
+                                <img src="images/starfinder/Starfinder_all.jpg" alt="Starfinder">
+                                <div class="image-indicator">
+                                    <span class="current-image">1</span> / <span class="total-images">12</span>
+                                </div>
                             </div>
                             <div class="project-content">
                                 <p>Remote-controlled telescope mount to counteract earth's rotation.</p>
@@ -241,73 +331,6 @@
                         </div>
                     </a>
 
-                    <!-- Efficient Room Design Project Card -->
-                    <a href="efficient-room-design.html" class="project-card-link">
-                        <div class="project-card">
-                            <div class="project-header">
-                                <h3>Efficient Room Design</h3>
-                            </div>
-                            <div class="project-image">
-                                <img src="images/room-design/room_1.jpg" alt="Efficient Room Design">
-                                <!-- Add more images for this project when available -->
-                            </div>
-                            <div class="project-content">
-                                <p>Space-saving sports room design utilizing existing structures.</p>
-                            </div>
-                            <div class="project-footer">
-                                <div class="project-tags">
-                                    <span>Design</span>
-                                    <span>Space Saving</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Heating Control System (HCS) Project Card -->
-                    <a href="heating-control-system.html" class="project-card-link">
-                        <div class="project-card">
-                            <div class="project-header">
-                                <h3>Heating Control System (HCS)</h3>
-                            </div>
-                            <div class="project-image">
-                                <img src="images/hcs/hcs_1.jpg" alt="Heating Control System">
-                                <!-- Add more images for this project when available -->
-                            </div>
-                            <div class="project-content">
-                                <p>Automated heating control system for optimized home temperature management.</p>
-                            </div>
-                            <div class="project-footer">
-                                <div class="project-tags">
-                                    <span>Raspberry Pi</span>
-                                    <span>Automation</span>
-                                    <span>Sensors</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- plänty Project Card -->
-                    <a href="planty.html" class="project-card-link">
-                        <div class="project-card">
-                            <div class="project-header">
-                                <h3>plänty</h3>
-                            </div>
-                            <div class="project-image">
-                                <img src="images/planty/planty_1.jpg" alt="plänty">
-                                <!-- Add more images for this project when available -->
-                            </div>
-                            <div class="project-content">
-                                <p>Low-maintenance hydroponic system for kitchen herbs.</p>
-                            </div>
-                            <div class="project-footer">
-                                <div class="project-tags">
-                                    <span>Hydroponics</span>
-                                    <span>Raspberry Pi</span>
-                                    <span>Automation</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
 
                     <!-- Escher 3D Reconstruction Project Card -->
                     <a href="escher-3d-reconstruction.html" class="project-card-link">
@@ -338,13 +361,15 @@
 
                     <!-- MECFcam Project Card -->
                     <a href="mecfcam.html" class="project-card-link">
-                        <div class="project-card">
+                        <div class="project-card" data-images='["images/mecfcam/image-1.png", "images/mecfcam/image.png", "images/mecfcam/logo.png"]' data-default-image="0">
                             <div class="project-header">
                                 <h3>MECFcam</h3>
                             </div>
                             <div class="project-image">
-                                <img src="images/mecfcam/mecfcam_1.jpg" alt="MECFcam">
-                                <!-- Add more images for this project when available -->
+                                <img src="images/mecfcam/image-1.png" alt="MECFcam">
+                                <div class="image-indicator">
+                                    <span class="current-image">1</span> / <span class="total-images">3</span>
+                                </div>
                             </div>
                             <div class="project-content">
                                 <p>Low-latency video streaming for model railroad simulator.</p>
@@ -358,15 +383,68 @@
                         </div>
                     </a>
 
+
+                    <!-- Geisser Heating Solutions Project Card -->
+                    <a href="heating-control-system.html" class="project-card-link">
+                        <div class="project-card" data-images='["images/hcs/HCS_concept.jpg", "images/hcs/parts_overview.png"]' data-default-image="0">
+                            <div class="project-header">
+                                <h3>Geisser Heating Solutions</h3>
+                            </div>
+                            <div class="project-image">
+                                <img src="images/hcs/HCS_concept.jpg" alt="Heating Control System">
+                                <div class="image-indicator">
+                                    <span class="current-image">1</span> / <span class="total-images">2</span>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <p>Smart heating control system for home temperature management.</p>
+                            </div>
+                            <div class="project-footer">
+                                <div class="project-tags">
+                                    <span>Raspberry Pi</span>
+                                    <span>Automation</span>
+                                    <span>Sensors</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- plänty Project Card -->
+                    <a href="planty.html" class="project-card-link">
+                        <div class="project-card" data-images='["images/plänty/planty_overview.jpg", "images/plänty/planty_1.jpg", "images/plänty/planty_3.jpg"]' data-default-image="0">
+                            <div class="project-header">
+                                <h3>plänty</h3>
+                            </div>
+                            <div class="project-image">
+                                <img src="images/plänty/planty_overview.jpg" alt="plänty">
+                                <div class="image-indicator">
+                                    <span class="current-image">1</span> / <span class="total-images">3</span>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <p>Low-maintenance hydroponic system for kitchen herbs.</p>
+                            </div>
+                            <div class="project-footer">
+                                <div class="project-tags">
+                                    <span>Hydroponics</span>
+                                    <span>Raspberry Pi</span>
+                                    <span>Automation</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
                     <!-- Ultimate Workout Challenge App Project Card -->
                     <a href="ultimate-workout-challenge-app.html" class="project-card-link">
-                        <div class="project-card">
+                        <div class="project-card" data-images='["images/uwc/uwc.png", "images/uwc/home.png", "images/uwc/workout_generator.png", "images/uwc/exercises.png", "images/uwc/leaderboard.png", "images/uwc/tracker.png"]' data-default-image="2">
                             <div class="project-header">
                                 <h3>Ultimate Workout Challenge App</h3>
                             </div>
                             <div class="project-image">
-                                <img src="images/workout-app/workout_1.jpg" alt="Ultimate Workout Challenge App">
-                                <!-- Add more images for this project when available -->
+                                <img src="images/uwc/workout_generator.png" alt="Ultimate Workout Challenge App">
+                                <div class="image-indicator">
+                                    <span class="current-image">3</span> / <span class="total-images">6</span>
+                                </div>
                             </div>
                             <div class="project-content">
                                 <p>Web app for exercise tracking, competition, and health monitoring.</p>
@@ -380,25 +458,25 @@
                         </div>
                     </a>
 
-                    <!-- CatDoor Project Card -->
-                    <a href="catdoor.html" class="project-card-link">
-                        <div class="project-card">
+                    <!-- Efficient Room Design Project Card -->
+                    <a href="efficient-room-design.html" class="project-card-link">
+                        <div class="project-card" data-images='["images/room_design/room_design_before_2.jpg", "images/room_design/room_design_before_1.png", "images/room_design/room_design_after_overview.jpg", "images/room_design/room_design_1.jpg", "images/room_design/room_design_after_2.png", "images/room_design/room_design_after_6.png", "images/room_design/room_design_after_7.jpg", "images/room_design/room_design_after_3.jpg", "images/room_design/room_design_after_5.png"]' data-default-image="2">
                             <div class="project-header">
-                                <h3>CatDoor</h3>
+                                <h3>Efficient Room Design</h3>
                             </div>
                             <div class="project-image">
-                                <img src="images/catdoor/catdoor_1.jpg" alt="CatDoor">
-                                <!-- Add more images for this project when available -->
+                                <img src="images/room_design/room_design_after_overview.jpg" alt="Efficient Room Design">
+                                <div class="image-indicator">
+                                    <span class="current-image">3</span> / <span class="total-images">9</span>
+                                </div>
                             </div>
                             <div class="project-content">
-                                <p>Automated cat door with RFID, camera safety, and motor control.</p>
+                                <p>Space-saving sports room design utilizing existing structures.</p>
                             </div>
                             <div class="project-footer">
                                 <div class="project-tags">
-                                    <span>Automation</span>
-                                    <span>Raspberry Pi</span>
-                                    <span>RFID</span>
-                                    <span>Computer Vision</span>
+                                    <span>Design</span>
+                                    <span>Space Saving</span>
                                 </div>
                             </div>
                         </div>
@@ -526,26 +604,84 @@
         // Set current year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
         
-        // Theme toggle functionality
-        const themeToggleBtn = document.getElementById('theme-toggle-btn');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-        
-        // Check for saved theme preference or use the system preference
-        const currentTheme = localStorage.getItem('theme') || 
-                            (prefersDarkScheme.matches ? 'dark' : 'light');
-        
-        // Set initial theme
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-theme');
+        // Update project links to include theme parameter (backup for file:// protocol)
+        function updateProjectLinks() {
+            const currentTheme = getTheme();
+            
+            // FIXED: Use selector that finds links containing .html (not ending with .html)
+            const projectLinks = document.querySelectorAll('a[href*=".html"]:not([href*="#"])');
+            
+            let updatedCount = 0;
+            projectLinks.forEach((link, index) => {
+                const href = link.getAttribute('href');
+                if (href && href.includes('.html')) {
+                    const oldHref = href;
+                    // Parse the URL and update theme parameter
+                    const url = new URL(href, window.location.href);
+                    url.searchParams.set('theme', currentTheme);
+                    const newHref = url.pathname + url.search;
+                    link.setAttribute('href', newHref);
+                    
+                    updatedCount++;
+                }
+            });
         }
         
-        // Toggle theme when button is clicked
-        themeToggleBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
+        // Update links when theme changes - MAKE THIS IMMEDIATE
+        const originalSetTheme = window.setTheme;
+        window.setTheme = function(theme) {
+            // Apply theme first
+            originalSetTheme(theme);
+            // Update links immediately - NO DELAY
+            updateProjectLinks();
+        };
+        
+        // IMPORTANT: Add click handler to update links just-in-time
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a[href$=".html"]');
+            if (link) {
+                const href = link.getAttribute('href');
+                
+                const currentTheme = getTheme();
+
+                // Update this specific link immediately before navigation
+                if (href && !href.includes('#')) {
+                    const url = new URL(href, window.location.href);
+                    const oldTheme = url.searchParams.get('theme');
+                    url.searchParams.set('theme', currentTheme);
+                    const newHref = url.pathname + url.search;
+                    
+                    if (oldTheme !== currentTheme) {
+                        link.setAttribute('href', newHref);
+                        
+                        // Small delay to ensure the update takes effect
+                        e.preventDefault();
+                        setTimeout(() => {
+                            window.location.href = newHref;
+                        }, 10);
+                    }
+                }
+            }
+        });
+        
+        // ENHANCED: Also update links when theme toggle button is clicked
+        document.getElementById('theme-toggle-btn').addEventListener('click', function() {
             
-            // Save preference to localStorage
-            const theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-            localStorage.setItem('theme', theme);
+            // Call the original toggleTheme function
+            window.toggleTheme();
+            
+            // Force update links after a tiny delay to ensure theme change completed
+            setTimeout(() => {
+                updateProjectLinks();
+                
+                // Verify the links were updated correctly
+                const catdoorLink = document.querySelector('a[href*="catdoor"]');
+            }, 50);
+        });
+        
+        // Update links on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProjectLinks();
         });
         
         // Mobile navigation toggle
@@ -575,7 +711,6 @@
             }
             
             card.addEventListener('mouseenter', () => {
-                // Show the image indicator
                 if (imageIndicator) {
                     imageIndicator.style.opacity = '1';
                 }
@@ -586,18 +721,16 @@
                     if (currentImageSpan) {
                         currentImageSpan.textContent = currentIndex + 1;
                     }
-                }, 800); // Change image every 800ms
+                }, 800);
             });
             
             card.addEventListener('mouseleave', () => {
                 clearInterval(hoverTimer);
                 
-                // Hide the image indicator
                 if (imageIndicator) {
                     imageIndicator.style.opacity = '0';
                 }
                 
-                // Reset to default image
                 currentIndex = defaultImageIndex;
                 img.src = images[defaultImageIndex];
                 if (currentImageSpan) {
@@ -611,11 +744,9 @@
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                // Close mobile nav if open
                 navElement.classList.remove('active');
                 navToggleBtn.classList.remove('active');
                 
-                // Scroll to target section
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
                 
@@ -662,6 +793,19 @@
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
+            }
+        });
+        
+        // Debug localStorage on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Test localStorage write/read
+            try {
+                localStorage.setItem('test', 'working');
+                const testResult = localStorage.getItem('test');
+                localStorage.removeItem('test');
+            } catch (e) {
+                console.error('localStorage not working:', e);
             }
         });
     </script>
