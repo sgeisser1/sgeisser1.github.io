@@ -143,7 +143,7 @@ main {
     display: block;
 }
 
-/* Technical details and lists */
+/* Technical details and lists - FIXED ALIGNMENT */
 .skills-list {
     margin-bottom: var(--spacing-md);
 }
@@ -153,6 +153,7 @@ main {
     display: flex;
     align-items: flex-start;
     gap: var(--spacing-sm);
+    list-style: none;
 }
 
 .skills-list .skill-bullet {
@@ -161,8 +162,15 @@ main {
     height: 6px;
     background-color: var(--accent-color);
     border-radius: 50%;
-    margin-right: 4px;
     margin-top: 0.7em;
+    flex-shrink: 0;
+}
+
+/* Fixed alignment for text after strong tags */
+.skills-list li strong {
+    min-width: 160px; /* Ensures consistent alignment */
+    flex-shrink: 0;
+    display: inline-block;
 }
 
 .tech-stack {
@@ -270,5 +278,16 @@ main {
     
     .code-example pre {
         font-size: 0.8rem;
+    }
+    
+    /* Responsive adjustment for strong tags */
+    .skills-list li strong {
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 576px) {
+    .skills-list li strong {
+        min-width: 100px;
     }
 }
