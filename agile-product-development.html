@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agile Product Development | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Check URL parameters for theme (backup method)
+        function getThemeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlTheme = urlParams.get('theme');
+            if (urlTheme === 'dark' || urlTheme === 'light') {
+                return urlTheme;
+            }
+            return null;
+        }
+        
+        // NEW: Try to get theme from main page if it's still open
+        function getThemeFromMainPage() {
+            try {
+                // Try to read localStorage (might work in some cases)
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+                
+                // Try accessing window.opener if opened in new tab
+                if (window.opener && window.opener.getTheme && typeof window.opener.getTheme === 'function') {
+                    const parentTheme = window.opener.getTheme();
+                    return parentTheme;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ Error accessing main page theme:', e);
+            }
+            return null;
+        }
+        
+        // Improved theme reader for project pages
+        function getTheme() {
+            
+            // First, try URL parameter (most reliable for file:// protocol)
+            const urlTheme = getThemeFromURL();
+            if (urlTheme) {
+                return urlTheme;
+            }
+            
+            // Then try to get current theme from main page
+            const mainPageTheme = getThemeFromMainPage();
+            if (mainPageTheme) {
+                return mainPageTheme;
+            }
+            
+            // Try localStorage directly (works for web servers)
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ localStorage not accessible:', e);
+            }
+            
+            // Default to light theme
+            return 'light';
+        }
+        
+        function setTheme(theme) {
+            if (theme !== 'dark' && theme !== 'light') {
+                console.error('Project page - ❌ INVALID THEME:', theme);
+                return;
+            }
+            
+            // Always apply to documentElement (this always exists)
+            document.documentElement.classList.remove('dark-theme', 'light-theme');
+            document.documentElement.classList.add(theme + '-theme');
+            
+            // Only apply to body if it exists
+            if (document.body) {
+                document.body.classList.remove('dark-theme', 'light-theme');
+                document.body.classList.add(theme + '-theme');
+            }
+            
+            // Update URL parameter to match current theme (for future refreshes)
+            const currentURL = new URL(window.location);
+            const currentURLTheme = currentURL.searchParams.get('theme');
+            
+            if (currentURLTheme !== theme) {
+                currentURL.searchParams.set('theme', theme);
+                window.history.replaceState({}, '', currentURL);
+            }
+        }
+        
+        // Apply theme immediately to documentElement only
+        const initialTheme = getTheme();
+        setTheme(initialTheme);
+        
+        // Listen for theme changes from main page via localStorage
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cv-website-theme' && (e.newValue === 'dark' || e.newValue === 'light')) {
+                setTheme(e.newValue);
+            }
+        });
+        
+        // Listen for messages from parent window (postMessage API)
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'theme-change' && (e.data.theme === 'dark' || e.data.theme === 'light')) {
+                setTheme(e.data.theme);
+            }
+        });
+        
+        // Enhanced polling that checks main page theme first
+        let lastTheme = initialTheme;
+        let pollCount = 0;
+        const checkInterval = setInterval(function() {
+            pollCount++;
+            
+            const currentTheme = getTheme();
+            if (currentTheme !== lastTheme) {
+                setTheme(currentTheme);
+                lastTheme = currentTheme;
+            }
+        }, 2000); // Check every 2 seconds
+        
+        // Stop polling after 30 seconds to prevent infinite loops
+        setTimeout(function() {
+            clearInterval(checkInterval);
+        }, 30000);
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="header-info">
+                    <h1>STEPHAN <span>GEISSER</span></h1>
+                    <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
+                </div>
+            </div>
+             <nav>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#experience">Experience</a></li>
+                    <li><a href="index.html#education">Education</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-toggle">
+                <button id="nav-toggle-btn" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="project-detail">
+            <div class="container">
+                <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
+                <h1 class="project-title">Agile Product Development</h1>
+                <div class="project-subtitle">
+                    <span class="thesis-badge">MSc Thesis</span>
+                    <span class="duration">Oct 2025 - Apr 2025</span>
+                </div>
+                
+                <div class="project-tags">
+                    <span>Agile Development</span>
+                    <span>Innovation</span>
+                    <span>Rapid Prototyping</span>
+                    <span>Team Leadership</span>
+                    <span>Industry Collaboration</span>
+                    <span>Interdisciplinary</span>
+                </div>
+                
+                <!-- Gallery with images -->
+                <div class="gallery-container">
+                    <div class="gallery-main">
+                        <img id="main-image" src="images/XLab/Overview.PNG" alt="Agile Product Development at ETH Feasibility Lab">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumbnail active" data-img="images/XLab/Overview.PNG">
+                            <img src="images/XLab/Overview.PNG" alt="Agile Product Development at ETH Feasibility Lab">
+                        </div>
+                        <div class="gallery-thumbnail" data-img="images/XLab/EXL_Funnel.PNG">
+                            <img src="images/XLab/EXL_Funnel.PNG" alt="Project steps in the Exploration Lab">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-description">
+                    <div class="project-section">
+                        <h2>Program Mission</h2>
+                        <p><em>"Building on the students' curiosity, we respectfully challenge the status quo and co-create innovations to inspire an exploration mindset."</em></p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h2>Project Overview</h2>
+                        <p>My Master's thesis at the <strong>ETH Feasibility Lab (X-ploration Lab)</strong> focused on applying agile innovation methodologies to real-world product development challenges in collaboration with leading Swiss companies including Bühler AG, Bossard, V-Zug, and VAT.</p>
+                        
+                        <p>The program bridges the gap between academic research and industry needs by using rapid prototyping, hypothesis-driven development, and iterative testing to solve complex engineering challenges within interdisciplinary teams.</p>
+                        
+                        <div class="video-section">
+                            <h4>Program Overview Video</h4>
+                            <p>Watch this overview of the ETH Feasibility Lab program to understand the innovative approach and methodology:</p>
+                            <div class="video-embed">
+                                <iframe src="https://www.youtube.com/embed/JpbxRg2feJA" 
+                                        title="ETH Feasibility Lab - Program Overview" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                        allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Key Focus Areas</h3>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Agile Hardware Development:</strong> Adapting software agile principles to physical product development</li>
+                            <li><span class="skill-bullet"></span> <strong>Rapid Prototyping:</strong> Building and testing physical prototypes to validate hypotheses quickly</li>
+                            <li><span class="skill-bullet"></span> <strong>Industry Collaboration:</strong> Working directly with partner companies on real challenges</li>
+                            <li><span class="skill-bullet"></span> <strong>Interdisciplinary Teamwork:</strong> Collaborating across engineering, design, and business domains</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Methodology & Approach</h3>
+                        <p>The project employed a structured yet flexible approach to innovation, combining theoretical agile principles with hands-on experimentation. Key methodologies included:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Hypothesis-driven development with rapid iteration cycles</li>
+                            <li><span class="skill-bullet"></span> Early and frequent testing with physical prototypes</li>
+                            <li><span class="skill-bullet"></span> Cross-functional team collaboration and knowledge sharing</li>
+                            <li><span class="skill-bullet"></span> Direct engagement with industry stakeholders and end users</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Key Learnings</h3>
+                        <p>This thesis provided invaluable experience in bridging academic research with practical industry applications. The program emphasized the importance of structured innovation processes while maintaining flexibility for creative problem-solving.</p>
+                        
+                        <p><strong>Core insights gained:</strong> Understanding how to adapt agile methodologies for hardware development, leading interdisciplinary teams effectively, and translating complex technical concepts into actionable business solutions. The experience reinforced the critical role of rapid experimentation and customer feedback in successful product development.</p>
+                    </div>
+
+                    <div class="project-section">
+                        <h3>Industry Partners</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fas fa-industry"></i>
+                                <span>Bühler AG</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Bossard</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-home"></i>
+                                <span>V-Zug</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-microchip"></i>
+                                <span>VAT</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile navigation toggle
+        const navToggleBtn = document.getElementById('nav-toggle-btn');
+        const navElement = document.querySelector('nav');
+
+        navToggleBtn.addEventListener('click', () => {
+            navElement.classList.toggle('active');
+            navToggleBtn.classList.toggle('active');
+        });
+        
+        // Final theme check after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const theme = getTheme();
+            setTheme(theme);
+        });
+    </script>
+</body>
+</html>

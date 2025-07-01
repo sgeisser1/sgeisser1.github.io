@@ -1169,6 +1169,200 @@ main {
   }
 }
 
+/* Add these styles to your style.css file for the new agile project page elements */
+
+/* Project subtitle styling */
+.project-subtitle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.duration {
+  color: var(--text-secondary);
+  font-weight: 500;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--bg-accent);
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+/* Enhanced thesis badge for project pages */
+.project-subtitle .thesis-badge {
+  background-color: var(--accent-color);
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dark-theme .project-subtitle .thesis-badge {
+  background-color: var(--accent-secondary);
+}
+
+/* Video section styling */
+.video-section {
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-lg);
+  background-color: var(--bg-accent);
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-color);
+}
+
+.video-section h4 {
+  margin-bottom: var(--spacing-sm);
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Responsive video embed container */
+.video-embed {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  margin-top: var(--spacing-md);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+}
+
+.video-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+/* Responsive adjustments for project subtitle */
+@media (max-width: 576px) {
+  .project-subtitle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+  
+  .video-section {
+    padding: var(--spacing-md);
+  }
+}
+
+* Projects Subsections */
+.projects-subsection {
+  margin-bottom: var(--spacing-xxl);
+}
+
+.projects-subsection:last-child {
+  margin-bottom: 0;
+}
+
+.subsection-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+  padding-bottom: var(--spacing-md);
+}
+
+.subsection-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background-color: var(--accent-color);
+  opacity: 0.6;
+}
+
+/* Project Summary Cards (non-clickable ETH projects) */
+.project-summary {
+  cursor: default;
+}
+
+.project-summary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Special Badges */
+.thesis-badge, .highlight-badge {
+  background-color: var(--accent-color);
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: var(--spacing-sm);
+}
+
+.highlight-badge {
+  background-color: #e74c3c;
+}
+
+.dark-theme .thesis-badge {
+  background-color: var(--accent-secondary);
+}
+
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+/* Placeholder image styling until real images are added */
+.project-summary .project-image img[src*="placeholder"] {
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-secondary) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  position: relative;
+}
+
+.project-summary .project-image img[src*="placeholder"]::after {
+  content: "ETH";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .subsection-title {
+    font-size: 1.5rem;
+  }
+  
+  .project-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .thesis-badge, .highlight-badge {
+    margin-left: 0;
+    margin-top: var(--spacing-xs);
+  }
+}
+
 /* Animations & Transitions */
 @keyframes fadeIn {
   from {
