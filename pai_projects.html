@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probabilistic Artificial Intelligence Course Projects | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Theme handling script (same as previous pages)
+        function getThemeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlTheme = urlParams.get('theme');
+            if (urlTheme === 'dark' || urlTheme === 'light') {
+                return urlTheme;
+            }
+            return null;
+        }
+        
+        function getThemeFromMainPage() {
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+                
+                if (window.opener && window.opener.getTheme && typeof window.opener.getTheme === 'function') {
+                    const parentTheme = window.opener.getTheme();
+                    return parentTheme;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ Error accessing main page theme:', e);
+            }
+            return null;
+        }
+        
+        function getTheme() {
+            const urlTheme = getThemeFromURL();
+            if (urlTheme) {
+                return urlTheme;
+            }
+            
+            const mainPageTheme = getThemeFromMainPage();
+            if (mainPageTheme) {
+                return mainPageTheme;
+            }
+            
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ localStorage not accessible:', e);
+            }
+            
+            return 'light';
+        }
+        
+        function setTheme(theme) {
+            if (theme !== 'dark' && theme !== 'light') {
+                console.error('Project page - ❌ INVALID THEME:', theme);
+                return;
+            }
+            
+            document.documentElement.classList.remove('dark-theme', 'light-theme');
+            document.documentElement.classList.add(theme + '-theme');
+            
+            if (document.body) {
+                document.body.classList.remove('dark-theme', 'light-theme');
+                document.body.classList.add(theme + '-theme');
+            }
+            
+            const currentURL = new URL(window.location);
+            const currentURLTheme = currentURL.searchParams.get('theme');
+            
+            if (currentURLTheme !== theme) {
+                currentURL.searchParams.set('theme', theme);
+                window.history.replaceState({}, '', currentURL);
+            }
+        }
+        
+        const initialTheme = getTheme();
+        setTheme(initialTheme);
+        
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cv-website-theme' && (e.newValue === 'dark' || e.newValue === 'light')) {
+                setTheme(e.newValue);
+            }
+        });
+        
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'theme-change' && (e.data.theme === 'dark' || e.data.theme === 'light')) {
+                setTheme(e.data.theme);
+            }
+        });
+        
+        let lastTheme = initialTheme;
+        let pollCount = 0;
+        const checkInterval = setInterval(function() {
+            pollCount++;
+            
+            const currentTheme = getTheme();
+            if (currentTheme !== lastTheme) {
+                setTheme(currentTheme);
+                lastTheme = currentTheme;
+            }
+        }, 2000);
+        
+        setTimeout(function() {
+            clearInterval(checkInterval);
+        }, 30000);
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="header-info">
+                    <h1>STEPHAN <span>GEISSER</span></h1>
+                    <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#experience">Experience</a></li>
+                    <li><a href="index.html#education">Education</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-toggle">
+                <button id="nav-toggle-btn" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="project-detail">
+            <div class="container">
+                <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
+                <h1 class="project-title">Probabilistic Artificial Intelligence Course Projects</h1>
+                <p class="project-subtitle">Bayesian Methods & Uncertainty Quantification | ETH Zurich</p>
+                
+                <div class="project-tags">
+                    <span>Gaussian Processes</span>
+                    <span>Bayesian Neural Networks</span>
+                    <span>Bayesian Optimization</span>
+                    <span>Reinforcement Learning</span>
+                    <span>Uncertainty Quantification</span>
+                    <span>SWAG</span>
+                    <span>Drug Discovery</span>
+                    <span>Control Systems</span>
+                    <span>Probabilistic Modeling</span>
+                </div>
+
+                <div class="project-description">
+                    <div class="project-section">
+                        <h2>Course Overview</h2>
+                        <p>This Probabilistic Artificial Intelligence course at ETH Zurich provided comprehensive training in Bayesian machine learning methods and uncertainty quantification. The course emphasized the importance of probabilistic thinking in AI applications, covering fundamental concepts from Gaussian Processes to modern Bayesian deep learning techniques.</p>
+                        
+                        <p>Each project addressed real-world challenges where uncertainty quantification is crucial: environmental monitoring, medical imaging, drug discovery, and control systems. The coursework emphasized both theoretical understanding and practical implementation of state-of-the-art probabilistic AI methods.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fas fa-chart-area"></i>
+                                <span>Gaussian Processes</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-brain"></i>
+                                <span>Bayesian Neural Networks</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-search"></i>
+                                <span>Bayesian Optimization</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-python"></i>
+                                <span>PyTorch</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-robot"></i>
+                                <span>Reinforcement Learning</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-satellite"></i>
+                                <span>Remote Sensing</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-pills"></i>
+                                <span>Drug Discovery</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Control Systems</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Project 1: Pollution Concentration Prediction with Gaussian Processes</h3>
+                        <p>Implemented Gaussian Process Regression for predicting PM2.5 pollution concentrations with spatial uncertainty quantification. This project addressed the critical challenge of environmental monitoring with limited sensor data and incorporated city-area constraints for realistic policy applications.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Spatial Gaussian Processes:</strong> Developed GP models for 2D spatial prediction using Matérn and RBF kernels with optimized hyperparameters</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Constrained Optimization:</strong> Implemented city-area constraints where underprediction in urban zones incurs higher costs, reflecting real-world policy implications</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Kernel Design:</strong> Experimented with multiple kernel types (Matérn ν=2.5, RBF, White noise) and automatic hyperparameter optimization using multiple restarts</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Uncertainty-Aware Predictions:</strong> Leveraged GP posterior variance to make risk-aware predictions, adding standard deviation factors in high-risk city areas</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Cost Function Optimization:</strong> Designed asymmetric cost functions penalizing underprediction (cost=3) vs. overprediction (cost=1) in city areas</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>3D Visualization:</strong> Created comprehensive 3D surface plots combining training data, predictions, and uncertainty estimates for model interpretation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Project 2: Bayesian Neural Networks for Satellite Image Classification</h3>
+                        <p>Implemented SWAG (SWA-Gaussian) for uncertainty-aware land-use classification from satellite imagery. This project addressed the critical need for calibrated uncertainty estimates in Earth observation applications where ambiguous samples require careful handling.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>SWAG Implementation:</strong> Developed both SWAG-Diagonal and full SWAG for approximate Bayesian inference in neural networks, building on Stochastic Weight Averaging</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Satellite Image Processing:</strong> Processed 60×60 RGB satellite images for 6-class land usage classification (forests, water bodies, urban areas, agriculture, etc.)</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Uncertainty Calibration:</strong> Implemented Expected Calibration Error (ECE) measurement with 20 bins to ensure model confidence matches actual accuracy</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Ambiguous Sample Detection:</strong> Developed methods to identify and handle ambiguous samples (mixed land usage, seasonal variations, cloud cover) using confidence thresholds</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Cost-Sensitive Learning:</strong> Optimized prediction strategies balancing "don't know" responses (cost=1) against incorrect classification (cost=3)</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Model Averaging:</strong> Implemented Bayesian model averaging over multiple posterior samples for robust predictions with quantified uncertainty</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Project 3: Constrained Bayesian Optimization for Drug Discovery</h3>
+                        <p>Developed safe Bayesian optimization algorithms for drug candidate development, optimizing bioavailability (logP) while respecting synthetic accessibility constraints. This project addressed real challenges in pharmaceutical research where safety constraints are paramount.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Safe Bayesian Optimization:</strong> Implemented constrained BO ensuring synthetic accessibility (SA < 4.0) while maximizing bioavailability (logP)</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Multi-Objective Gaussian Processes:</strong> Developed separate GP models for objective function (Matérn kernel) and constraint function (additive Linear + Matérn kernels)</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Acquisition Function Design:</strong> Implemented acquisition functions respecting feasibility constraints and balancing exploration-exploitation in safe regions</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Lagrangian Relaxation:</strong> Applied constrained optimization techniques using penalty methods: max f(x) - λ max(v(x), 0)</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Hyperparameter Optimization:</strong> Automated kernel parameter tuning for both objective and constraint functions using maximum likelihood estimation</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Drug Design Applications:</strong> Demonstrated practical relevance for pharmaceutical research with realistic molecular property constraints</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Project 4: Off-Policy Reinforcement Learning for Control</h3>
+                        <p>Implemented off-policy RL algorithms for inverted pendulum control, learning swing-up policies from simulation data. This project demonstrated modern RL techniques for continuous control problems with safety considerations.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Off-Policy Learning:</strong> Developed algorithms that learn optimal policies from previously collected data without online interaction during training</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Pendulum Control:</strong> Solved the classic inverted pendulum swing-up problem (from π to 0 angle) requiring precise control and timing</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Continuous Action Spaces:</strong> Handled continuous torque control rather than discrete actions, requiring advanced policy representation</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Sample Efficiency:</strong> Optimized learning from limited simulation data, crucial for real-world applications where data collection is expensive</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Policy Evaluation:</strong> Implemented robust policy evaluation methods for assessing control performance in simulation environments</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Control Theory Integration:</strong> Combined RL with classical control theory principles for stable and effective pendulum manipulation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Probabilistic Methods & Innovations</h3>
+                        <p>The course projects showcased cutting-edge probabilistic AI techniques:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Bayesian inference for neural network weight posteriors using SWAG</li>
+                            <li><span class="skill-bullet"></span> Multi-output Gaussian Processes with specialized kernel design</li>
+                            <li><span class="skill-bullet"></span> Uncertainty-aware decision making under constraints</li>
+                            <li><span class="skill-bullet"></span> Expected Calibration Error for model reliability assessment</li>
+                            <li><span class="skill-bullet"></span> Safe exploration in Bayesian optimization</li>
+                            <li><span class="skill-bullet"></span> Off-policy learning with importance sampling corrections</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Research Methodology</h3>
+                        <p>Each project followed rigorous probabilistic methodology:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Bayesian Experimental Design:</strong> Proper prior specification, likelihood modeling, and posterior inference for all probabilistic models</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Uncertainty Quantification:</strong> Systematic evaluation of model uncertainty, calibration assessment, and confidence interval validation</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Hyperparameter Optimization:</strong> Evidence-based model selection using marginal likelihood and cross-validation techniques</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Constraint Handling:</strong> Principled approaches to incorporating domain constraints through penalty methods and safe optimization</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Key Results & Achievements</h3>
+                        <p>The probabilistic AI projects demonstrated significant advances in uncertainty-aware machine learning:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Gaussian Process Mastery:</strong> Achieved optimal performance in spatial prediction tasks with proper uncertainty quantification</li>
+                            <li><span class="skill-bullet"></span> <strong>Bayesian Deep Learning:</strong> Successfully implemented SWAG for calibrated uncertainty in image classification</li>
+                            <li><span class="skill-bullet"></span> <strong>Safe Optimization:</strong> Developed constraint-aware Bayesian optimization exceeding baseline performance (>0.6 normalized regret)</li>
+                            <li><span class="skill-bullet"></span> <strong>Control Applications:</strong> Demonstrated effective off-policy RL for continuous control problems</li>
+                            <li><span class="skill-bullet"></span> <strong>Practical Impact:</strong> Applied probabilistic methods to real-world problems in environmental monitoring, Earth observation, drug discovery, and robotics</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Skills Demonstrated</h3>
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Bayesian Machine Learning:</strong> Gaussian Processes, Bayesian neural networks, posterior inference, and model averaging techniques</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Optimization Theory:</strong> Bayesian optimization, acquisition functions, constrained optimization, and safe exploration strategies</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Uncertainty Quantification:</strong> Calibration assessment, Expected Calibration Error, confidence intervals, and risk-aware decision making</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Reinforcement Learning:</strong> Off-policy methods, continuous control, policy evaluation, and sample-efficient learning</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Domain Applications:</strong> Environmental science, Earth observation, pharmaceutical research, and control engineering</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Impact & Real-World Applications</h3>
+                        <p>These projects provided hands-on experience with probabilistic AI methods crucial for high-stakes applications:</p>
+                        
+                        <p><strong>Environmental Monitoring:</strong> Uncertainty-aware pollution prediction for policy decisions with asymmetric costs. <strong>Earth Observation:</strong> Calibrated satellite image analysis for land-use monitoring and climate change research. <strong>Drug Discovery:</strong> Safe optimization for pharmaceutical research with synthesis constraints. <strong>Robotics & Control:</strong> Sample-efficient learning for autonomous systems and industrial control.</p>
+                        
+                        <p>The comprehensive probabilistic toolkit developed through these projects is directly applicable to modern AI challenges requiring trustworthy, uncertainty-aware decision making in critical domains such as healthcare, environmental science, and autonomous systems.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile navigation toggle
+        const navToggleBtn = document.getElementById('nav-toggle-btn');
+        const navElement = document.querySelector('nav');
+
+        navToggleBtn.addEventListener('click', () => {
+            navElement.classList.toggle('active');
+            navToggleBtn.classList.toggle('active');
+        });
+        
+        // Final theme check after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const theme = getTheme();
+            setTheme(theme);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data-Driven Drone Velocity Estimation | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Check URL parameters for theme (backup method)
+        function getThemeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlTheme = urlParams.get('theme');
+            if (urlTheme === 'dark' || urlTheme === 'light') {
+                return urlTheme;
+            }
+            return null;
+        }
+        
+        // NEW: Try to get theme from main page if it's still open
+        function getThemeFromMainPage() {
+            try {
+                // Try to read localStorage (might work in some cases)
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+                
+                // Try accessing window.opener if opened in new tab
+                if (window.opener && window.opener.getTheme && typeof window.opener.getTheme === 'function') {
+                    const parentTheme = window.opener.getTheme();
+                    return parentTheme;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ Error accessing main page theme:', e);
+            }
+            return null;
+        }
+        
+        // Improved theme reader for project pages
+        function getTheme() {
+            
+            // First, try URL parameter (most reliable for file:// protocol)
+            const urlTheme = getThemeFromURL();
+            if (urlTheme) {
+                return urlTheme;
+            }
+            
+            // Then try to get current theme from main page
+            const mainPageTheme = getThemeFromMainPage();
+            if (mainPageTheme) {
+                return mainPageTheme;
+            }
+            
+            // Try localStorage directly (works for web servers)
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ localStorage not accessible:', e);
+            }
+            
+            // Default to light theme
+            return 'light';
+        }
+        
+        function setTheme(theme) {
+            if (theme !== 'dark' && theme !== 'light') {
+                console.error('Project page - ❌ INVALID THEME:', theme);
+                return;
+            }
+            
+            // Always apply to documentElement (this always exists)
+            document.documentElement.classList.remove('dark-theme', 'light-theme');
+            document.documentElement.classList.add(theme + '-theme');
+            
+            // Only apply to body if it exists
+            if (document.body) {
+                document.body.classList.remove('dark-theme', 'light-theme');
+                document.body.classList.add(theme + '-theme');
+            }
+            
+            // Update URL parameter to match current theme (for future refreshes)
+            const currentURL = new URL(window.location);
+            const currentURLTheme = currentURL.searchParams.get('theme');
+            
+            if (currentURLTheme !== theme) {
+                currentURL.searchParams.set('theme', theme);
+                window.history.replaceState({}, '', currentURL);
+            }
+        }
+        
+        // Apply theme immediately to documentElement only
+        const initialTheme = getTheme();
+        setTheme(initialTheme);
+        
+        // Listen for theme changes from main page via localStorage
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cv-website-theme' && (e.newValue === 'dark' || e.newValue === 'light')) {
+                setTheme(e.newValue);
+            }
+        });
+        
+        // Listen for messages from parent window (postMessage API)
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'theme-change' && (e.data.theme === 'dark' || e.data.theme === 'light')) {
+                setTheme(e.data.theme);
+            }
+        });
+        
+        // Enhanced polling that checks main page theme first
+        let lastTheme = initialTheme;
+        let pollCount = 0;
+        const checkInterval = setInterval(function() {
+            pollCount++;
+            
+            const currentTheme = getTheme();
+            if (currentTheme !== lastTheme) {
+                setTheme(currentTheme);
+                lastTheme = currentTheme;
+            }
+        }, 2000); // Check every 2 seconds
+        
+        // Stop polling after 30 seconds to prevent infinite loops
+        setTimeout(function() {
+            clearInterval(checkInterval);
+        }, 30000);
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="header-info">
+                    <h1>STEPHAN <span>GEISSER</span></h1>
+                    <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
+                </div>
+                <!-- NO THEME TOGGLE ON PROJECT PAGES -->
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#experience">Experience</a></li>
+                    <li><a href="index.html#education">Education</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-toggle">
+                <button id="nav-toggle-btn" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="project-detail">
+            <div class="container">
+                <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
+                <h1 class="project-title">Data-Driven Drone Velocity Estimation</h1>
+                <p class="project-subtitle">Advanced Radar-Inertial Odometry | Autonomous Systems Lab, ETH Zurich</p>
+                
+                <div class="project-tags">
+                    <span>Radar Processing</span>
+                    <span>Sensor Fusion</span>
+                    <span>Deep Learning</span>
+                    <span>Drone Navigation</span>
+                    <span>CNN</span>
+                    <span>GRU</span>
+                    <span>PyTorch</span>
+                    <span>State Estimation</span>
+                </div>
+
+                <div class="project-description">
+                    <div class="project-section">
+                        <h2>Project Overview</h2>
+                        <p>This extensive research project spanned two phases over nearly a full academic year at ETH Zurich's Autonomous Systems Lab. The work addressed the critical challenge of robust velocity estimation for aerial robots using lightweight, cost-effective radar sensors. The project progressed from radar-only approaches to advanced sensor fusion techniques, demonstrating significant improvements in odometry accuracy for UAV applications.</p>
+                        
+                        <p>The research was motivated by the limitations of traditional odometry methods in confined environments where GNSS signals are unavailable and visual features are sparse. Radar technology offers unique advantages including robustness in visually degraded conditions and direct Doppler velocity measurements without requiring environmental features.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fas fa-satellite-dish"></i>
+                                <span>Radar Processing</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-brain"></i>
+                                <span>Deep Learning</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-microchip"></i>
+                                <span>Sensor Fusion</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-python"></i>
+                                <span>PyTorch</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>State Estimation</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-drone"></i>
+                                <span>UAV Systems</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Signal Processing</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-project-diagram"></i>
+                                <span>Neural Networks</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Phase 1: Radar-Only Velocity Estimation</h3>
+                        <p>The initial phase focused on developing robust velocity estimation using only radar data from the TI-AWR1843AOPEVM sensor. This phase was conducted as part of the "Perception and Learning for Robotics" course in collaboration with Max Greiner.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Sparse Data Challenge:</strong> Developed techniques to handle extremely sparse radar data with only 6-9 data points per scan on average, significantly less than typical radar applications</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>CNN Architecture:</strong> Designed a custom convolutional neural network to process multi-channel radar images containing Doppler velocity, range, and spatial position information</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Temporal Dependencies:</strong> Implemented Gated Recurrent Units (GRU) to capture temporal relationships in radar measurements and improve prediction robustness</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Data Preprocessing:</strong> Developed sophisticated preprocessing pipelines to transform spherical radar coordinates into structured 4-channel images suitable for deep learning</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Noise Handling:</strong> Addressed highly non-Gaussian noise patterns typical of low-cost radar sensors through data augmentation and robust training techniques</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Phase 2: Advanced Sensor Fusion</h3>
+                        <p>The second phase, conducted as a semester thesis, focused on enhancing performance through intelligent fusion of radar and IMU data using advanced machine learning architectures.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>FusionNN Architecture:</strong> Developed a comprehensive fusion model combining separate radar and IMU encoders with a sophisticated fusion layer for optimal information integration</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Multi-Modal Processing:</strong> Implemented separate neural network branches for radar (CNN-based) and IMU (RNN-based) data processing, each optimized for their respective sensor characteristics</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Temporal Sensor Fusion:</strong> Designed GRU-based fusion layers to capture temporal dependencies across multiple sensor modalities and improve prediction stability</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Low-Velocity Optimization:</strong> Specialized the system for very low velocity scenarios (below 0.3 m/s) critical for precise aerial manipulation tasks</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Comparative Analysis:</strong> Conducted thorough evaluation against state-of-the-art Radio Inertial Odometry (RIO) methods using real-world flight data</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Innovations</h3>
+                        <p>The project introduced several novel approaches to address the unique challenges of radar-based UAV odometry:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Multi-channel radar image representation for CNN processing</li>
+                            <li><span class="skill-bullet"></span> Encoder-decoder architectures for robust feature extraction</li>
+                            <li><span class="skill-bullet"></span> Temporal gating mechanisms for handling missing radar data</li>
+                            <li><span class="skill-bullet"></span> Coordinate transformation pipelines for sensor alignment</li>
+                            <li><span class="skill-bullet"></span> Advanced loss functions optimized for low-velocity scenarios</li>
+                            <li><span class="skill-bullet"></span> Drift-aware evaluation metrics for odometry assessment</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Research Methodology</h3>
+                        <p>The project employed rigorous experimental methodology combining simulation and real-world validation:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Dataset Collection:</strong> Gathered real-world flight data using hexacopter platforms equipped with TI-AWR1843AOPEVM radar sensors and high-precision IMU systems</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Ground Truth Estimation:</strong> Implemented Modular Sensor Fusion (MSF) framework using Leica total station measurements for accurate velocity ground truth</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Evaluation Metrics:</strong> Developed comprehensive evaluation criteria including accuracy metrics, drift analysis, and robustness assessments</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Comparative Studies:</strong> Systematic comparison against established methods including Radio Inertial Odometry and traditional least squares approaches</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Key Results & Achievements</h3>
+                        <p>The research demonstrated significant advances in radar-based UAV odometry:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Performance Parity:</strong> Achieved similar performance to state-of-the-art RIO methods at very low velocities (0-0.15 m/s)</li>
+                            <li><span class="skill-bullet"></span> <strong>Robustness Improvement:</strong> Demonstrated superior robustness to outliers compared to traditional least squares approaches</li>
+                            <li><span class="skill-bullet"></span> <strong>Fusion Benefits:</strong> Showed clear performance improvements when fusing radar and IMU data versus radar-only approaches</li>
+                            <li><span class="skill-bullet"></span> <strong>Temporal Stability:</strong> Reduced standard deviation in velocity estimates through temporal modeling</li>
+                            <li><span class="skill-bullet"></span> <strong>Data Efficiency:</strong> Achieved reliable performance with extremely sparse radar data</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Skills Demonstrated</h3>
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Deep Learning:</strong> Advanced PyTorch implementation, CNN and RNN architectures, custom loss functions, and training optimization</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Signal Processing:</strong> Radar data preprocessing, coordinate transformations, sensor calibration, and noise characterization</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Sensor Fusion:</strong> Multi-modal data integration, temporal alignment, and state estimation techniques</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Research Methodology:</strong> Experimental design, statistical analysis, performance evaluation, and scientific documentation</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Systems Engineering:</strong> Hardware-software integration, real-time processing, and embedded system optimization</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Impact & Future Work</h3>
+                        <p>This research contributed to the advancement of radar-based navigation systems for UAVs and established a foundation for future developments in sensor fusion techniques. The work demonstrated the feasibility of using lightweight radar sensors for precise velocity estimation in challenging environments.</p>
+                        
+                        <p>The project outcomes have implications for autonomous aerial manipulation, indoor navigation, and emergency response scenarios where traditional GPS-based systems are unavailable. The developed techniques are particularly valuable for applications requiring precise low-velocity control in confined spaces.</p>
+                    </div>
+                    
+                    <div class="project-section acknowledgments">
+                        <h3>Acknowledgments</h3>
+                        <p>Special thanks to <strong>Max Greiner</strong> for his excellent collaboration during the first phase of the project. Max's contributions to the radar data preprocessing pipeline and CNN architecture development were crucial for establishing the foundation of our radar-only approach.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile navigation toggle
+        const navToggleBtn = document.getElementById('nav-toggle-btn');
+        const navElement = document.querySelector('nav');
+
+        navToggleBtn.addEventListener('click', () => {
+            navElement.classList.toggle('active');
+            navToggleBtn.classList.toggle('active');
+        });
+        
+        // Final theme check after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const theme = getTheme();
+            setTheme(theme);
+        });
+    </script>
+</body>
+</html>

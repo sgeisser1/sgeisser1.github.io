@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated HS Code Classification | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Check URL parameters for theme (backup method)
+        function getThemeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlTheme = urlParams.get('theme');
+            if (urlTheme === 'dark' || urlTheme === 'light') {
+                return urlTheme;
+            }
+            return null;
+        }
+        
+        // NEW: Try to get theme from main page if it's still open
+        function getThemeFromMainPage() {
+            try {
+                // Try to read localStorage (might work in some cases)
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+                
+                // Try accessing window.opener if opened in new tab
+                if (window.opener && window.opener.getTheme && typeof window.opener.getTheme === 'function') {
+                    const parentTheme = window.opener.getTheme();
+                    return parentTheme;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ Error accessing main page theme:', e);
+            }
+            return null;
+        }
+        
+        // Improved theme reader for project pages
+        function getTheme() {
+            
+            // First, try URL parameter (most reliable for file:// protocol)
+            const urlTheme = getThemeFromURL();
+            if (urlTheme) {
+                return urlTheme;
+            }
+            
+            // Then try to get current theme from main page
+            const mainPageTheme = getThemeFromMainPage();
+            if (mainPageTheme) {
+                return mainPageTheme;
+            }
+            
+            // Try localStorage directly (works for web servers)
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ localStorage not accessible:', e);
+            }
+            
+            // Default to light theme
+            return 'light';
+        }
+        
+        function setTheme(theme) {
+            if (theme !== 'dark' && theme !== 'light') {
+                console.error('Project page - ❌ INVALID THEME:', theme);
+                return;
+            }
+            
+            // Always apply to documentElement (this always exists)
+            document.documentElement.classList.remove('dark-theme', 'light-theme');
+            document.documentElement.classList.add(theme + '-theme');
+            
+            // Only apply to body if it exists
+            if (document.body) {
+                document.body.classList.remove('dark-theme', 'light-theme');
+                document.body.classList.add(theme + '-theme');
+            }
+            
+            // Update URL parameter to match current theme (for future refreshes)
+            const currentURL = new URL(window.location);
+            const currentURLTheme = currentURL.searchParams.get('theme');
+            
+            if (currentURLTheme !== theme) {
+                currentURL.searchParams.set('theme', theme);
+                window.history.replaceState({}, '', currentURL);
+            }
+        }
+        
+        // Apply theme immediately to documentElement only
+        const initialTheme = getTheme();
+        setTheme(initialTheme);
+        
+        // Listen for theme changes from main page via localStorage
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cv-website-theme' && (e.newValue === 'dark' || e.newValue === 'light')) {
+                setTheme(e.newValue);
+            }
+        });
+        
+        // Listen for messages from parent window (postMessage API)
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'theme-change' && (e.data.theme === 'dark' || e.data.theme === 'light')) {
+                setTheme(e.data.theme);
+            }
+        });
+        
+        // Enhanced polling that checks main page theme first
+        let lastTheme = initialTheme;
+        let pollCount = 0;
+        const checkInterval = setInterval(function() {
+            pollCount++;
+            
+            const currentTheme = getTheme();
+            if (currentTheme !== lastTheme) {
+                setTheme(currentTheme);
+                lastTheme = currentTheme;
+            }
+        }, 2000); // Check every 2 seconds
+        
+        // Stop polling after 30 seconds to prevent infinite loops
+        setTimeout(function() {
+            clearInterval(checkInterval);
+        }, 30000);
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="header-info">
+                    <h1>STEPHAN <span>GEISSER</span></h1>
+                    <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
+                </div>
+                <!-- NO THEME TOGGLE ON PROJECT PAGES -->
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#experience">Experience</a></li>
+                    <li><a href="index.html#education">Education</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-toggle">
+                <button id="nav-toggle-btn" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="project-detail">
+            <div class="container">
+                <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
+                <h1 class="project-title">Automated HS Code Classification System</h1>
+                <p class="project-subtitle">Enterprise AI Solution for Trade Compliance | 10,000+ Parts Monthly</p>
+                
+                <div class="project-tags">
+                    <span>Large Language Models</span>
+                    <span>Text Classification</span>
+                    <span>Azure ML</span>
+                    <span>Multi-Agent Systems</span>
+                    <span>HuggingFace</span>
+                    <span>LangChain</span>
+                    <span>Trade Compliance</span>
+                    <span>Enterprise AI</span>
+                </div>
+
+                <div class="project-description">
+                    <div class="project-section">
+                        <h2>Project Overview</h2>
+                        <p>This enterprise-scale project developed an automated classification system for harmonized system (HS) codes, transforming a largely manual process into an AI-driven solution capable of processing over 10,000 machine parts monthly. The system addresses critical trade compliance requirements while significantly reducing manual workload and improving classification consistency.</p>
+                        
+                        <p>The project involved comprehensive analysis and testing of multiple AI approaches, from traditional machine learning to cutting-edge large language models, all implemented within a secure enterprise environment using Azure services to ensure data protection and compliance with corporate security policies.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fas fa-brain"></i>
+                                <span>Large Language Models</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cloud"></i>
+                                <span>Azure ML Services</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-robot"></i>
+                                <span>Multi-Agent Systems</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-project-diagram"></i>
+                                <span>HuggingFace Transformers</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-link"></i>
+                                <span>LangChain</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-python"></i>
+                                <span>PyTorch</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Enterprise Security</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-balance-scale"></i>
+                                <span>Trade Compliance</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Business Challenge</h3>
+                        <p>The manual classification of machine parts into country-specific HS codes presented significant challenges for the organization:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Processing volume of 10,000+ parts monthly requiring expert classification</li>
+                            <li><span class="skill-bullet"></span> High manual workload leading to bottlenecks and inconsistent classifications</li>
+                            <li><span class="skill-bullet"></span> Risk of misclassification resulting in customs penalties and compliance issues</li>
+                            <li><span class="skill-bullet"></span> Need for explainable decisions to justify classifications to customs authorities</li>
+                            <li><span class="skill-bullet"></span> Requirement to adapt quickly to changing trade regulations and classification schemes</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Multiple AI Approach Analysis</h3>
+                        <p>The project systematically evaluated different AI methodologies to identify optimal solutions for enterprise HS code classification:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Traditional ML Classification:</strong> Developed classical machine learning models using text embedding techniques, trained on publicly available data and fine-tuned on company-specific datasets to incorporate domain expertise</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Large Language Models:</strong> Implemented both simple and reasoning-capable LLMs to leverage their broad knowledge of trade classifications and natural language understanding capabilities</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Multi-Agent Systems:</strong> Designed sophisticated agent-based architectures with custom tools to handle complex classification scenarios and provide comprehensive analysis workflows</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Hybrid Approaches:</strong> Explored combinations of different methodologies to leverage the strengths of each approach while mitigating individual weaknesses</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Implementation</h3>
+                        <p>The system was built with enterprise-grade requirements including security, scalability, and integration capabilities:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Azure Cloud Infrastructure:</strong> Leveraged Azure ML Services for secure model deployment, ensuring data privacy and compliance with corporate security policies</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>HuggingFace Integration:</strong> Utilized Transformers library for state-of-the-art text embedding models and pre-trained language models optimized for classification tasks</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>LangChain Framework:</strong> Implemented sophisticated prompt engineering and chain-of-thought reasoning for LLM-based classification approaches</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Custom Tool Development:</strong> Created specialized tools and agents for accessing classification databases, validation workflows, and decision reasoning</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Data Security Architecture:</strong> Designed secure data pipelines ensuring sensitive company information remains within trusted enterprise boundaries</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Comparative Analysis Results</h3>
+                        <p>Each approach demonstrated distinct advantages and trade-offs for enterprise deployment:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Traditional ML Advantages:</strong> Superior accuracy on company-specific parts, significantly faster processing times, lower computational costs, and efficient integration of domain knowledge through fine-tuning</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Traditional ML Limitations:</strong> Difficulty adapting to regulatory changes, requirement for retraining when classification schemes evolve, and limited explainability of decision-making process</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>LLM Advantages:</strong> Automatic adaptation to updated classification schemes, excellent explainability with detailed reasoning, and robust handling of novel part descriptions without retraining</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>LLM Limitations:</strong> Lower accuracy on company-specific parts, higher computational costs, increased latency for processing, and dependency on external model updates</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Enterprise Insights & Challenges</h3>
+                        <p>The project provided valuable insights into enterprise AI deployment challenges and organizational dynamics:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Data Security Constraints:</strong> Navigated complex enterprise security requirements ensuring sensitive data handling within approved cloud environments</li>
+                            <li><span class="skill-bullet"></span> <strong>Organizational Dynamics:</strong> Experienced typical large corporation decision-making processes and change management challenges</li>
+                            <li><span class="skill-bullet"></span> <strong>Compliance Requirements:</strong> Balanced AI automation benefits with regulatory compliance and audit trail requirements</li>
+                            <li><span class="skill-bullet"></span> <strong>Stakeholder Management:</strong> Coordinated with multiple departments including legal, compliance, IT security, and operations teams</li>
+                            <li><span class="skill-bullet"></span> <strong>Technology Integration:</strong> Addressed enterprise system integration challenges and legacy system compatibility</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Skills Demonstrated</h3>
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Advanced NLP:</strong> Text embedding techniques, transformer architectures, prompt engineering, and multi-modal language model applications</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Cloud Computing:</strong> Azure ML Services, secure cloud deployments, enterprise identity management, and scalable infrastructure design</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>MLOps:</strong> Model versioning, automated deployment pipelines, performance monitoring, and production-ready ML system development</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Enterprise AI:</strong> Security-first AI development, compliance considerations, stakeholder management, and large-scale system integration</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Research & Analysis:</strong> Comparative methodology evaluation, performance benchmarking, and technical feasibility assessment</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Business Impact & Value</h3>
+                        <p>The automated HS code classification system delivers significant value across multiple dimensions:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Operational Efficiency:</strong> Potential for 80%+ reduction in manual classification workload</li>
+                            <li><span class="skill-bullet"></span> <strong>Consistency Improvement:</strong> Standardized classification approach reducing human error and variability</li>
+                            <li><span class="skill-bullet"></span> <strong>Compliance Enhancement:</strong> Built-in reasoning capabilities for audit trails and customs authority justification</li>
+                            <li><span class="skill-bullet"></span> <strong>Scalability:</strong> System designed to handle volume growth and international expansion</li>
+                            <li><span class="skill-bullet"></span> <strong>Risk Mitigation:</strong> Reduced misclassification risks and associated financial penalties</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Key Learnings & Insights</h3>
+                        <p>This project provided invaluable experience in enterprise AI development and deployment, highlighting the importance of balancing technical capabilities with business requirements, security constraints, and organizational readiness. The comprehensive comparison of different AI approaches demonstrated that optimal solutions often require thoughtful trade-offs between accuracy, explainability, cost, and adaptability.</p>
+                        
+                        <p>The experience underscored the critical importance of explainable AI in regulated industries, where the ability to justify automated decisions is as important as the accuracy of those decisions. This project successfully bridges the gap between cutting-edge AI research and practical enterprise applications in trade compliance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile navigation toggle
+        const navToggleBtn = document.getElementById('nav-toggle-btn');
+        const navElement = document.querySelector('nav');
+
+        navToggleBtn.addEventListener('click', () => {
+            navElement.classList.toggle('active');
+            navToggleBtn.classList.toggle('active');
+        });
+        
+        // Final theme check after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const theme = getTheme();
+            setTheme(theme);
+        });
+    </script>
+</body>
+</html>

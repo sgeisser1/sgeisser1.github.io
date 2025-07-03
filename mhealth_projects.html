@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Health and Activity Monitoring Course Projects | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Theme management (same as other pages)
+        function getThemeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlTheme = urlParams.get('theme');
+            if (urlTheme === 'dark' || urlTheme === 'light') {
+                return urlTheme;
+            }
+            return null;
+        }
+        
+        function getThemeFromMainPage() {
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+                
+                if (window.opener && window.opener.getTheme && typeof window.opener.getTheme === 'function') {
+                    const parentTheme = window.opener.getTheme();
+                    return parentTheme;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ Error accessing main page theme:', e);
+            }
+            return null;
+        }
+        
+        function getTheme() {
+            const urlTheme = getThemeFromURL();
+            if (urlTheme) {
+                return urlTheme;
+            }
+            
+            const mainPageTheme = getThemeFromMainPage();
+            if (mainPageTheme) {
+                return mainPageTheme;
+            }
+            
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ localStorage not accessible:', e);
+            }
+            
+            return 'light';
+        }
+        
+        function setTheme(theme) {
+            if (theme !== 'dark' && theme !== 'light') {
+                console.error('Project page - ❌ INVALID THEME:', theme);
+                return;
+            }
+            
+            document.documentElement.classList.remove('dark-theme', 'light-theme');
+            document.documentElement.classList.add(theme + '-theme');
+            
+            if (document.body) {
+                document.body.classList.remove('dark-theme', 'light-theme');
+                document.body.classList.add(theme + '-theme');
+            }
+            
+            const currentURL = new URL(window.location);
+            const currentURLTheme = currentURL.searchParams.get('theme');
+            
+            if (currentURLTheme !== theme) {
+                currentURL.searchParams.set('theme', theme);
+                window.history.replaceState({}, '', currentURL);
+            }
+        }
+        
+        const initialTheme = getTheme();
+        setTheme(initialTheme);
+        
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cv-website-theme' && (e.newValue === 'dark' || e.newValue === 'light')) {
+                setTheme(e.newValue);
+            }
+        });
+        
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'theme-change' && (e.data.theme === 'dark' || e.data.theme === 'light')) {
+                setTheme(e.data.theme);
+            }
+        });
+        
+        let lastTheme = initialTheme;
+        let pollCount = 0;
+        const checkInterval = setInterval(function() {
+            pollCount++;
+            
+            const currentTheme = getTheme();
+            if (currentTheme !== lastTheme) {
+                setTheme(currentTheme);
+                lastTheme = currentTheme;
+            }
+        }, 2000);
+        
+        setTimeout(function() {
+            clearInterval(checkInterval);
+        }, 30000);
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="header-info">
+                    <h1>STEPHAN <span>GEISSER</span></h1>
+                    <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#experience">Experience</a></li>
+                    <li><a href="index.html#education">Education</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-toggle">
+                <button id="nav-toggle-btn" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="project-detail">
+            <div class="container">
+                <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
+                <h1 class="project-title">Mobile Health and Activity Monitoring Course Projects</h1>
+                <p class="project-subtitle">Wearable Technology & Biomedical Signal Processing | ETH Zurich</p>
+                
+                <div class="project-tags">
+                    <span>Mobile Health</span>
+                    <span>Wearable Technology</span>
+                    <span>Signal Processing</span>
+                    <span>PPG Analysis</span>
+                    <span>Activity Recognition</span>
+                    <span>Machine Learning</span>
+                    <span>Step Counting</span>
+                    <span>Heart Rate Monitoring</span>
+                    <span>Sensor Fusion</span>
+                    <span>Real-time Processing</span>
+                </div>
+
+                <div class="project-description">
+                    <div class="project-section">
+                        <h2>Course Overview</h2>
+                        <p>This cutting-edge mobile health course focused on developing algorithms for wearable technology applications, particularly in the realm of health monitoring and activity recognition. Through two comprehensive exercises, I implemented advanced signal processing and machine learning techniques for real-world mobile health scenarios that directly parallel commercial smartwatch and fitness tracker technologies.</p>
+                        
+                        <p>The course emphasized practical implementation of algorithms that power modern wearable devices, covering the complete pipeline from raw sensor data acquisition to actionable health insights. Each project addressed real challenges faced by companies like Apple, Samsung, Polar, and Garmin in their wearable product development.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fas fa-heartbeat"></i>
+                                <span>PPG Processing</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-wave-square"></i>
+                                <span>Signal Processing</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-running"></i>
+                                <span>Activity Recognition</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-microchip"></i>
+                                <span>Sensor Fusion</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-python"></i>
+                                <span>Python/SciPy</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-brain"></i>
+                                <span>Machine Learning</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Wearable Tech</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Real-time Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Exercise 1: Advanced Heart Rate Estimation from PPG Signals</h3>
+                        <p>Developed robust heart rate monitoring algorithms using photoplethysmography (PPG) signals from wearable devices, addressing the core challenge of accurate HR estimation in noisy, real-world conditions.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>PPG Signal Processing:</strong> Implemented advanced filtering and preprocessing techniques for raw PPG signals from forehead and wrist sensors, handling 19-bit unsigned integer data at 128 Hz sampling rate</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Noise Robust Algorithms:</strong> Developed algorithms resilient to motion artifacts and poor signal quality typical in wearable device usage scenarios</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Multi-Modal Enhancement:</strong> Integrated accelerometer data to improve heart rate estimation accuracy through motion compensation and signal quality assessment</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Peak Detection & Analysis:</strong> Implemented sophisticated peak detection algorithms using SciPy's find_peaks() with optimized parameters for physiological heart rate ranges (40-180 BPM)</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Temporal Windowing:</strong> Designed sliding window approaches for 30-second heart rate calculations, balancing temporal resolution with measurement accuracy</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Frequency Domain Analysis:</strong> Applied FFT-based spectral analysis for heart rate extraction in challenging signal conditions</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Exercise 2: Comprehensive Wearable Activity Monitoring System</h3>
+                        <p>Built a complete activity monitoring system capable of step counting, device location detection, activity recognition, and path classification using real-world crowd-sourced data from 676 recordings.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Multi-Task Learning Framework:</strong> Developed unified system addressing four distinct but related tasks: step counting, smartwatch location classification, activity recognition, and path identification</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Robust Step Counting:</strong> Implemented accurate step detection algorithms for natural walking, running, and stair climbing activities, handling edge cases and irregular movement patterns</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Device Location Classification:</strong> Built machine learning models to classify smartwatch placement (left wrist, belt/waistband, right ankle) using accelerometer and gyroscope signatures</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Activity Recognition:</strong> Designed classifiers to detect standing, walking, running, and cycling activities with minimum 60-second duration requirements</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Geographic Path Classification:</strong> Implemented algorithms to identify specific routes between Zurich main station and ETH using motion and elevation patterns</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Real-World Data Processing:</strong> Handled complex, noisy sensor data from LilyGo smartwatches and smartphones with varying sampling rates and missing data</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Advanced Signal Processing Techniques</h3>
+                        <p>Throughout both exercises, I implemented sophisticated signal processing methods essential for mobile health applications:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Adaptive Filtering:</strong> Designed adaptive filters for removing motion artifacts from PPG signals while preserving cardiac information</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Feature Engineering:</strong> Extracted time-domain and frequency-domain features from accelerometer, gyroscope, and magnetometer data for activity classification</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Multi-Sensor Fusion:</strong> Developed algorithms combining data from multiple sensors (accelerometer, gyroscope, magnetometer) for improved accuracy</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Real-Time Constraints:</strong> Optimized algorithms to meet strict 10-second processing requirements for real-time wearable device applications</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Robust Statistics:</strong> Applied robust statistical methods to handle outliers and noise typical in mobile sensor data</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Machine Learning and Classification</h3>
+                        <p>Implemented advanced machine learning techniques for complex multi-class and multi-task problems:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Feature Selection:</strong> Applied statistical and information-theoretic methods to identify optimal feature sets for each classification task</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Weak Label Learning:</strong> Handled challenging weakly-labeled activity data where precise temporal boundaries were unknown</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Multi-Class Classification:</strong> Developed classifiers for device location (3 classes), activities (4 classes), and paths (5 classes)</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Temporal Modeling:</strong> Incorporated temporal dependencies and sequence information for improved activity recognition</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Cross-Validation:</strong> Implemented robust evaluation strategies appropriate for time-series and person-specific data</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Real-World Data Challenges</h3>
+                        <p>Successfully addressed numerous challenges inherent in real-world mobile health data:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Highly variable signal quality across different users and conditions</li>
+                            <li><span class="skill-bullet"></span> Missing data and sensor dropouts during data collection</li>
+                            <li><span class="skill-bullet"></span> Individual differences in movement patterns and physiology</li>
+                            <li><span class="skill-bullet"></span> Environmental variations affecting sensor readings</li>
+                            <li><span class="skill-bullet"></span> Device orientation and placement variations</li>
+                            <li><span class="skill-bullet"></span> Crowd-sourced data with inherent labeling inconsistencies</li>
+                            <li><span class="skill-bullet"></span> Computational constraints for mobile device deployment</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Performance Achievements</h3>
+                        <p>Demonstrated strong performance across all mobile health monitoring tasks:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Heart Rate Estimation:</strong> Achieved competitive accuracy with combined MAE and MedAE evaluation score below target thresholds</li>
+                            <li><span class="skill-bullet"></span> <strong>Step Counting:</strong> Developed robust algorithms accurate across walking, running, and stair climbing activities</li>
+                            <li><span class="skill-bullet"></span> <strong>Device Location Classification:</strong> Successfully identified smartwatch placement location with high accuracy</li>
+                            <li><span class="skill-bullet"></span> <strong>Activity Recognition:</strong> Classified activities (standing, walking, running, cycling) with >60% accuracy requirement</li>
+                            <li><span class="skill-bullet"></span> <strong>Path Classification:</strong> Distinguished between 5 different routes in Zurich using motion signatures</li>
+                            <li><span class="skill-bullet"></span> <strong>Real-Time Performance:</strong> Met strict 10-second processing time requirements for mobile deployment</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Skills Demonstrated</h3>
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Biomedical Signal Processing:</strong> Advanced PPG signal analysis, filtering techniques, and physiological signal interpretation</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Wearable Technology:</strong> Understanding of sensor limitations, power constraints, and real-world deployment challenges</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Multi-Modal Data Fusion:</strong> Integration of heterogeneous sensor data for improved accuracy and robustness</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Real-Time Algorithm Design:</strong> Development of computationally efficient algorithms suitable for mobile devices</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Machine Learning:</strong> Application of supervised learning techniques to complex, noisy, real-world data</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Industry Applications & Impact</h3>
+                        <p>These projects directly addressed challenges faced by major wearable technology companies and healthcare providers:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Consumer Wearables:</strong> Algorithms developed are directly applicable to smartwatches and fitness trackers from Apple, Samsung, Fitbit, and Garmin</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Healthcare Monitoring:</strong> PPG-based heart rate estimation techniques applicable to continuous health monitoring and medical devices</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Fitness Applications:</strong> Step counting and activity recognition crucial for fitness tracking and health behavior analysis</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Location Services:</strong> Device placement detection important for optimizing sensor fusion and user experience</li>
+                        </ul>
+                        
+                        <p>The real-world nature of the data and strict performance requirements ensured that developed algorithms are practically deployable and commercially relevant. This experience provided invaluable insight into the technical challenges and constraints of mobile health technology development.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Future Directions & Research Impact</h3>
+                        <p>The techniques developed in this course form the foundation for advanced mobile health applications including continuous health monitoring, early disease detection, and personalized health recommendations. The combination of robust signal processing with machine learning approaches demonstrates the potential for wearable devices to become increasingly sophisticated health monitoring tools.</p>
+                        
+                        <p>This work contributes to the growing field of digital health and demonstrates the practical application of engineering principles to improve human health outcomes through technology.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const navToggleBtn = document.getElementById('nav-toggle-btn');
+        const navElement = document.querySelector('nav');
+
+        navToggleBtn.addEventListener('click', () => {
+            navElement.classList.toggle('active');
+            navToggleBtn.classList.toggle('active');
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const theme = getTheme();
+            setTheme(theme);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Analysis and Computer Vision Course Projects | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Theme management (same as drone page)
+        function getThemeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlTheme = urlParams.get('theme');
+            if (urlTheme === 'dark' || urlTheme === 'light') {
+                return urlTheme;
+            }
+            return null;
+        }
+        
+        function getThemeFromMainPage() {
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+                
+                if (window.opener && window.opener.getTheme && typeof window.opener.getTheme === 'function') {
+                    const parentTheme = window.opener.getTheme();
+                    return parentTheme;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ Error accessing main page theme:', e);
+            }
+            return null;
+        }
+        
+        function getTheme() {
+            const urlTheme = getThemeFromURL();
+            if (urlTheme) {
+                return urlTheme;
+            }
+            
+            const mainPageTheme = getThemeFromMainPage();
+            if (mainPageTheme) {
+                return mainPageTheme;
+            }
+            
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ localStorage not accessible:', e);
+            }
+            
+            return 'light';
+        }
+        
+        function setTheme(theme) {
+            if (theme !== 'dark' && theme !== 'light') {
+                console.error('Project page - ❌ INVALID THEME:', theme);
+                return;
+            }
+            
+            document.documentElement.classList.remove('dark-theme', 'light-theme');
+            document.documentElement.classList.add(theme + '-theme');
+            
+            if (document.body) {
+                document.body.classList.remove('dark-theme', 'light-theme');
+                document.body.classList.add(theme + '-theme');
+            }
+            
+            const currentURL = new URL(window.location);
+            const currentURLTheme = currentURL.searchParams.get('theme');
+            
+            if (currentURLTheme !== theme) {
+                currentURL.searchParams.set('theme', theme);
+                window.history.replaceState({}, '', currentURL);
+            }
+        }
+        
+        const initialTheme = getTheme();
+        setTheme(initialTheme);
+        
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cv-website-theme' && (e.newValue === 'dark' || e.newValue === 'light')) {
+                setTheme(e.newValue);
+            }
+        });
+        
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'theme-change' && (e.data.theme === 'dark' || e.data.theme === 'light')) {
+                setTheme(e.data.theme);
+            }
+        });
+        
+        let lastTheme = initialTheme;
+        let pollCount = 0;
+        const checkInterval = setInterval(function() {
+            pollCount++;
+            
+            const currentTheme = getTheme();
+            if (currentTheme !== lastTheme) {
+                setTheme(currentTheme);
+                lastTheme = currentTheme;
+            }
+        }, 2000);
+        
+        setTimeout(function() {
+            clearInterval(checkInterval);
+        }, 30000);
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="header-info">
+                    <h1>STEPHAN <span>GEISSER</span></h1>
+                    <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#experience">Experience</a></li>
+                    <li><a href="index.html#education">Education</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-toggle">
+                <button id="nav-toggle-btn" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="project-detail">
+            <div class="container">
+                <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
+                <h1 class="project-title">Image Analysis and Computer Vision Course Projects</h1>
+                <p class="project-subtitle">Advanced Computer Vision Techniques | ETH Zurich</p>
+                
+                <div class="project-tags">
+                    <span>Computer Vision</span>
+                    <span>Deep Learning</span>
+                    <span>Image Processing</span>
+                    <span>CNN</span>
+                    <span>Transfer Learning</span>
+                    <span>Stereo Vision</span>
+                    <span>Image Compression</span>
+                    <span>Segmentation</span>
+                    <span>PyTorch</span>
+                    <span>OpenCV</span>
+                </div>
+
+                <div class="project-description">
+                    <div class="project-section">
+                        <h2>Course Overview</h2>
+                        <p>This comprehensive computer vision course at ETH Zurich covered the fundamental and advanced techniques in image analysis and computer vision. Through five challenging exercises, I implemented cutting-edge algorithms spanning image compression, interactive segmentation, 3D reconstruction, classification, and transfer learning. Each project tackled real-world computer vision problems with practical applications, from game image compression to medical image analysis.</p>
+                        
+                        <p>The course provided hands-on experience with both traditional computer vision methods and modern deep learning approaches, emphasizing the mathematical foundations and practical implementation of key algorithms in the field.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fas fa-eye"></i>
+                                <span>Computer Vision</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-brain"></i>
+                                <span>Deep Learning</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-image"></i>
+                                <span>Image Processing</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-python"></i>
+                                <span>PyTorch</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-camera"></i>
+                                <span>OpenCV</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-compress"></i>
+                                <span>Image Compression</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cube"></i>
+                                <span>3D Reconstruction</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cut"></i>
+                                <span>Segmentation</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Exercise 1: Image Compression for Tic-Tac-Toe Games</h3>
+                        <p>Developed an intelligent image compression system for streaming live tic-tac-toe games with limited bandwidth. The challenge involved compressing noisy camera images while maintaining quality for accurate game reconstruction.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>PCA-Based Compression:</strong> Implemented Principal Component Analysis for dimensionality reduction and efficient image representation using learned codebooks</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Noise Reduction:</strong> Designed algorithms to handle camera noise and reconstruct clean discrete game images from continuous-valued noisy inputs</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Codebook Learning:</strong> Developed training procedures to learn optimal compression codebooks from 100 training images, balancing compression ratio and reconstruction quality</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Evaluation Metrics:</strong> Optimized compression performance using combined metrics including mean absolute error, median absolute error, and file size constraints</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Real-time Processing:</strong> Achieved efficient compression and reconstruction suitable for live game streaming applications</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Exercise 2: Interactive Segmentation for Cat Memes</h3>
+                        <p>Created an advanced segmentation system for automatically extracting cats from images using minimal user input (bounding box) for meme generation applications.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Min-Cut Segmentation:</strong> Implemented graph-based min-cut algorithms using PyMaxFlow for precise foreground-background separation</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Multi-Modal Input:</strong> Leveraged both RGB and auxiliary sensor images to improve segmentation accuracy in challenging scenarios</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Interactive Framework:</strong> Designed user-friendly workflow requiring only bounding box input while maintaining high segmentation quality</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Energy Optimization:</strong> Formulated and solved energy minimization problems for optimal boundary detection</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Robustness Testing:</strong> Achieved over 60% IoU accuracy on diverse test images with varying lighting and background conditions</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Exercise 3: Stereo Vision and 3D Reconstruction</h3>
+                        <p>Implemented complete stereo vision pipeline for 3D point cloud reconstruction from dual camera systems, covering calibration, correspondence matching, and triangulation.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Camera Calibration:</strong> Developed automated calibration procedures to determine intrinsic and extrinsic camera parameters from calibration points</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Correspondence Search:</strong> Implemented Normalized Cross-Correlation (NCC) for finding pixel correspondences across stereo image pairs</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>3D Triangulation:</strong> Applied geometric triangulation methods to recover world coordinates from image correspondences</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Epipolar Geometry:</strong> Utilized epipolar constraints to optimize correspondence search and improve computational efficiency</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Point Cloud Generation:</strong> Created dense 3D point clouds with interactive visualization capabilities for scene reconstruction</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Exercise 4: Deep Learning Image Classification</h3>
+                        <p>Built and trained convolutional neural networks for multi-class image classification using PyTorch, covering network design, training optimization, and performance evaluation.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>CNN Architecture Design:</strong> Developed custom convolutional neural network architectures optimized for 6-class image classification (buildings, forests, mountains, glacier, sea, street)</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Training Pipeline:</strong> Implemented complete training workflows including data loading, augmentation, loss computation, and optimization using SGD and Adam optimizers</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Data Augmentation:</strong> Applied various augmentation techniques to improve model generalization and prevent overfitting</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Performance Optimization:</strong> Achieved over 70% classification accuracy through hyperparameter tuning and architectural improvements</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>PyTorch Mastery:</strong> Gained extensive experience with PyTorch ecosystem including datasets, dataloaders, and neural network modules</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Exercise 5: Transfer Learning with Limited Data</h3>
+                        <p>Implemented advanced transfer learning techniques using pre-trained ResNet models to achieve high classification accuracy with severely limited training data.</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Pre-trained Model Adaptation:</strong> Modified pre-trained ResNet18 architecture to handle 10-class classification task with only 210 samples per class</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Fine-tuning Strategies:</strong> Implemented layer-wise learning rate scheduling and selective parameter freezing to optimize transfer learning performance</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Data Efficiency:</strong> Achieved over 60% accuracy despite severe data limitations through intelligent use of pre-trained features</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Class Mapping:</strong> Handled complex mapping between 5-class pre-trained model and 10-class target problem</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Model Analysis:</strong> Conducted detailed performance analysis including per-class accuracy evaluation and failure case analysis</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Innovations & Methods</h3>
+                        <p>Throughout the course, I implemented and mastered numerous computer vision techniques:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Principal Component Analysis for dimensionality reduction</li>
+                            <li><span class="skill-bullet"></span> Graph-based segmentation with min-cut optimization</li>
+                            <li><span class="skill-bullet"></span> Stereo geometry and triangulation algorithms</li>
+                            <li><span class="skill-bullet"></span> Normalized Cross-Correlation for feature matching</li>
+                            <li><span class="skill-bullet"></span> Convolutional Neural Network architectures</li>
+                            <li><span class="skill-bullet"></span> Transfer learning and fine-tuning strategies</li>
+                            <li><span class="skill-bullet"></span> Data augmentation and regularization techniques</li>
+                            <li><span class="skill-bullet"></span> Multi-modal sensor fusion approaches</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Key Achievements & Results</h3>
+                        <p>Successfully completed all five challenging exercises with strong performance across different computer vision domains:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Image Compression:</strong> Achieved evaluation score below 35 with efficient PCA-based compression</li>
+                            <li><span class="skill-bullet"></span> <strong>Interactive Segmentation:</strong> Exceeded 63% IoU accuracy for cat segmentation tasks</li>
+                            <li><span class="skill-bullet"></span> <strong>Stereo Vision:</strong> Successfully reconstructed 3D point clouds with accurate depth estimation</li>
+                            <li><span class="skill-bullet"></span> <strong>Image Classification:</strong> Achieved over 70% accuracy on 6-class classification problem</li>
+                            <li><span class="skill-bullet"></span> <strong>Transfer Learning:</strong> Reached 60%+ accuracy with limited training data using transfer learning</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Skills Demonstrated</h3>
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Mathematical Foundations:</strong> Linear algebra, optimization theory, probability theory, and geometric transformations applied to computer vision problems</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Programming Expertise:</strong> Advanced Python programming with NumPy, PyTorch, OpenCV, and SciPy for implementing complex algorithms</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Algorithm Implementation:</strong> From-scratch implementation of classical and modern computer vision algorithms</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Deep Learning:</strong> Neural network design, training, evaluation, and optimization techniques</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Problem Solving:</strong> Systematic approach to tackling diverse computer vision challenges with appropriate method selection</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Applications & Impact</h3>
+                        <p>These projects demonstrated practical applications of computer vision across multiple domains including entertainment (gaming, meme generation), robotics (3D reconstruction), and content analysis (image classification). The comprehensive coverage of both traditional and deep learning approaches provided a solid foundation for tackling real-world computer vision challenges.</p>
+                        
+                        <p>The hands-on implementation of these diverse techniques enhanced my understanding of the theoretical foundations while building practical skills essential for computer vision research and development.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const navToggleBtn = document.getElementById('nav-toggle-btn');
+        const navElement = document.querySelector('nav');
+
+        navToggleBtn.addEventListener('click', () => {
+            navElement.classList.toggle('active');
+            navToggleBtn.classList.toggle('active');
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const theme = getTheme();
+            setTheme(theme);
+        });
+    </script>
+</body>
+</html>

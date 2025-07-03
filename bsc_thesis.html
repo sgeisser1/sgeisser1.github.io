@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEV Velocity Estimation | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Check URL parameters for theme (backup method)
+        function getThemeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlTheme = urlParams.get('theme');
+            if (urlTheme === 'dark' || urlTheme === 'light') {
+                return urlTheme;
+            }
+            return null;
+        }
+        
+        // NEW: Try to get theme from main page if it's still open
+        function getThemeFromMainPage() {
+            try {
+                // Try to read localStorage (might work in some cases)
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+                
+                // Try accessing window.opener if opened in new tab
+                if (window.opener && window.opener.getTheme && typeof window.opener.getTheme === 'function') {
+                    const parentTheme = window.opener.getTheme();
+                    return parentTheme;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ Error accessing main page theme:', e);
+            }
+            return null;
+        }
+        
+        // Improved theme reader for project pages
+        function getTheme() {
+            
+            // First, try URL parameter (most reliable for file:// protocol)
+            const urlTheme = getThemeFromURL();
+            if (urlTheme) {
+                return urlTheme;
+            }
+            
+            // Then try to get current theme from main page
+            const mainPageTheme = getThemeFromMainPage();
+            if (mainPageTheme) {
+                return mainPageTheme;
+            }
+            
+            // Try localStorage directly (works for web servers)
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ localStorage not accessible:', e);
+            }
+            
+            // Default to light theme
+            return 'light';
+        }
+        
+        function setTheme(theme) {
+            if (theme !== 'dark' && theme !== 'light') {
+                console.error('Project page - ❌ INVALID THEME:', theme);
+                return;
+            }
+            
+            // Always apply to documentElement (this always exists)
+            document.documentElement.classList.remove('dark-theme', 'light-theme');
+            document.documentElement.classList.add(theme + '-theme');
+            
+            // Only apply to body if it exists
+            if (document.body) {
+                document.body.classList.remove('dark-theme', 'light-theme');
+                document.body.classList.add(theme + '-theme');
+            }
+            
+            // Update URL parameter to match current theme (for future refreshes)
+            const currentURL = new URL(window.location);
+            const currentURLTheme = currentURL.searchParams.get('theme');
+            
+            if (currentURLTheme !== theme) {
+                currentURL.searchParams.set('theme', theme);
+                window.history.replaceState({}, '', currentURL);
+            }
+        }
+        
+        // Apply theme immediately to documentElement only
+        const initialTheme = getTheme();
+        setTheme(initialTheme);
+        
+        // Listen for theme changes from main page via localStorage
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cv-website-theme' && (e.newValue === 'dark' || e.newValue === 'light')) {
+                setTheme(e.newValue);
+            }
+        });
+        
+        // Listen for messages from parent window (postMessage API)
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'theme-change' && (e.data.theme === 'dark' || e.data.theme === 'light')) {
+                setTheme(e.data.theme);
+            }
+        });
+        
+        // Enhanced polling that checks main page theme first
+        let lastTheme = initialTheme;
+        let pollCount = 0;
+        const checkInterval = setInterval(function() {
+            pollCount++;
+            
+            const currentTheme = getTheme();
+            if (currentTheme !== lastTheme) {
+                setTheme(currentTheme);
+                lastTheme = currentTheme;
+            }
+        }, 2000); // Check every 2 seconds
+        
+        // Stop polling after 30 seconds to prevent infinite loops
+        setTimeout(function() {
+            clearInterval(checkInterval);
+        }, 30000);
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="header-info">
+                    <h1>STEPHAN <span>GEISSER</span></h1>
+                    <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
+                </div>
+                <!-- NO THEME TOGGLE ON PROJECT PAGES -->
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#experience">Experience</a></li>
+                    <li><a href="index.html#education">Education</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-toggle">
+                <button id="nav-toggle-btn" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="project-detail">
+            <div class="container">
+                <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
+                <h1 class="project-title">Machine Learning for Velocity Estimation in Hybrid Electric Vehicles</h1>
+                <p class="project-subtitle">Bachelor's Thesis | ETH Zurich</p>
+                
+                <div class="project-tags">
+                    <span>Machine Learning</span>
+                    <span>Markov Chain</span>
+                    <span>Model Predictive Control</span>
+                    <span>Hybrid Electric Vehicle</span>
+                    <span>Energy Management</span>
+                    <span>MATLAB</span>
+                    <span>Data Analysis</span>
+                </div>
+
+                <div class="project-description">
+                    <div class="project-section">
+                        <h2>Research Overview</h2>
+                        <p>This Bachelor's thesis investigated the application of machine learning techniques to improve velocity prediction for hybrid electric vehicles (HEVs). The research focused on developing data-driven methods that could provide more accurate estimations of future vehicle behavior compared to traditional crude forecasts, ultimately contributing to reduced CO2 emissions through enhanced energy management systems.</p>
+                        
+                        <p>The project involved analyzing a large collection of real-world driving data to train and implement state-of-the-art machine learning approaches. The primary objective was to develop a predictor capable of forecasting future vehicle velocity using only past and current onboard measurements, thereby supporting model predictive control (MPC) algorithms in optimizing hybrid vehicle performance.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fas fa-brain"></i>
+                                <span>Machine Learning</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-project-diagram"></i>
+                                <span>Markov Chains</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-calculator"></i>
+                                <span>MATLAB</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Model Predictive Control</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-car"></i>
+                                <span>Vehicle Dynamics</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-database"></i>
+                                <span>Data Preprocessing</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Research Objectives</h3>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Analyze the performance of machine learning-based velocity prediction methods</li>
+                            <li><span class="skill-bullet"></span> Develop and train Markov chain models using large-scale vehicle measurement data</li>
+                            <li><span class="skill-bullet"></span> Implement velocity prediction constraints using reference-dependent bounds</li>
+                            <li><span class="skill-bullet"></span> Evaluate the robustness of prediction methods against reference velocity uncertainties</li>
+                            <li><span class="skill-bullet"></span> Compare performance of different prediction approaches within existing multi-level controllers</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Research Methodology</h3>
+                        <p>The research approach combined theoretical machine learning concepts with practical automotive engineering applications:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Data Collection & Preprocessing:</strong> Extensive analysis and preprocessing of velocity measurement data collected during various real-world car trips, ensuring data quality and consistency for model training.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Markov Chain Development:</strong> Implementation and training of Markov chain models capable of predicting future velocities based solely on initial velocity and acceleration measurements from onboard sensors.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Constraint Implementation:</strong> Development of an enhanced prediction method that constrains velocity forecasts using reference-dependent velocity bounds, improving prediction accuracy and reliability.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Comparative Analysis:</strong> Systematic evaluation of multiple prediction methods, including reference velocity approaches and constrained Markov chain predictions, within the existing multi-level controller framework.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Robustness Testing:</strong> Comprehensive assessment of prediction method robustness against mispredictions in reference velocity, including testing with rough speed limit data as reference input.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Challenges</h3>
+                        <p>Several complex challenges were addressed throughout the research process:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Large-Scale Data Processing:</strong> Managing and preprocessing extensive datasets from multiple driving scenarios while maintaining computational efficiency and data integrity.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Model Training Optimization:</strong> Balancing model complexity with prediction accuracy while avoiding overfitting to specific driving patterns or conditions.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Real-Time Prediction Requirements:</strong> Ensuring that prediction algorithms could operate within the time constraints required by model predictive control systems in real vehicle applications.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Uncertainty Quantification:</strong> Developing methods to assess and communicate prediction confidence levels, particularly important for safety-critical automotive applications.</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Integration Complexity:</strong> Successfully integrating new prediction methods into existing multi-level controller architectures without disrupting established control logic.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Key Research Components</h3>
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Markov Chain Implementation:</strong> Custom MATLAB implementation of Markov chain models specifically tailored for vehicle velocity prediction applications</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Data Analysis Pipeline:</strong> Comprehensive preprocessing and analysis framework for handling large-scale automotive measurement data</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Constraint Optimization:</strong> Mathematical formulation and implementation of reference-dependent velocity bounds for improved prediction accuracy</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Performance Evaluation Framework:</strong> Systematic testing and validation procedures for comparing different prediction methodologies</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Robustness Analysis Tools:</strong> Statistical methods for evaluating prediction stability under various uncertainty conditions</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Key Findings & Results</h3>
+                        <p>The research yielded several significant findings that contribute to the field of hybrid vehicle energy management:</p>
+                        
+                        <p>All tested velocity prediction methods demonstrated strong performance within the multi-level controller framework. The reference velocity approach achieved the best overall results, while the Markov chain prediction method with velocity constraints showed nearly equivalent performance. This finding is particularly valuable as it demonstrates the viability of machine learning approaches in automotive control applications.</p>
+                        
+                        <p>The robustness analysis revealed that all prediction methods showed excellent stability against reference velocity uncertainties. Remarkably, even rough speed limit data proved sufficient as reference velocity input, suggesting that the developed methods could be practically implemented without requiring highly precise reference information.</p>
+                        
+                        <p>While the velocity predictions achieved good results for controller performance, the research also highlighted that prediction accuracy compared to actual driven velocities remains an area for future improvement, indicating opportunities for further research and development.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Impact & Contributions</h3>
+                        <p>This thesis made several important contributions to the intersection of machine learning and automotive engineering:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Demonstrated the practical applicability of Markov chain models for real-time vehicle velocity prediction</li>
+                            <li><span class="skill-bullet"></span> Established that machine learning approaches can match the performance of traditional reference-based methods</li>
+                            <li><span class="skill-bullet"></span> Proved the robustness of prediction methods against common real-world uncertainties</li>
+                            <li><span class="skill-bullet"></span> Provided a framework for integrating ML-based predictions into existing vehicle control systems</li>
+                            <li><span class="skill-bullet"></span> Contributed to the broader goal of reducing vehicle emissions through improved energy management</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Future Research Directions</h3>
+                        <p>The research identified several promising avenues for future investigation:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Deep learning approaches for improved velocity prediction accuracy</li>
+                            <li><span class="skill-bullet"></span> Integration of real-time traffic data and road condition information</li>
+                            <li><span class="skill-bullet"></span> Extension to fully electric and autonomous vehicle applications</li>
+                            <li><span class="skill-bullet"></span> Development of adaptive learning systems that improve with driving experience</li>
+                            <li><span class="skill-bullet"></span> Investigation of multi-vehicle prediction systems for connected vehicle networks</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile navigation toggle
+        const navToggleBtn = document.getElementById('nav-toggle-btn');
+        const navElement = document.querySelector('nav');
+
+        navToggleBtn.addEventListener('click', () => {
+            navElement.classList.toggle('active');
+            navToggleBtn.classList.toggle('active');
+        });
+        
+        // Final theme check after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const theme = getTheme();
+            setTheme(theme);
+        });
+    </script>
+</body>
+</html>

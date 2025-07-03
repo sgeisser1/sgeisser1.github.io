@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duckietown Autonomous Vehicles | Stephan Geisser</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Check URL parameters for theme (backup method)
+        function getThemeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlTheme = urlParams.get('theme');
+            if (urlTheme === 'dark' || urlTheme === 'light') {
+                return urlTheme;
+            }
+            return null;
+        }
+        
+        // NEW: Try to get theme from main page if it's still open
+        function getThemeFromMainPage() {
+            try {
+                // Try to read localStorage (might work in some cases)
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+                
+                // Try accessing window.opener if opened in new tab
+                if (window.opener && window.opener.getTheme && typeof window.opener.getTheme === 'function') {
+                    const parentTheme = window.opener.getTheme();
+                    return parentTheme;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ Error accessing main page theme:', e);
+            }
+            return null;
+        }
+        
+        // Improved theme reader for project pages
+        function getTheme() {
+            
+            // First, try URL parameter (most reliable for file:// protocol)
+            const urlTheme = getThemeFromURL();
+            if (urlTheme) {
+                return urlTheme;
+            }
+            
+            // Then try to get current theme from main page
+            const mainPageTheme = getThemeFromMainPage();
+            if (mainPageTheme) {
+                return mainPageTheme;
+            }
+            
+            // Try localStorage directly (works for web servers)
+            try {
+                const saved = localStorage.getItem('cv-website-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    return saved;
+                }
+            } catch (e) {
+                console.warn('Project page - ✗ localStorage not accessible:', e);
+            }
+            
+            // Default to light theme
+            return 'light';
+        }
+        
+        function setTheme(theme) {
+            if (theme !== 'dark' && theme !== 'light') {
+                console.error('Project page - ❌ INVALID THEME:', theme);
+                return;
+            }
+            
+            // Always apply to documentElement (this always exists)
+            document.documentElement.classList.remove('dark-theme', 'light-theme');
+            document.documentElement.classList.add(theme + '-theme');
+            
+            // Only apply to body if it exists
+            if (document.body) {
+                document.body.classList.remove('dark-theme', 'light-theme');
+                document.body.classList.add(theme + '-theme');
+            }
+            
+            // Update URL parameter to match current theme (for future refreshes)
+            const currentURL = new URL(window.location);
+            const currentURLTheme = currentURL.searchParams.get('theme');
+            
+            if (currentURLTheme !== theme) {
+                currentURL.searchParams.set('theme', theme);
+                window.history.replaceState({}, '', currentURL);
+            }
+        }
+        
+        // Apply theme immediately to documentElement only
+        const initialTheme = getTheme();
+        setTheme(initialTheme);
+        
+        // Listen for theme changes from main page via localStorage
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cv-website-theme' && (e.newValue === 'dark' || e.newValue === 'light')) {
+                setTheme(e.newValue);
+            }
+        });
+        
+        // Listen for messages from parent window (postMessage API)
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'theme-change' && (e.data.theme === 'dark' || e.data.theme === 'light')) {
+                setTheme(e.data.theme);
+            }
+        });
+        
+        // Enhanced polling that checks main page theme first
+        let lastTheme = initialTheme;
+        let pollCount = 0;
+        const checkInterval = setInterval(function() {
+            pollCount++;
+            
+            const currentTheme = getTheme();
+            if (currentTheme !== lastTheme) {
+                setTheme(currentTheme);
+                lastTheme = currentTheme;
+            }
+        }, 2000); // Check every 2 seconds
+        
+        // Stop polling after 30 seconds to prevent infinite loops
+        setTimeout(function() {
+            clearInterval(checkInterval);
+        }, 30000);
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="header-info">
+                    <h1>STEPHAN <span>GEISSER</span></h1>
+                    <p class="tagline">Applied Scientist | Mechanical Engineer | AI & ML Specialist</p>
+                </div>
+                <!-- NO THEME TOGGLE ON PROJECT PAGES -->
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#experience">Experience</a></li>
+                    <li><a href="index.html#education">Education</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-toggle">
+                <button id="nav-toggle-btn" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="project-detail">
+            <div class="container">
+                <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+                
+                <h1 class="project-title">Duckietown Autonomous Vehicles</h1>
+                <p class="project-subtitle">Self-Driving Cars with Robotics & AI | ETH Zurich & MIT CSAIL</p>
+                
+                <div class="project-tags">
+                    <span>Autonomous Vehicles</span>
+                    <span>Computer Vision</span>
+                    <span>Machine Learning</span>
+                    <span>ROS</span>
+                    <span>Docker</span>
+                    <span>Python</span>
+                    <span>Control Systems</span>
+                    <span>Reinforcement Learning</span>
+                </div>
+
+                <div class="project-description">
+                    <div class="project-section">
+                        <h2>Program Overview</h2>
+                        <p>Duckietown is a prestigious, highly competitive robotics and autonomous vehicles program created at MIT Computer Science and Artificial Intelligence Laboratory, now used by over 200 universities worldwide. This comprehensive course provided hands-on experience in building and programming autonomous vehicles from the ground up, culminating in a fully functional self-driving car capable of navigating complex traffic scenarios.</p>
+                        
+                        <p>The program combined theoretical foundations with practical implementation, using real hardware (Jetson Nano-powered Duckiebot) and modern software architectures. Our final project, "Resiliency to Traffic Stuck due to Emergency Situations," demonstrated advanced autonomous navigation capabilities including emergency detection, collision avoidance, and intelligent overtaking maneuvers.</p>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fas fa-car"></i>
+                                <span>Autonomous Vehicles</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-eye"></i>
+                                <span>Computer Vision</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-robot"></i>
+                                <span>ROS</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-docker"></i>
+                                <span>Docker</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-python"></i>
+                                <span>Python</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-brain"></i>
+                                <span>Machine Learning</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Control Systems</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-microchip"></i>
+                                <span>Embedded Systems</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Core Competencies Developed</h3>
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Autonomous vehicle architecture design and implementation</li>
+                            <li><span class="skill-bullet"></span> Computer vision algorithms for lane detection and object recognition</li>
+                            <li><span class="skill-bullet"></span> Machine learning models for object detection and decision making</li>
+                            <li><span class="skill-bullet"></span> Control systems design including PID controllers and state estimation</li>
+                            <li><span class="skill-bullet"></span> Real-time sensor fusion using cameras, ToF sensors, and odometry</li>
+                            <li><span class="skill-bullet"></span> Reinforcement learning for autonomous navigation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Curriculum Highlights</h3>
+                        <p>The program covered seven comprehensive modules, each building upon previous knowledge:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Sensorimotor Architectures:</strong> Developed reactive "Braitenberg" agents for obstacle avoidance using behavioral robotics principles</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Modeling and Control:</strong> Designed odometry functions and PID controllers for precise vehicle motion control</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Robot Vision:</strong> Implemented projective geometry, camera calibration, and image processing for visual lane servoing</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Object Detection:</strong> Trained convolutional neural networks (CNNs) for real-time duckie detection and avoidance</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>State Estimation:</strong> Built Kalman and particle filters for robust vehicle localization using sensor fusion</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Reinforcement Learning:</strong> Explored policy gradients and domain randomization for autonomous lane following</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Final Project: Emergency Traffic Navigation</h3>
+                        <p>Our capstone project, "Fl*ck," addressed the challenging problem of autonomous vehicle behavior during emergency situations. The system successfully integrated multiple advanced technologies:</p>
+                        
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Emergency Detection:</strong> Developed computer vision algorithms using HSV color masks and blob detection to identify flashing hazard lights with 90% accuracy</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Collision Avoidance:</strong> Implemented ToF sensor-based safety systems including "Ghost Rider" detection for oncoming traffic</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Decision Making:</strong> Created state-machine architecture for complex scenarios including stop-and-go traffic and safe overtaking maneuvers</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Lane Management:</strong> Integrated traditional lane following with "British Lane Following" for wrong-side driving during overtaking</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Technical Achievements</h3>
+                        <p>The project demonstrated proficiency in cutting-edge autonomous vehicle technologies:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> Real-time computer vision processing with down-sampling optimization</li>
+                            <li><span class="skill-bullet"></span> Robust sensor fusion combining visual, distance, and odometry data</li>
+                            <li><span class="skill-bullet"></span> State estimation using temporal filtering and prediction algorithms</li>
+                            <li><span class="skill-bullet"></span> Hardware-software integration on embedded Jetson Nano platform</li>
+                            <li><span class="skill-bullet"></span> Docker containerization for reproducible robotics deployments</li>
+                            <li><span class="skill-bullet"></span> ROS-based distributed system architecture</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Performance Results</h3>
+                        <p>The system achieved impressive performance across multiple evaluation criteria:</p>
+                        
+                        <ul class="skills-list">
+                            <li><span class="skill-bullet"></span> <strong>Emergency Detection:</strong> 90% success rate in distinguishing flashing hazards from static lights</li>
+                            <li><span class="skill-bullet"></span> <strong>Stop-and-Go Traffic:</strong> 80% success rate with reliable collision avoidance</li>
+                            <li><span class="skill-bullet"></span> <strong>Overtaking Maneuvers:</strong> 60% success rate in complex multi-vehicle scenarios</li>
+                            <li><span class="skill-bullet"></span> <strong>Safety Performance:</strong> Zero collisions during extensive testing due to robust collision avoidance systems</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Skills & Tools Mastered</h3>
+                        <ul class="labeled-list">
+                            <li><span class="skill-bullet"></span> <strong>Programming:</strong> Advanced Python development, object-oriented design, and real-time systems programming</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Robotics:</strong> ROS ecosystem, sensor integration, actuator control, and distributed system architecture</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Computer Vision:</strong> OpenCV, image processing pipelines, feature extraction, and real-time video analysis</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Machine Learning:</strong> TensorFlow, CNN training, object detection models, and reinforcement learning</li>
+                            
+                            <li><span class="skill-bullet"></span> <strong>Systems Engineering:</strong> Docker containerization, Linux administration, and hardware-software integration</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-section">
+                        <h3>Impact & Recognition</h3>
+                        <p>This project demonstrated the practical application of advanced AI and robotics concepts to real-world autonomous vehicle challenges. The work contributed to the broader understanding of emergency response behaviors in autonomous systems and showcased the potential for robust, safety-critical autonomous vehicle deployment.</p>
+                        
+                        <p>The comprehensive nature of the Duckietown program, combined with the successful completion of complex challenges, provided invaluable experience in the rapidly evolving field of autonomous vehicles and prepared me for advanced roles in robotics and AI development.</p>
+                    </div>
+
+                    <div class="project-section acknowledgments">
+                        <h3>Acknowledgments</h3>
+                        <p>I would like to express my sincere gratitude to my talented teammates <strong>Max Greiner</strong> and <strong>Elia Späte</strong> for their exceptional collaboration on the emergency traffic navigation system. Max's expertise in <strong>computer vision algorithms</strong> and <strong>control systems</strong> was instrumental in developing the robust emergency detection pipeline and state machine architecture. Elia's contributions to <strong>hardware integration</strong> and <strong>sensor fusion</strong> ensured reliable performance of our ToF-based collision avoidance and odometry systems.</p>
+                       
+                        <p>Special thanks to both Max and Elia for their dedication during countless hours of testing and debugging, especially when fine-tuning the flashing hazard detection algorithms and perfecting the lane-following integration. Their collaborative spirit and technical expertise were essential to achieving our 90% emergency detection success rate and making our autonomous Duckiebot safely navigate complex traffic scenarios.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year">2025</span> Stephan Geisser. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile navigation toggle
+        const navToggleBtn = document.getElementById('nav-toggle-btn');
+        const navElement = document.querySelector('nav');
+
+        navToggleBtn.addEventListener('click', () => {
+            navElement.classList.toggle('active');
+            navToggleBtn.classList.toggle('active');
+        });
+        
+        // Final theme check after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const theme = getTheme();
+            setTheme(theme);
+        });
+    </script>
+</body>
+</html>
