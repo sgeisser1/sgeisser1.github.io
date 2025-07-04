@@ -390,13 +390,16 @@ section:nth-child(even) {
   gap: var(--spacing-sm);
 }
 
-/* Projects Grid */
+/* ===== ENHANCED PROJECT CARDS - FIXED VERSION ===== */
+/* Projects Grid - Enhanced for better alignment */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: var(--spacing-lg);
+  align-items: stretch; /* Ensures all cards stretch to same height */
 }
 
+/* Enhanced Project Card Styles */
 .project-card {
   background-color: var(--bg-accent);
   border-radius: 4px;
@@ -406,6 +409,7 @@ section:nth-child(even) {
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative; /* Added for absolute positioning of badge */
 }
 
 .project-card:hover {
@@ -415,23 +419,68 @@ section:nth-child(even) {
 
 .project-card h3 {
   color: var(--text-primary);
+  margin-bottom: 0;
+  line-height: 1.3;
+  flex: 1;
 }
 
 .project-card p {
   color: var(--text-primary);
 }
 
-.project-header {
-  padding: var(--spacing-md) var(--spacing-md) 0;
+/* Thesis Badge - Positioned over image */
+.thesis-badge, .highlight-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: var(--accent-color);
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 10;
+  transform: rotate(12deg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform var(--transition-fast);
+  margin-left: 0; /* Override any margin */
 }
 
-/* Project Image Section */
+.highlight-badge {
+  background-color: #e74c3c;
+}
+
+.dark-theme .thesis-badge {
+  background-color: var(--accent-secondary);
+}
+
+/* Hover effect for badge */
+.project-card:hover .thesis-badge,
+.project-card:hover .highlight-badge {
+  transform: rotate(8deg) scale(1.05);
+}
+
+/* Project Header - Fixed height for alignment */
+.project-header {
+  padding: var(--spacing-md) var(--spacing-md) 0;
+  min-height: 70px; /* Fixed minimum height for consistent alignment */
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start; /* Changed from space-between */
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+/* Project Image Section - Fixed height */
 .project-image {
   position: relative;
   height: 200px;
   overflow: hidden;
   margin: var(--spacing-md) var(--spacing-md) 0;
   border-radius: 4px;
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .project-image img {
@@ -445,6 +494,7 @@ section:nth-child(even) {
   transform: scale(1.05);
 }
 
+/* Image Indicator */
 .image-indicator {
   position: absolute;
   bottom: var(--spacing-sm);
@@ -457,8 +507,28 @@ section:nth-child(even) {
   font-weight: 500;
   opacity: 0;
   transition: opacity var(--transition-fast);
+  z-index: 5;
 }
 
+.project-card:hover .image-indicator {
+  opacity: 1;
+}
+
+/* Project Content - Flexible to fill space */
+.project-content {
+  padding: var(--spacing-md);
+  flex: 1; /* This makes content area flexible to push footer down */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.project-content p {
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+/* Project Tags (can appear in different places) */
 .project-tags {
   display: flex;
   gap: var(--spacing-sm);
@@ -475,17 +545,14 @@ section:nth-child(even) {
   font-weight: 500;
 }
 
-.project-content {
-  padding: var(--spacing-md);
-  flex: 1;
-}
-
+/* Project Footer - Consistent bottom alignment */
 .project-footer {
   padding: var(--spacing-md);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   border-top: 1px solid var(--border-color);
+  margin-top: auto; /* This pushes footer to bottom */
 }
 
 .project-footer .project-tags {
@@ -512,6 +579,8 @@ section:nth-child(even) {
 .project-links a:hover {
   color: var(--accent-color);
 }
+
+/* ===== END ENHANCED PROJECT CARDS ===== */
 
 .add-project {
   border: 2px dashed var(--border-color);
@@ -997,6 +1066,139 @@ main {
   color: var(--accent-color);
 }
 
+/* Project subtitle styling */
+.project-subtitle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.duration {
+  color: var(--text-secondary);
+  font-weight: 500;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--bg-accent);
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+/* Enhanced thesis badge for project pages */
+.project-subtitle .thesis-badge {
+  background-color: var(--accent-color);
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dark-theme .project-subtitle .thesis-badge {
+  background-color: var(--accent-secondary);
+}
+
+/* Video section styling */
+.video-section {
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-lg);
+  background-color: var(--bg-accent);
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-color);
+}
+
+.video-section h4 {
+  margin-bottom: var(--spacing-sm);
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Responsive video embed container */
+.video-embed {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  margin-top: var(--spacing-md);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+}
+
+.video-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+/* Projects Subsections */
+.projects-subsection {
+  margin-bottom: var(--spacing-xxl);
+}
+
+.projects-subsection:last-child {
+  margin-bottom: 0;
+}
+
+.subsection-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+  padding-bottom: var(--spacing-md);
+}
+
+.subsection-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background-color: var(--accent-color);
+  opacity: 0.6;
+}
+
+/* Project Summary Cards (non-clickable ETH projects) */
+.project-summary {
+  cursor: default;
+}
+
+.project-summary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Placeholder image styling until real images are added */
+.project-summary .project-image img[src*="placeholder"] {
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-secondary) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  position: relative;
+}
+
+.project-summary .project-image img[src*="placeholder"]::after {
+  content: "ETH";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 /* Responsive Styles */
 @media (max-width: 992px) {
   html {
@@ -1161,6 +1363,24 @@ main {
     grid-template-columns: auto 140px 1fr;
     gap: var(--spacing-xs);
   }
+  
+  /* Project card responsive adjustments */
+  .project-header {
+    min-height: 50px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .thesis-badge, .highlight-badge {
+    top: 10px;
+    right: 10px;
+    transform: rotate(8deg);
+    font-size: 0.65rem;
+  }
+  
+  .project-image {
+    height: 180px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -1185,81 +1405,18 @@ main {
     grid-template-columns: auto 120px 1fr;
     gap: var(--spacing-xs);
   }
-}
-
-/* Add these styles to your style.css file for the new agile project page elements */
-
-/* Project subtitle styling */
-.project-subtitle {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
-  flex-wrap: wrap;
-}
-
-.duration {
-  color: var(--text-secondary);
-  font-weight: 500;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  background-color: var(--bg-accent);
-  border-radius: 12px;
-  font-size: 0.875rem;
-}
-
-/* Enhanced thesis badge for project pages */
-.project-subtitle .thesis-badge {
-  background-color: var(--accent-color);
-  color: white;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.dark-theme .project-subtitle .thesis-badge {
-  background-color: var(--accent-secondary);
-}
-
-/* Video section styling */
-.video-section {
-  margin: var(--spacing-lg) 0;
-  padding: var(--spacing-lg);
-  background-color: var(--bg-accent);
-  border-radius: 8px;
-  border-left: 4px solid var(--accent-color);
-}
-
-.video-section h4 {
-  margin-bottom: var(--spacing-sm);
-  color: var(--accent-color);
-  font-weight: 600;
-}
-
-/* Responsive video embed container */
-.video-embed {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  margin-top: var(--spacing-md);
-  border-radius: 8px;
-  box-shadow: var(--card-shadow);
-}
-
-.video-embed iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-}
-
-/* Responsive adjustments for project subtitle */
-@media (max-width: 576px) {
+  
+  .project-header {
+    min-height: 45px;
+  }
+  
+  .thesis-badge, .highlight-badge {
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    font-size: 0.6rem;
+  }
+  
   .project-subtitle {
     flex-direction: column;
     align-items: flex-start;
@@ -1269,40 +1426,13 @@ main {
   .video-section {
     padding: var(--spacing-md);
   }
+  
+  .subsection-title {
+    font-size: 1.5rem;
+  }
 }
 
-* Projects Subsections */
-.projects-subsection {
-  margin-bottom: var(--spacing-xxl);
-}
-
-.projects-subsection:last-child {
-  margin-bottom: 0;
-}
-
-.subsection-title {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: var(--accent-color);
-  text-align: center;
-  margin-bottom: var(--spacing-xl);
-  position: relative;
-  padding-bottom: var(--spacing-md);
-}
-
-.subsection-title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 2px;
-  background-color: var(--accent-color);
-  opacity: 0.6;
-}
-
-/* Project Summary Cards (non-clickable ETH projects) */
+/* Special handling for project summary cards (non-clickable ETH projects) */
 .project-summary {
   cursor: default;
 }
@@ -1310,75 +1440,6 @@ main {
 .project-summary:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Special Badges */
-.thesis-badge, .highlight-badge {
-  background-color: var(--accent-color);
-  color: white;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-left: var(--spacing-sm);
-}
-
-.highlight-badge {
-  background-color: #e74c3c;
-}
-
-.dark-theme .thesis-badge {
-  background-color: var(--accent-secondary);
-}
-
-.project-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm);
-}
-
-/* Placeholder image styling until real images are added */
-.project-summary .project-image img[src*="placeholder"] {
-  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-secondary) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  position: relative;
-}
-
-.project-summary .project-image img[src*="placeholder"]::after {
-  content: "ETH";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .subsection-title {
-    font-size: 1.5rem;
-  }
-  
-  .project-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .thesis-badge, .highlight-badge {
-    margin-left: 0;
-    margin-top: var(--spacing-xs);
-  }
 }
 
 /* Animations & Transitions */
