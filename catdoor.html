@@ -248,6 +248,10 @@
                                 <i class="fas fa-code"></i>
                                 <span>Web Development</span>
                             </div>
+                            <div class="tech-item">
+                                <i class="fas fa-drafting-compass"></i>
+                                <span>Rapid Prototyping</span>
+                            </div>
                         </div>
                     </div>
                     
@@ -269,7 +273,7 @@
                         
                         <!-- LABELED LIST: Use for detailed implementation steps with specific labels -->
                         <ul class="labeled-list">
-                            <li><span class="skill-bullet"></span> <strong>Door Mechanism:</strong> A stepping motor was attached to the door handle mechanism, allowing for precise control of the door's movement. The motor is powerful enough to operate the door but gentle enough to stop immediately if resistance is detected.</li>
+                            <li><span class="skill-bullet"></span> <strong>Door Mechanism:</strong> A stepping motor was attached to the door handle mechanism, allowing for precise control of the door's movement. The motor is powerful enough to operate the door, but gentle enough not to cause major damage if something does get jammed.</li>
                             
                             <li><span class="skill-bullet"></span> <strong>Control System:</strong> Two Raspberry Pi units form the brain of the operation - a Raspberry Pi 5 handles the primary processing, including computer vision tasks, while a Raspberry Pi Zero 2W manages the RFID reading and secondary functions.</li>
                             
@@ -289,42 +293,22 @@
                         
                         <!-- LABELED LIST: Use for specific challenges with detailed explanations -->
                         <ul class="labeled-list">
-                            <li><span class="skill-bullet"></span> <strong>Reliable Cat Detection:</strong> Developing a machine learning model that could accurately detect cats in various lighting conditions and positions required extensive training and refinement.</li>
+                            <li><span class="skill-bullet"></span> <strong>Reliable Cat Detection:</strong> Developing a machine learning model that can accurately recognise cats under different lighting conditions and in different positions was already difficult. But making it highly accurate and run in real time was even more challenging.</li>
                             
                             <li><span class="skill-bullet"></span> <strong>RFID Reading Range:</strong> Balancing the need for early detection with the limitation of RFID reading distances required careful positioning and testing of the reader components.</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Mechanical Integration:</strong> Creating a motor coupling that could effectively operate the door handle without permanent modifications to the door required custom-designed brackets and adaptors.</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Power Management:</strong> Ensuring reliable operation during power fluctuations or brief outages required implementing a backup power system for critical components.</li>
-                            
+                         
                             <li><span class="skill-bullet"></span> <strong>Cat Training:</strong> Perhaps the most unpredictable challenge was teaching the cat to use the system consistently, which required patience and positive reinforcement techniques.</li>
                         </ul>
                     </div>
                     
-                    <div class="project-section">
-                        <h3>Software Components</h3>
-                        <!-- REGULAR SKILLS LIST: Use for software component descriptions -->
-                        <ul class="labeled-list">
-                            <li><span class="skill-bullet"></span> <strong>Computer Vision System:</strong> Python-based application using OpenCV and TensorFlow for real-time cat detection and tracking</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>RFID Reading Module:</strong> Low-level interface with the RFID hardware to identify registered microchips</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Motor Control Logic:</strong> Precision control of the stepper motor with acceleration/deceleration profiles for smooth operation</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Web Dashboard:</strong> Flask-based web application providing real-time status, remote control, and historical data visualization</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Logging System:</strong> Comprehensive activity tracking for debugging and behavior analysis</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="project-section">
+                    <!-- <div class="project-section">
                         <h3>Outcomes & Insights</h3>
                         <p>The CatDoor project successfully provides a convenient entry and exit solution for our cat without requiring expensive structural modifications to accommodate a traditional cat flap. The system has proven reliable in daily use, with the cat quickly adapting to the automated door.</p>
                         
                         <p>The machine learning component has been particularly effective, with no safety incidents recorded since implementation. The system distinguishes between the household cat and neighborhood visitors with high accuracy, and the web interface has provided interesting insights into the cat's daily routine and activity patterns.</p>
                         
                         <p>This project demonstrated the potential for applying sophisticated technologies to seemingly simple household problems, resulting in elegant solutions that enhance both human and pet quality of life. The modular design approach means components can be upgraded or modified independently as new technologies emerge or requirements change.</p>
-                    </div>
+                    </div> -->
                     
                     <div class="project-section">
                         <h3>Future Improvements</h3>

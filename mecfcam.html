@@ -184,10 +184,10 @@
                         <img id="main-image" src="images/mecfcam/mecfcam_Test.JPEG" alt="MECFcam Test Setup">
                     </div>
                     <div class="gallery-thumbnails">
-                        <div class="gallery-thumbnail" data-img="images/mecfcam/mecfcam_Test.JPEG">
+                        <div class="gallery-thumbnail active" data-img="images/mecfcam/mecfcam_Test.JPEG">
                             <img src="images/mecfcam/mecfcam_Test.JPEG" alt="MECFcam Test Setup">
                         </div>
-                        <div class="gallery-thumbnail active" data-img="images/mecfcam/image-1.png">
+                        <div class="gallery-thumbnail" data-img="images/mecfcam/image-1.png">
                             <img src="images/mecfcam/image-1.png" alt="MECFcam Video Lok">
                         </div>
                         <div class="gallery-thumbnail" data-img="images/mecfcam/image.png">
@@ -205,7 +205,9 @@
                 <div class="project-description">
                     <div class="project-section">
                         <h2>Project Overview</h2>
-                        <p>The MECFcam is a specialized low-latency video streaming system designed for a model railroad simulator. We have an H0 model railroad layout with a real driver's cab of the <a href="https://www.mecf.ch/" target="_blank">MECF</a> (Modell Eisenbahn Club Flawil). Previously, the system relied on an analog camera, but our goal was to develop a digital solution that provides higher video resolution with less noise while maintaining minimal latency.</p>
+                        <p>The MECFcam is a specialized low-latency video streaming system designed for a model railroad simulator. <a href="https://www.mecf.ch/" target="_blank">MECF</a> (Modell Eisenbahn Club Flawil) has an H0 model railway layout with a real driver's cab. This means that a miniature locomotive (which is equipped with a camera) can be controlled remotely from the driver's cab of a real locomotive.</p>
+
+                        <p>Previously, the system relied on an analog camera, but our goal was to develop a digital solution that provides higher video resolution with less noise while maintaining minimal latency.</p>
                         
                         <p>In model railway simulation, video latency is critical - any delay between the actual movement and what the operator sees can make controlling the train difficult and unrealistic. The challenge was to implement a high-resolution digital video solution without introducing noticeable lag, creating an immersive and responsive experience for the operator in the driver's cab.</p>
                     </div>
@@ -297,11 +299,9 @@
                     
                     <div class="project-section">
                         <h3>Outcomes & Learnings</h3>
-                        <p>The MECFcam project successfully delivers a high-quality, low-latency video stream from the model railway to the driver's cab, significantly enhancing the simulation experience. The system achieves latency as low as 100ms while maintaining HD resolution at 40fps, providing a responsive and clear view for the operator.</p>
+                        <p>The MECFcam project successfully delivers a high-quality, low-latency video stream from the model railway to the driver's cab, significantly enhancing the simulation experience. The system achieves latency as low as 100ms while maintaining HD resolution at 40fps, providing a responsive and clear view for the operator. Nevertheless, the transmission seems to stutter when the train takes a curve, despite the high fps. This still needs to be looked at and improved.</p>
                         
                         <p>Through this project, I gained valuable experience with multimedia streaming pipelines, real-time video processing, and the challenges of optimizing for latency-sensitive applications. I also deepened my understanding of the Raspberry Pi camera system, GStreamer framework, and network streaming protocols.</p>
-                        
-                        <p>The modular approach allows for easy adaptation to different model railway layouts and can be extended with additional features such as multiple camera angles or on-screen telemetry data in future iterations.</p>
                     </div>
                 </div>
             </div>

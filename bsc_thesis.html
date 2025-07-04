@@ -169,10 +169,10 @@
             <div class="container">
                 <a href="index.html#projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
                 
-                <h1 class="project-title">Machine Learning for Velocity Estimation in Hybrid Electric Vehicles</h1>
-                <p class="project-subtitle">Bachelor's Thesis | ETH Zurich</p>
+                <h1 class="project-title">Machine Learning for Velocity Estimation in Hybrid Electric Vehicles (BSc Thesis)</h1>
                 
                 <div class="project-tags">
+                    <span>BSc Thesis</span>
                     <span>Machine Learning</span>
                     <span>Markov Chain</span>
                     <span>Model Predictive Control</span>
@@ -225,10 +225,6 @@
                                 <span>Model Predictive Control</span>
                             </div>
                             <div class="tech-item">
-                                <i class="fas fa-car"></i>
-                                <span>Vehicle Dynamics</span>
-                            </div>
-                            <div class="tech-item">
                                 <i class="fas fa-database"></i>
                                 <span>Data Preprocessing</span>
                             </div>
@@ -241,95 +237,16 @@
                             <li><span class="skill-bullet"></span> Analyze the performance of machine learning-based velocity prediction methods</li>
                             <li><span class="skill-bullet"></span> Develop and train Markov chain models using large-scale vehicle measurement data</li>
                             <li><span class="skill-bullet"></span> Implement velocity prediction constraints using reference-dependent bounds</li>
-                            <li><span class="skill-bullet"></span> Evaluate the robustness of prediction methods against reference velocity uncertainties</li>
+                            <li><span class="skill-bullet"></span> Evaluate the robustness of prediction methods</li>
                             <li><span class="skill-bullet"></span> Compare performance of different prediction approaches within existing multi-level controllers</li>
                         </ul>
                     </div>
                     
                     <div class="project-section">
-                        <h3>Research Methodology</h3>
-                        <p>The research approach combined theoretical machine learning concepts with practical automotive engineering applications:</p>
-                        
-                        <ul class="labeled-list">
-                            <li><span class="skill-bullet"></span> <strong>Data Collection & Preprocessing:</strong> Extensive analysis and preprocessing of velocity measurement data collected during various real-world car trips, ensuring data quality and consistency for model training.</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Markov Chain Development:</strong> Implementation and training of Markov chain models capable of predicting future velocities based solely on initial velocity and acceleration measurements from onboard sensors.</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Constraint Implementation:</strong> Development of an enhanced prediction method that constrains velocity forecasts using reference-dependent velocity bounds, improving prediction accuracy and reliability.</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Comparative Analysis:</strong> Systematic evaluation of multiple prediction methods, including reference velocity approaches and constrained Markov chain predictions, within the existing multi-level controller framework.</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Robustness Testing:</strong> Comprehensive assessment of prediction method robustness against mispredictions in reference velocity, including testing with rough speed limit data as reference input.</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="project-section">
-                        <h3>Technical Challenges</h3>
-                        <p>Several complex challenges were addressed throughout the research process:</p>
-                        
-                        <ul class="labeled-list">
-                            <li><span class="skill-bullet"></span> <strong>Large-Scale Data Processing:</strong> Managing and preprocessing extensive datasets from multiple driving scenarios while maintaining computational efficiency and data integrity.</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Model Training Optimization:</strong> Balancing model complexity with prediction accuracy while avoiding overfitting to specific driving patterns or conditions.</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Real-Time Prediction Requirements:</strong> Ensuring that prediction algorithms could operate within the time constraints required by model predictive control systems in real vehicle applications.</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Uncertainty Quantification:</strong> Developing methods to assess and communicate prediction confidence levels, particularly important for safety-critical automotive applications.</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Integration Complexity:</strong> Successfully integrating new prediction methods into existing multi-level controller architectures without disrupting established control logic.</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="project-section">
-                        <h3>Key Research Components</h3>
-                        <ul class="labeled-list">
-                            <li><span class="skill-bullet"></span> <strong>Markov Chain Implementation:</strong> Custom MATLAB implementation of Markov chain models specifically tailored for vehicle velocity prediction applications</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Data Analysis Pipeline:</strong> Comprehensive preprocessing and analysis framework for handling large-scale automotive measurement data</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Constraint Optimization:</strong> Mathematical formulation and implementation of reference-dependent velocity bounds for improved prediction accuracy</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Performance Evaluation Framework:</strong> Systematic testing and validation procedures for comparing different prediction methodologies</li>
-                            
-                            <li><span class="skill-bullet"></span> <strong>Robustness Analysis Tools:</strong> Statistical methods for evaluating prediction stability under various uncertainty conditions</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="project-section">
                         <h3>Key Findings & Results</h3>
-                        <p>The research yielded several significant findings that contribute to the field of hybrid vehicle energy management:</p>
-                        
-                        <p>All tested velocity prediction methods demonstrated strong performance within the multi-level controller framework. The reference velocity approach achieved the best overall results, while the Markov chain prediction method with velocity constraints showed nearly equivalent performance. This finding is particularly valuable as it demonstrates the viability of machine learning approaches in automotive control applications.</p>
-                        
-                        <p>The robustness analysis revealed that all prediction methods showed excellent stability against reference velocity uncertainties. Remarkably, even rough speed limit data proved sufficient as reference velocity input, suggesting that the developed methods could be practically implemented without requiring highly precise reference information.</p>
-                        
-                        <p>While the velocity predictions achieved good results for controller performance, the research also highlighted that prediction accuracy compared to actual driven velocities remains an area for future improvement, indicating opportunities for further research and development.</p>
-                    </div>
-                    
-                    <div class="project-section">
-                        <h3>Impact & Contributions</h3>
-                        <p>This thesis made several important contributions to the intersection of machine learning and automotive engineering:</p>
-                        
-                        <ul class="skills-list">
-                            <li><span class="skill-bullet"></span> Demonstrated the practical applicability of Markov chain models for real-time vehicle velocity prediction</li>
-                            <li><span class="skill-bullet"></span> Established that machine learning approaches can match the performance of traditional reference-based methods</li>
-                            <li><span class="skill-bullet"></span> Proved the robustness of prediction methods against common real-world uncertainties</li>
-                            <li><span class="skill-bullet"></span> Provided a framework for integrating ML-based predictions into existing vehicle control systems</li>
-                            <li><span class="skill-bullet"></span> Contributed to the broader goal of reducing vehicle emissions through improved energy management</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="project-section">
-                        <h3>Future Research Directions</h3>
-                        <p>The research identified several promising avenues for future investigation:</p>
-                        
-                        <ul class="skills-list">
-                            <li><span class="skill-bullet"></span> Deep learning approaches for improved velocity prediction accuracy</li>
-                            <li><span class="skill-bullet"></span> Integration of real-time traffic data and road condition information</li>
-                            <li><span class="skill-bullet"></span> Extension to fully electric and autonomous vehicle applications</li>
-                            <li><span class="skill-bullet"></span> Development of adaptive learning systems that improve with driving experience</li>
-                            <li><span class="skill-bullet"></span> Investigation of multi-vehicle prediction systems for connected vehicle networks</li>
-                        </ul>
+                        <p>Our investigation into a simple Markov chain model for vehicle velocity prediction revealed its limitations: it provided meaningful predictions only for the immediate future but became highly unreliable over longer time horizons. We identified a significant improvement opportunity by incorporating a categorization of current speed (e.g., city, extra-urban, highway) to serve as a predictive boundary, enhancing the model's accuracy.</p>
+                        <p>A substantial portion of this project involved thoroughly understanding a complex, multi-thousand-line Model Predictive Control (MPC) framework in MATLAB. This was crucial for validating the performance of our prediction pipeline. We also dedicated considerable effort to data preprocessing, recognizing its critical role in any Machine Learning endeavor. For instance, we ensured balanced dataset splits by classifying routes driven, guaranteeing similar journey types were reliably distributed across training, validation, and test sets.</p>
+                        <p>This project was a fun one and introduced me to machine learning for the first time. After my further studies with a deepening in ML, I would now clearly solve the project differently with more advanced ML approaches.</p>
                     </div>
                 </div>
             </div>

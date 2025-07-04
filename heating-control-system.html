@@ -199,7 +199,7 @@
                         <h2>Project Overview</h2>
                         <p>The Geisser Heating Solutions (GHS) is a smart home heating control solution designed to optimize temperature regulation in residential spaces. This project was developed to address the inefficiency of manual heating valves in an apartment with large window frontage, where solar gain during the day would cause overheating while the heating system continued to operate.</p>
                         
-                        <p>By retrofitting the existing manual heating valves with stepper motors and implementing a network of wireless temperature sensors throughout the apartment, the system provides precise, room-by-room temperature control. This results in improved comfort, reduced energy consumption, and elimination of the temperature fluctuations previously experienced.</p>
+                        <p>By retrofitting the existing manual heating valves with stepper motors and implementing a network of wireless temperature sensors throughout the home and using the outside temperature and solar radiation with a weather api, the system enables better, room-by-room temperature control. This leads to improved comfort, lower energy consumption and a reduction in the temperature fluctuations that previously occurred.</p>
                     </div>
                     
                     <div class="project-section">
@@ -210,8 +210,8 @@
                                 <span>Raspberry Pi</span>
                             </div>
                             <div class="tech-item">
-                                <i class="fas fa-thermometer-half"></i>
-                                <span>Temperature Sensors</span>
+                                <i class="fas fa-microchip"></i>
+                                <span>ESP8266</span>
                             </div>
                             <div class="tech-item">
                                 <i class="fas fa-wifi"></i>
@@ -222,12 +222,20 @@
                                 <span>Stepper Motors</span>
                             </div>
                             <div class="tech-item">
-                                <i class="fas fa-microchip"></i>
-                                <span>Embedded Systems</span>
-                            </div>
-                            <div class="tech-item">
                                 <i class="fas fa-chart-line"></i>
                                 <span>Data Visualization</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cloud-sun"></i>
+                                <span>Weather API</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-comments"></i>
+                                <span>MQTT</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-database"></i>
+                                <span>SQL Database</span>
                             </div>
                         </div>
                     </div>
@@ -258,14 +266,14 @@
                         </ul>
                     </div>
                     
-                    <div class="project-section">
+                    <!-- <div class="project-section">
                         <h3>Implementation Process</h3>
-                        <p>The HCS implementation followed a systematic approach to ensure reliable operation:</p>
+                        <p>The GHS implementation followed a systematic approach to ensure reliable operation:</p>
                         
                         <ul class="skills-list">
                             <li><span class="skill-bullet"></span> <strong>Hardware Design:</strong> Custom mounting brackets were designed to attach stepper motors to existing radiator valves without permanent modifications. Each motor assembly includes position sensors to track valve position accurately.</li>
                             
-                            <li><span class="skill-bullet"></span> <strong>Sensor Network:</strong> Wireless temperature sensors using low-power protocols were deployed in key locations throughout the apartment, providing continuous temperature monitoring while maintaining long battery life.</li>
+                            <li><span class="skill-bullet"></span> <strong>Sensor Network:</strong> ESP8266 wifi temperature sensors using low-power protocols were deployed in key locations throughout the apartment, providing continuous temperature monitoring while maintaining long battery life.</li>
                             
                             <li><span class="skill-bullet"></span> <strong>Control Software:</strong> Python-based control algorithms were developed to process temperature data and determine optimal valve positions. The system incorporates PID control loops for stable temperature management without overshooting.</li>
                             
@@ -305,30 +313,13 @@
                             
                             <li><span class="skill-bullet"></span> <strong>Prediction Engine:</strong> Statistical model that anticipates heating needs based on historical patterns and outdoor temperature forecasts</li>
                         </ul>
-                    </div>
+                    </div> -->
                     
                     <div class="project-section">
                         <h3>Outcomes & Insights</h3>
-                        <p>The heating control system has significantly improved temperature regulation throughout the apartment, eliminating the overheating issues previously experienced during sunny days. The system maintains consistent comfortable temperatures in each room while reducing overall energy consumption.</p>
+                        <p>The heating control system has improved temperature regulation throughout the apartment, reducing the overheating issues previously experienced during sunny days.</p>
                         
-                        <p>Data collected over several months of operation shows approximately 15-20% reduction in heating energy usage compared to the previous manual control approach. The system's predictive capabilities have improved over time as it learns from usage patterns and external conditions.</p>
-                        
-                        <p>One unexpected benefit has been the ability to identify and address other inefficiencies in the heating system, such as air pockets in radiators and suboptimal flow rates, through analysis of the temperature data patterns collected by the system.</p>
-                        
-                        <p>This project demonstrated how relatively simple automation technology can significantly improve everyday comfort and efficiency in residential settings. The modular design approach allows for easy expansion to additional rooms or incorporation of new features as needed.</p>
-                    </div>
-                    
-                    <div class="project-section">
-                        <h3>Future Enhancements</h3>
-                        <p>Several potential improvements are being considered for future iterations:</p>
-                        
-                        <ul class="skills-list">
-                            <li><span class="skill-bullet"></span> Integration with weather forecast data to proactively adjust heating based on predicted outdoor conditions</li>
-                            <li><span class="skill-bullet"></span> Presence detection to automatically adjust temperatures based on room occupancy</li>
-                            <li><span class="skill-bullet"></span> Mobile app development for more convenient remote control</li>
-                            <li><span class="skill-bullet"></span> Integration with other smart home systems for unified control</li>
-                            <li><span class="skill-bullet"></span> Enhanced energy usage analytics with cost estimation features</li>
-                        </ul>
+                        <p>I have learned that the stepper motor drivers are very different. Since the original stepper motor drivers produced too loud vibrations (which caused noise in the whole house) I had to change to silence drivers, which solved the problem immediately.</p>
                     </div>
                 </div>
             </div>
